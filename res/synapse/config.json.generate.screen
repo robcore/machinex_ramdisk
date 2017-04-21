@@ -1,6 +1,6 @@
 cat << CTAG
 {
-    name:"MDNIE",
+    name:"mDNIe",
     elements:[
     	{ SDescription:{
         	description:"Settings related to Samsung's mobile Digital Natural Image engine.@n",
@@ -78,30 +78,37 @@ cat << CTAG
 	}},
 	{ SColourPicker:{
 		title:"White",
+		default:#FFFFFF,
 		action:"screen control_white"
 	}},
 	{ SColourPicker:{
 		title:"Red",
+		default:#FF0000,
 		action:"screen control_red"
 	}},
 	{ SColourPicker:{
 		title:"Green",
+		default:#00FF00,
 		action:"screen control_green"
 	}},
 	{ SColourPicker:{
 		title:"Blue",
+		default:#0000FF,
 		action:"screen control_blue"
 	}},
 	{ SColourPicker:{
 		title:"Cyan",
+		default:#00FFFF,
 		action:"screen control_cyan"
 	}},
 	{ SColourPicker:{
 		title:"Magenta",
+		default:#FF00FF,
 		action:"screen control_magenta"
 	}},
 	{ SColourPicker:{
 		title:"Yellow",
+		default:#FFFF00,
 		action:"screen control_yellow"
 	}},
 	{ SPane:{
