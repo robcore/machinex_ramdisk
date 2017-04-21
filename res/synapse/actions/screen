@@ -7,26 +7,26 @@ fi
 P=/sys/class/mdnie/mdnie
 
 case $1 in
-black)
+control_black)
   if [ ! -z $2 ]
   then
   echo $2 $2 $2 > $P/$1
   fi
   echo $(cat $P/$1 | busybox awk '{print $1}')
   ;;
-red)
+control_red)
   ;&
-green)
+control_green)
   ;&
-blue)
+control_blue)
   ;&
-cyan)
+control_cyan)
   ;&
-magenta)
+control_magenta)
   ;&
-yellow)
+control_yellow)
   ;&
-white)
+control_white)
   if [ ! -z $2 ]
   then
   echo $R $G $B > $P/$1
@@ -34,3 +34,7 @@ white)
   echo $(busybox printf "#%02X%02X%02X\n" $(cat $P/$1))
   ;;
 esac
+
+read() {
+    echo $(busybox printf "#%02X%02X%02X" $(cat $P/$1))
+}

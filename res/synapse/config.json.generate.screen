@@ -1,10 +1,3 @@
-#!/system/bin/sh
-
-read() {
-    P=/sys/class/mdnie/mdnie
-    echo $(busybox printf "#%02X%02X%02X\n" $(cat $P/$1))
-}
-
 cat << CTAG
 {
     name:"MDNIE",
@@ -85,38 +78,38 @@ cat << CTAG
 	}},
 	{ SColourPicker:{
 		title:"White",
-		default:`echo $(read control_white)`,
-		action:"screen white"
+		default:`echo $(sh /res/synapse/actions/screen read control_white)`,
+		action:"screen control_white"
 	}},
 	{ SColourPicker:{
 		title:"Red",
-		default:`echo $(read control_red)`,
-		action:"screen red"
+		default:`echo $(sh /res/synapse/actions/screen read control_red)`,
+		action:"screen control_red"
 	}},
 	{ SColourPicker:{
 		title:"Green",
-		default:`echo $(read control_green)`,
-		action:"screen green"
+		default:`echo $(sh /res/synapse/actions/screen read control_green)`,
+		action:"screen control_green"
 	}},
 	{ SColourPicker:{
 		title:"Blue",
-		default:`echo $(read control_blue)`,
-		action:"screen blue"
+		default:`echo $(sh /res/synapse/actions/screen read control_blue)`,
+		action:"screen control_blue"
 	}},
 	{ SColourPicker:{
 		title:"Cyan",
-		default:`echo $(read control_cyan)`,
-		action:"screen cyan"
+		default:`echo $(sh /res/synapse/actions/screen read control_cyan)`,
+		action:"screen control_cyan"
 	}},
 	{ SColourPicker:{
 		title:"Magenta",
-		default:`echo $(read control_magenta)`,
-		action:"screen magenta"
+		default:`echo $(sh /res/synapse/actions/screen read control_magenta)`,
+		action:"screen control_magenta"
 	}},
 	{ SColourPicker:{
 		title:"Yellow",
-		default:`echo $(read control_yellow)`,
-		action:"screen yellow"
+		default:`echo $(sh /res/synapse/actions/screen read control_yellow)`,
+		action:"screen control_yellow"
 	}},
 	{ SPane:{
 		title:"Detailed Colour Options"
