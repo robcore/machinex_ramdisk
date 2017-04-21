@@ -3,7 +3,7 @@ cat << CTAG
     name:"MDNIE",
     elements:[
     	{ SDescription:{
-        	description:"\n\tSettings related to Samsung's mobile Digital Natural Image engine.\n\n",
+        	description:"Settings related to Samsung's mobile Digital Natural Image engine.@n",
         	background:0
 	}},
 		{ STitleBar:{
@@ -78,37 +78,37 @@ cat << CTAG
 	}},
 	{ SColourPicker:{
 		title:"White",
-		default:`echo $(sh /res/synapse/actions/screen read control_white)`,
+		default:`echo $(/res/synapse/actions/screen control_black)`,
 		action:"screen control_white"
 	}},
 	{ SColourPicker:{
 		title:"Red",
-		default:`echo $(sh /res/synapse/actions/screen read control_red)`,
+		default:`echo $(/res/synapse/actions/screen control_red)`,
 		action:"screen control_red"
 	}},
 	{ SColourPicker:{
 		title:"Green",
-		default:`echo $(sh /res/synapse/actions/screen read control_green)`,
+		default:`echo $(/res/synapse/actions/screen control_green)`,
 		action:"screen control_green"
 	}},
 	{ SColourPicker:{
 		title:"Blue",
-		default:`echo $(sh /res/synapse/actions/screen read control_blue)`,
+		default:`echo $(/res/synapse/actions/screen control_blue)`,
 		action:"screen control_blue"
 	}},
 	{ SColourPicker:{
 		title:"Cyan",
-		default:`echo $(sh /res/synapse/actions/screen read control_cyan)`,
+		default:`echo $(/res/synapse/actions/screen control_cyan)`,
 		action:"screen control_cyan"
 	}},
 	{ SColourPicker:{
 		title:"Magenta",
-		default:`echo $(sh /res/synapse/actions/screen read control_magenta)`,
+		default:`echo $(/res/synapse/actions/screen control_magenta)`,
 		action:"screen control_magenta"
 	}},
 	{ SColourPicker:{
 		title:"Yellow",
-		default:`echo $(sh /res/synapse/actions/screen read control_yellow)`,
+		default:`echo $(/res/synapse/actions/screen control_yellow)`,
 		action:"screen control_yellow"
 	}},
 	{ SPane:{
