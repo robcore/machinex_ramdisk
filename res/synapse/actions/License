@@ -1,0 +1,52 @@
+---------------------------------------------------------------------------------\
+	The below Copyright applies to any of the scripts, json configurations,
+	or anything else contained within the project that has been graciously
+	lent to me via UpInTheAir.  I'd like to add that he's a good man and
+	had to put up with some pretty ridiculous treatment by those who
+	profited from his hard work, and I appreciate his kind nature :)
+
+	Please note that this License has been added mainly for his awesome
+	work with MDNIE/SCREEN related functions, and that the majority of work
+	related to this Ramdisk has been a shared effort by myself, UpInTheAir,
+	Andreilux, Dorimanx, Yank555, Friedrich420 (you will always be my
+	brother in kernel development, and the first person to inspire me to
+	do this), the whole Emotion team, and many others who I may have forgotten.
+
+	If I've forgotten to mention anyone or credit them, please let me know and I
+	will rectify that post-haste!
+
+	Thanks to everyone involved, without you this old device would still be stuck
+	in the dark ages.
+
+	- Robcore
+---------------------------------------------------------------------------------\
+
+    Copyright (c) 2017 UpInTheAir. All rights reserved.
+
+    This software and associated documentation files (the "Software")
+    is proprietary of UpInTheAir. No part of this Software, either
+    material or conceptual may be copied or distributed, transmitted,
+    transcribed, stored in a retrieval system or translated into any
+    human or computer language in any form by any means, electronic,
+    mechanical, manual or otherwise, or disclosed to third parties
+    without the express written permission of UpInTheAir.
+
+    Alternatively, this program is free software in case of open
+    source project:
+
+    Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this Software, to redistribute the Software
+    and/or modify it under the terms of the GNU General Public
+    License as published by the Free Software Foundation; either
+    version 3 of the License, or (at your option) any later version,
+    subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+---------------------------------------------------------------------------------\

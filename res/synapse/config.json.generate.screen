@@ -1,3 +1,10 @@
+#!/system/bin/sh
+
+read() {
+    P=/sys/class/mdnie/mdnie
+    echo $(busybox printf "#%02X%02X%02X\n" $(cat $P/$1))
+}
+
 cat << CTAG
 {
     name:"MDNIE",
@@ -53,10 +60,14 @@ cat << CTAG
 				"1":"Enabled",
 			}
 		}},
-	{ SCheckBox:{
+	{ SSeekBar:{
 		label:"Sharpness",
-		description:"Enable / Disable screen sharpness",
+		description:"Choose Level of sharpness, from 0-11 (Default: 0)",
 		default:`cat /sys/class/mdnie/mdnie/sharpen`,
+			max:11,
+			min:0,
+			step:1,
+			unit:"",
 		action:"generic /sys/class/mdnie/mdnie/sharpen",
 	}},
 	{ SSeekBar:{
@@ -69,6 +80,47 @@ cat << CTAG
 			unit:"",
 			action:"generic /sys/class/mdnie/mdnie/black",
 		}},
+	{ SPane:{
+		title:"Basic Colour Options"
+	}},
+	{ SColourPicker:{
+		title:"White",
+		default:`echo $(read control_white)`,
+		action:"screen white"
+	}},
+	{ SColourPicker:{
+		title:"Red",
+		default:`echo $(read control_red)`,
+		action:"screen red"
+	}},
+	{ SColourPicker:{
+		title:"Green",
+		default:`echo $(read control_green)`,
+		action:"screen green"
+	}},
+	{ SColourPicker:{
+		title:"Blue",
+		default:`echo $(read control_blue)`,
+		action:"screen blue"
+	}},
+	{ SColourPicker:{
+		title:"Cyan",
+		default:`echo $(read control_cyan)`,
+		action:"screen cyan"
+	}},
+	{ SColourPicker:{
+		title:"Magenta",
+		default:`echo $(read control_magenta)`,
+		action:"screen magenta"
+	}},
+	{ SColourPicker:{
+		title:"Yellow",
+		default:`echo $(read control_yellow)`,
+		action:"screen yellow"
+	}},
+	{ SPane:{
+		title:"Detailed Colour Options"
+	}},
 	{ SSeekBar:{
        		title:"Blue in Black",
 		description:"(Default: 0)",
