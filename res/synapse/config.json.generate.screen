@@ -220,7 +220,7 @@ cat << CTAG
 			action:"generic /sys/class/mdnie/mdnie/magenta_red",
 		}},
 	{ SSeekBar:{
-       		title:"Red Color",
+       		title:"Red Colour",
 		description:"Global Red Level. (Default: 255)",
 			default:`cat /sys/class/mdnie/mdnie/red_red`,
 			max:255,
