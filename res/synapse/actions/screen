@@ -1,65 +1,36 @@
-BB=busybox;
+if [[ ! -z $2 ]]; then
+	let "RC=($((16$2)) & 16711680) >> 16";
+	let "GC=($((16$2)) & 65280) >> 8";
+	let "BC=$((16$2)) & 255";
+fi
 
-R=($((16$2)) & 16711680) >> 16"
-G=($((16$2)) & 65280) >> 8"
-B=$((16$2)) & 255"
 P=/sys/class/mdnie/mdnie
 
 case $1 in
 control_black)
   if [ ! -z $2 ]
   then
-  $BB echo $2 $2 $2 > $P/$1
+  echo $2 $2 $2 > $P/$1
   fi
-  $BB echo $($BB cat $P/$1 | $BB awk '{print $1}')
+  echo $(cat $P/$1 | busybox awk '{print $1}')
   ;;
 control_red)
-  if [ ! -z $2 ]
-  then
-  $BB echo $R $G $B > $P/$1
-  fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
-  ;;
+;&
 control_green)
-  if [ ! -z $2 ]
-  then
-  $BB echo $R $G $B > $P/$1
-  fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
-  ;;
+;&
 control_blue)
-  if [ ! -z $2 ]
-  then
-  $BB echo $R $G $B > $P/$1
-  fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
-  ;;
+;&
 control_cyan)
-  if [ ! -z $2 ]
-  then
-  $BB echo $R $G $B > $P/$1
-  fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
-  ;;
+;&
 control_magenta)
-  if [ ! -z $2 ]
-  then
-  $BB echo $R $G $B > $P/$1
-  fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
-  ;;
+;&
 control_yellow)
-  if [ ! -z $2 ]
-  then
-  $BB echo $R $G $B > $P/$1
-  fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
-  ;;
+;&
 control_white)
   if [ ! -z $2 ]
   then
-  $BB echo $R $G $B > $P/$1
+  echo $R $G $B > $P/$1
   fi
-  $BB echo $($BB printf "#%02X%02X%02X\n" $($BB cat $P/$1))
+  echo $(busybox printf "#%02X%02X%02X\n" $(cat $P/$1))
   ;;
 esac

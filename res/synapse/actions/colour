@@ -9,34 +9,22 @@ fi
 
 case $1 in
 
-scr_red)	;&
-scr_green)	;&
-scr_blue)	;&
-scr_yellow)	;&
-scr_cyan)	;&
-scr_magenta)	;&
-scr_white)	;&
-scr_black)
-	P=/sys/class/misc/mdnie/hook_control/
+control_red)	;&
+control_green)	;&
+control_blue)	;&
+control_yellow)	;&
+control_cyan)	;&
+control_magenta)	;&
+control_white)	;&
+control_black)
+	P=/sys/class/misc/mdnie
 
 	if [[ ! -z $2 ]]; then
-		echo $RC > $P/$1_red
-		echo $GC > $P/$1_green
-		echo $BC > $P/$1_blue
+		echo $RC > $P/$1
+		echo $GC > $P/$1
+		echo $BC > $P/$1
 	fi
 
-	echo $(printf "#%02X%02X%02X\n" $(cat $P/$1_red) $(cat $P/$1_green) $(cat $P/$1_blue))
+	echo $(printf "#%02X%02X%02X\n" $(cat $P/$1) $(cat $P/$1) $(cat $P/$1))
 	;;
-led_noti)
-	P=/sys/class/sec/led/led_noti_
-
-	if [[ ! -z $2 ]]; then
-		echo $RC > $Pr
-		echo $GC > $Pg
-		echo $BC > $Pb
-	fi
-
-	echo $(printf "#%02X%02X%02X\n" $(cat $Pr) $(cat $Pg) $(cat $Pb))
-	;;
-
 esac
