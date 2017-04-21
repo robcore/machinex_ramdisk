@@ -1,0 +1,77 @@
+cat << CTAG
+{
+	name:CPU VOLT,
+		elements:[
+	{ SPane:{
+		title:"PVS Binning:"
+	}},
+	{ SLiveLabel:{
+		refresh:0,
+		action:"live LivePVS"
+	}},
+	{ SPane:{
+		title:"Speed Binning:"
+	}},
+	{ SLiveLabel:{
+		refresh:0,
+		action:"live LiveSPEED"
+	}},
+					{ SPane:{
+						title:"Krait CPU Voltage Boost"
+					}},
+						{ SCheckBox:{
+							label:"Krait CPU Voltage Boost",
+							description:"This is a safer, more reliable voltage boost toggle included from stock sources.  Use this as a stable alternative to adjusting the values in the the below sections.",
+							default:`/system/bin/sh /res/synapse/actions/vboosthelper`,
+							action:"boolean /sys/module/acpuclock_krait/parameters/boost"
+						}},
+			`if [ -f "/sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels" ]; then
+				$BB echo '{ STitleBar:{
+					title:"CPU Global Voltage"
+				}},
+					{ SSeekBar:{
+						default:0,
+						action:"cpuvolt global",
+						unit:" uV",
+						min:-200000,
+						max:200000,
+						step:12500,
+						notify:[
+							{
+								on:APPLY,
+								do:[ REFRESH, APPLY ],
+								to:['
+									while read CPUFREQ VOLT; do
+									CPUFREQ=\`$BB echo $CPUFREQ | sed "s/://"\`;
+										echo '"cpuvolt '$CPUFREQ'",';
+									done < /sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels;
+								$BB echo ']
+							}
+						]
+					}},'
+			fi`
+			`if [ -f "/sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels" ]; then
+				$BB echo '{ SPane:{
+					title:"CPU Frequency Voltage",
+					description:"Decreasing voltages will potentially lower heat and power consumption of the CPU. Increasing it does the opposite. Changing voltages has a GREAT chance of causing instability.  This Section could make your phone explode like a Note 7."
+				}},'
+					while read CPUFREQ VOLT; do
+					CPUFREQ=\`$BB echo $CPUFREQ | $BB sed "s/://"\`
+					LABEL=$((CPUFREQ / 1000))
+						$BB echo '{ SSeekBar:{
+								title:"'${LABEL}' MHz",
+								default:'$VOLT',
+								action:"cpuvolt '$CPUFREQ'",
+								unit:" uV",
+								min:600000,
+								max:1450000,
+								step:12500
+							}},'
+						done < /sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels
+			fi`
+	{ SDescription:{
+		description:" "
+	}},
+		]
+}
+CTAG

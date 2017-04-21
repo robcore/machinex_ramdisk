@@ -1,0 +1,100 @@
+cat << CTAG
+{
+    name:HOTPLUG,
+    elements:[
+        { STitleBar:{
+		title:"Hotplug Driver"
+        }},
+	{ SOptionList:{
+		description: "MSM Hotplug is a hotplug driver that hotplugs cores based on system load. Intelli Hotplug hooks in task scheduler and hotplug cores accordingly. Bricked hotplug is a conservative hotplug driver. Lazy is a leaner intelliplug.  Alucard Hotplug is a semi-automatic solution for hotplugging and scheduling. Blu_Plug is a highly optimized, dynamic hotplugging driver.  Mako_Hotplug is an automatic-style, Conservative, mostly 2-core MP Decision replacement.",
+		default:Intelli_Hotplug,
+		action:"hotplug_select /data/.machinex/hotplug_prof",
+		values:[ Lazyplug, MSM_Hotplug, Intelli_Hotplug, Bricked_Hotplug, MSM_Sleeper, Blu_Plug, Mako_Hotplug, Alucard_Hotplug
+		],
+	}},
+	{ SSeekBar:{
+		title:"Min CPUs Online",
+		description:"This will decide the minimum number of cores that stays online when device is awake. Higher the number of cores, better the performance. This must be less than or equal to no. of Max CPUs online. This tunable works for Intelli Hotplug, MSM Hotplug, Blu_Plug, Mako_Hotplug, Alucard Hotplug and Bricked Hotplug.",
+		min:1, max:4, unit:" cores", step:1,
+		default:`echo $(/res/synapse/actions/hotplug_action max_cpus_online)`,
+        action:"hotplug_action min_cpus_online"
+	}},
+	{ SSeekBar:{
+		title:"Max CPUs Online",
+		description:"This will decide the maximum number of cores that can go online when device is awake. Higher the number of cores, better the performance. This must be greater than or equal to no. of Min CPUs online and Boosted CPUs. This tunable works for Intelli Hotplug, Lazyplug, MSM Hotplug, Blu_Plug, Mako_Hotplug, Alucard Hotplug, MSM_Sleeper and Bricked Hotplug.",
+		min:1, max:4, unit:" cores", step:1,
+		default:`echo $(/res/synapse/actions/hotplug_action max_cpus_online)`,
+        action:"hotplug_action max_cpus_online"
+	}},
+	{ SSeekBar:{
+		title:"Max CPUs Online (Suspend)",
+		description:"This will decide the maximum number of cores that can go online when device is suspended. Higher the number of cores, better the performance. This should be less than or equal to no. of Max CPUs online. In case you are having trouble like music glitch on screen off, keep this value greater than unity. Please note when value is set to 1, you will have very good power saving since hotplug will be completely suspended when idle. This tunable works for Alucard Hotplug, MSM Hotplug, MSM_Sleeper, Blu_Plug and Bricked Hotplug.",
+		min:1, max:4, unit:" cores", step:1,
+		default:`echo $(/res/synapse/actions/hotplug_action max_cpus_online_susp)`,
+        action:"hotplug_action max_cpus_online_susp"
+	}},
+	{ SSeekBar:{
+		title:"Touch Boosted CPUs",
+		description:"This will decide the no. of cores to be boosted when screen is touched. Higher the number of cores, higher the performance. This must be lesser than or equal to no. of Max CPUs online. When is is set to lesser or equal value of Min CPUs online, it is as good as disabled.",
+		min:1, max:4, unit:" cores", step:1,
+		default:`echo $(/res/synapse/actions/hotplug_action cpus_boosted)`,
+        action:"hotplug_action cpus_boosted"
+	}},
+	{ SOptionList:{
+		title:"Hotplug Suspend",
+		description:"Toggle Hotplugging Suspend for IntelliPlug, Alucard Hotplug, and any other drivers that may support it. Toggle it if having issues with suspend.",
+		default:`echo $(/res/synapse/actions/hotplug_action hotplug_suspend)`,
+		action:"hotplug_action hotplug_suspend",
+		values:{
+			0:"Off", 1:"On"
+		}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Intelliplug Specific Options",
+		description:"OPTIONS",
+	}},
+	{ SOptionList:{
+		title:"Intelliplug Full Mode Profile",
+		description:"Full mode profile is specific to Intelli Hotplug with Max CPUs Online = 4. This changes behavior of Intelli Hotplug to perform accordingly.",
+		default:`cat /sys/kernel/intelli_plug/full_mode_profile`,
+		action:"generic /sys/kernel/intelli_plug/full_mode_profile",
+		values:{
+			0:"Balanced", 1:"Performance", 2:"Conservative", 3:"Disabled", 4:"Tri", 5:"Eco", 6:"Strict"
+		}
+	}},
+	{ SPane:{
+		title:"Lazyplug Specific Options",
+		description:"OPTIONS",
+	}},
+	{ SOptionList:{
+		title:"Lazyplug Full Mode Profile",
+		description:"Full mode profile is specific to Lazyplug with Max CPUs Online = 4. This changes behavior of Lazyplug to perform accordingly. Warning, the Max CPUs Online setting above overrides Eco Modes.",
+		default:`cat /sys/module/lazyplug/parameters/nr_run_profile_sel`,
+		action:"generic /sys/module/lazyplug/parameters/nr_run_profile_sel",
+		values:{
+			0:"Balanced", 1:"Performance", 2:"Conservative", 3:"Eco", 4:"Eco Extreme", 5:"Disabled",
+		}
+	}},
+	{ SPane:{
+		title:"MSM_Sleeper Specific Options",
+		description:"OPTIONS",
+	}},
+	{ SOptionList:{
+       		title:"Run with all cores online",
+		description:"Default Enabled",
+		default:`cat /sys/devices/platform/msm_sleeper/plug_all`,
+		action:"generic /sys/devices/platform/msm_sleeper/plug_all",
+		values:{
+			"0":"Disabled",
+			"1":"Enabled",
+			}
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

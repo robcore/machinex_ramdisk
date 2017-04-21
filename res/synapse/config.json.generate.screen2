@@ -1,0 +1,27 @@
+cat << CTAG
+{
+    name:"HBM",
+    elements:[
+		{ STitleBar:{
+			title:"High Brightness Mode"
+        }},
+		{ SDescription:{
+        	description:"Give yourself a brightness boost"
+		}},
+		{ SDescription:{
+			description:"Toggle HBM High Brightness Mode"
+		}},
+		{ SDescription:{
+			description:"Default is Disabled"
+		}},
+			{ SButton:{
+				label:"Enable HBM",
+				action:"hbm enable"
+			}},
+			{ SButton:{
+				label:"Disable HBM",
+				action:"hbm disable"
+			}},
+    ]
+}
+CTAG

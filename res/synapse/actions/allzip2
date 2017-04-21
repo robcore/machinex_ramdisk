@@ -1,0 +1,32 @@
+TIMESTAMP=`date +%Y-%m-%d.%H.%M.%S`;
+ALL=/sdcard/machinex/ZippedLogs
+BB=busybox
+
+[ ! -d "$ALL" ] && mkdir -p "$ALL";
+chmod 755 $ALL
+
+case $1 in
+	zl)
+		CAT="$ALL/logcat.txt";
+		logcat -d > $CAT;
+
+		DMSG="$ALL/dmesg.txt";
+		dmesg > $DMESG;
+
+		PROP="$ALL/props.txt";
+		getprop > $PROP
+
+		kmsg=/proc/last_kmsg;
+		if [ -f $kmsg ]; then
+			KMSG="$ALL/last_kmsg.txt";
+			cat $kmsg > $KMSG;
+			$BB gzip -f $CAT $DMSG $KMSG $PROP > $ALL/AllLogs-$TIMESTAMP.gz
+			rm -f $CAT $DMSG $KMSG $PROP
+			echo "All Logs saved to $ALL";
+		else
+			$BB gzip -f $CAT $DMSG $PROP > $ALL/AllLogs-$TIMESTAMP.gz
+			rm -f $CAT $DMSG $PROP
+			echo "No kmsg -- Remaining Logs saved to $ALL";
+		fi;
+	;;
+esac;

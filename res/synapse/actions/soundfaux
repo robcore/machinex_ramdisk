@@ -1,0 +1,28 @@
+UKM=/data/.machinex;
+BB=busybox;
+
+if [ -f $1 ]; then
+	if [ "$1" == "/sys/kernel/sound_control_3/gpl_cam_mic_gain" ] || [ "$1" == "/sys/kernel/sound_control_3/gpl_mic_gain" ]; then
+		if [ "$2" -lt 0 ]; then
+			V=$2;
+			V=$((256 + V));
+			H=$((255 - V));
+			$BB echo "$V $H" > $1;
+		else
+			V=$2;
+			H=$((255 - V));
+			$BB echo "$V $H" > $1;
+		fi;
+	else [ "$1" == "/sys/kernel/sound_control_3/gpl_headphone_gain" ] || [ "$1" == "/sys/kernel/sound_control_3/gpl_speaker_gain" ]; then
+		if [ "$2" -lt 0 ]; then
+			V=$2;
+			H=$((255 - V - V));
+			V=$((256 + V));
+			$BB echo "$V $V $H" > $1;
+		else
+			V=$2;
+			H=$((255 - V - V));
+			$BB echo "$V $V $H" > $1;
+		fi;
+	fi;
+fi;

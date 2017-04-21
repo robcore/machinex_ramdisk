@@ -1,0 +1,21 @@
+UKM=/data/.machinex;
+BB=busybox;
+
+refresh () {
+	 am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/module/cpu_boost/parameters"}}' 2> /dev/null;
+}
+
+if [ -f $1 ]; then
+	OLD=`cat $1`
+	if [[ ! -z $2 ]]; then
+		echo $2 > $1
+	fi
+
+	NEW=`cat $1`
+
+	if [ $OLD != $NEW ]; then
+		refresh &
+	fi
+
+	echo $NEW
+fi

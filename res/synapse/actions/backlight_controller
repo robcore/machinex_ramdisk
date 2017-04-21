@@ -1,0 +1,12 @@
+UKM=/data/.machinex;
+BB=busybox;
+
+if [ -f $1 ]; then
+	if [[ ! -z "$2" ]]; then
+		$BB chmod 666 $1
+		$BB echo "$2" > $1 2> /dev/null;
+		$BB chmod 660 $1
+	fi;
+
+	$BB echo "`$BB cat $1`";
+fi;

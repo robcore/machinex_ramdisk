@@ -1,0 +1,30 @@
+read() {
+	VALUE=0
+	for COLOR in `cat /sys/devices/virtual/misc/gammacontrol/tuner` ; do
+		VALUE=$(($VALUE+1))
+		if [ "$VALUE" == $1 ]; then
+			echo $COLOR
+			return
+		fi
+	done
+}
+
+write() {
+	COLORARR=""
+	VALUE=0
+	for COLOR in `cat /sys/devices/virtual/misc/gammacontrol/tuner`; do
+		VALUE=$(($VALUE+1))
+		if [ "$VALUE" == $1 ]; then
+			COLORARR="$COLORARR $2"
+		else
+			COLORARR="$COLORARR $COLOR"
+		fi
+	done
+	echo $COLORARR > /sys/devices/virtual/misc/gammacontrol/tuner
+}
+
+if [[ ! -z $2 ]]; then
+        write $1 $2
+fi
+
+echo $(read $1)

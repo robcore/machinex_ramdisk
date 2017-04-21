@@ -1,0 +1,12 @@
+UKM=/data/.machinex;
+BB=busybox
+
+VALUE=`$BB cat /sys/module/acpuclock_krait/parameters/boost`;
+
+	if [ $VALUE = "Y" ]; then
+		$BB echo "1";
+	elif [ $VALUE = "N" ]; then
+		$BB echo "0";
+	else
+		$BB echo "0";
+	fi;

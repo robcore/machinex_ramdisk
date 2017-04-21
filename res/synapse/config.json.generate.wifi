@@ -1,0 +1,76 @@
+cat << CTAG
+{
+  name:WiFi,
+  elements:[
+    { STitleBar:{
+        title:"DHD WiFi Driver Controls"
+    }},
+if [ -e /sys/module/dhd/parameters/info_string ]; then
+	echo "{ SLiveLabel:{
+		refresh:0,
+		action:"live LiveWIFI"
+	}},
+"
+fi
+	{ SDescription:{
+		description:"DANGER! These are NEVER exposed to userspace and should be researched before use."
+	}},
+	{ SDescription:{
+		description:"Controls only appear when WiFI driver is ON and LOADED."
+	}},
+if [ -e /sys/module/dhd/parameters/dhd_slpauto ]; then
+	echo "{ SCheckBox:{
+		label:"SLPAUTO",
+		description:"The built in autosleep function within the DHD driver.",
+		default:`cat /sys/module/dhd/parameters/dhd_slpauto`,
+		action:"generic /sys/module/dhd/parameters/dhd_slpauto"
+	}},
+"
+fi
+`
+if [ -e "/dev/block/zram0" ]; then
+    echo '{ SPane:{
+              title:"Z-RAM",
+              description:"Attempts to increase performance by compressing RAM to create a virtual swap device. Potentially frees up RAM for multitasking at the cost of CPU to de/compress pages."
+          }},
+          { SSeekBar:{
+              title:"Disk Size",
+              min:0, max:384, step:8, unit:" MB",
+              default:0,
+              action:"zram zram0"
+          }},
+    ';
+`
+if [ -e "/sys/module/dhd/parameters/dhd_idletime" ]; then
+	echo "{ SSeekBar:{
+		title:"DHD Idletime",
+		min:1,
+		max:20,
+		step:1,
+		unit:" s",
+		default:`cat /sys/module/dhd/parameters/dhd_idletime`,
+		action:"generic /sys/module/dhd/parameters/dhd_idletime"
+	}},
+"
+fi
+if [ -e /sys/module/dhd/parameters/dhd_watchdog_ms ]; then
+	echo "{ SDescription:{
+		description:"The DHD Watchdog timeout affects the wakelock most often held by the WiFi driver..."
+	}},
+	{ SSeekBar:{
+		title:"DHD Watchdog Timeout",
+		min:1,
+		max:20,
+		step:1,
+		unit:" ms",
+		default:`cat /sys/module/dhd/parameters/dhd_watchdog_ms`,
+		action:"generic /sys/module/dhd/parameters/dhd_watchdog_ms"
+	}},
+"
+fi
+	{ SDescription:{
+		description:" "
+	}},
+  ]
+}
+CTAG

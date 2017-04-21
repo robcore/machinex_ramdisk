@@ -1,0 +1,62 @@
+TIMESTAMP=`date +%Y-%m-%d.%H.%M.%S`;
+ALL=/sdcard/machinex/ZippedLogs
+BB=busybox
+SQL3=sqlite3
+DISABLED_SETTINGS="'buildprop net.hostname', 'buildprop service.adb.tcp.port'";
+DISABLED_ACTIONS="AND key NOT LIKE 'restorebackup%'";
+SYNAPSE_DATA=/data/data/com.af.synapse/databases
+
+
+[ ! -d "$ALL" ] && mkdir -p "$ALL";
+chmod 777 $ALL
+
+case $1 in
+	zl)
+		SETT=$ALL/settings.txt
+		cd $SYNAPSE_DATA
+		$SQL3 -separator '=' actionValueStore "SELECT key, value FROM action_value WHERE context = 'global' ORDER BY key ASC;" > $SETT;
+		cd /
+		echo "----------------" >> $SETT;
+		echo "----------------" >> $SETT;
+		echo "-------MX-------" >> $SETT;
+		echo "----------------" >> $SETT;
+		echo "----------------" >> $SETT;
+		echo "USER PVS BINNING" >> $SETT;
+		cat /sys/devices/system/soc/soc0/pvs_bin >> $SETT;
+		echo "USER SPEED BIN" >> $SETT;
+		cat /sys/devices/system/soc/soc0/speed_bin >> $SETT;
+		echo "CURRENT VERSION" >> $SETT;
+		cat /proc/version >> $SETT;
+		cd /
+
+		CAT="$ALL/logcat.txt";
+		logcat -d > $CAT;
+		cat /proc/version >> $CAT;
+
+		DMSG="$ALL/dmesg.txt";
+		dmesg > $DMSG;
+		cat /proc/version >> $DMSG;
+
+		PROP="$ALL/props.txt";
+		getprop > $PROP
+		cat /proc/version >> $PROP
+
+		kmsg=/proc/last_kmsg;
+		ZIPK=all_logs-$TIMESTAMP.zip
+		ZIPNOK=all_logs-no-k-$TIMESTAMP.zip
+		if [ -f $kmsg ]; then
+			KMSG="$ALL/last_kmsg.txt";
+			cat $kmsg > $KMSG;
+			cat /proc/version >> $KMSG;
+			cd $ALL
+			zip -m -q -9 - *.txt > $ZIPK
+			cd /
+			echo "All Logs saved to $ALL"
+		else
+			cd $ALL
+			zip -m -q -9 - *.txt > $ZIPNOK
+			cd /
+			echo "No kmsg -- Remaining Logs saved to $ALL"
+		fi;
+	;;
+esac;

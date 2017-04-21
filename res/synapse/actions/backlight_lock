@@ -1,0 +1,22 @@
+BB=busybox;
+
+case $1 in
+locker)
+  P=/data/.machinex/b_lock
+  if [ ! -z $2 ]; then
+  if [ $2 -eq 0 ]; then
+    echo 0 > $P 2> /dev/null
+	echo 666 > /sys/devices/platform/msm_fb.526593/leds/lcd-backlight/brightness 2> /dev/null
+  elif [ $2 -eq 1 ]; then
+    echo 1 > $P 2> /dev/null
+	echo 444 > /sys/devices/platform/msm_fb.526593/leds/lcd-backlight/brightness 2> /dev/null
+  fi
+  fi
+  COPY=`cat $P`
+  if [ $COPY -eq 0 ]; then
+    echo 0
+  elif [ $COPY -eq 1 ]; then
+    echo 1
+  fi
+  ;;
+esac

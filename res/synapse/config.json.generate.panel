@@ -1,0 +1,133 @@
+VALUE=0
+
+cat << CTAG
+{
+    name:PANEL,
+		elements:[
+    { STitleBar:{
+        title:"High Brightness Mode"
+    }},
+	{ SCheckBox:{
+		label:"HBM",
+		description:"High Brightness Mode is unlocked to the panel's full 400CD potential on this kernel.",
+		default:0,
+		action:"mdnie hibri"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ STitleBar:{
+			title:"MSM Kcal"
+		}},
+		{ SDescription:{
+			description:"Set multiplier of a specific colour."
+		}},
+		{ SDescription:{
+			description:"You can turn screen off and back on to apply the change, or hit the apply button below.  However, note that the driver has reported issues when applied with the screen on."
+		}},
+`for COLOR in \`cat /sys/devices/platform/DIAG0.0/power_rail\` ; do
+		VALUE=$(($VALUE+1))
+		echo '{ SSeekBar:{ '
+			case $VALUE in
+			1)
+				echo 'title:"Red"' ;;
+			2)
+				echo 'title:"Green"' ;;
+			3)
+				echo 'title:"Blue"' ;;
+			esac
+			echo ', action:"kcal '${VALUE}'",
+			max:255, min:60 }},'
+done`
+			{ SButton:{
+				label:"APPLY KCAL",
+				action:"hbm kapply"
+			}},
+		{ STitleBar:{
+			title:"Generic CM PCC Color Control"
+		}},
+		{ SDescription:{
+			description:"Set multiplier of a specific colour."
+		}},
+		{ SDescription:{
+			description:"Range is 6600-32768."
+		}},
+`for PCC in \`cat /sys/devices/virtual/graphics/fb0/rgb\` ; do
+		VALUE=$(($VALUE+1))
+		echo '{ SSeekBar:{ '
+			case $VALUE in
+			1)
+				echo 'title:"Red"' ;;
+			2)
+				echo 'title:"Green"' ;;
+			3)
+				echo 'title:"Blue"' ;;
+			esac
+			echo ', action:"cmrgb '${VALUE}'",
+			max:32768, min:6600 }},'
+done`
+    { STitleBar:{
+        title:"Vertical Sync"
+    }},
+	{ SCheckBox:{
+		label:"VSYNC",
+		description:" ",
+		default:`cat /sys/kernel/debug/msm_fb/2/vsync_enable`,
+		action:"generic /sys/kernel/debug/msm_fb/2/vsync_enable"
+	}},
+    { STitleBar:{
+        title:"Hardware Panel Vertical Sync"
+    }},
+	{ SCheckBox:{
+		label:"HW VSYNC",
+		description:" ",
+		default:`cat /sys/kernel/debug/msm_fb/2/hw_vsync_mode`,
+		action:"generic /sys/kernel/debug/msm_fb/2/hw_vsync_mode"
+	}},
+    { STitleBar:{
+        title:"Light Sensor"
+    }},
+	{ SCheckBox:{
+		label:"Light Sensor",
+		description:"Toggle Light Sensor on and off.",
+		default:`cat /sys/devices/virtual/input/input8/enabled`,
+		action:"generic /sys/devices/virtual/input/input8/enabled"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    { STitleBar:{
+        title:"HDMI HDCP"
+    }},
+	{ SCheckBox:{
+		label:"HDCP",
+		description:"Toggle HDMI content protection service.",
+		default:0,
+		action:"boolean /sys/module/hdmi_msm/parameters/hdcp"
+	}},
+		{ STitleBar:{
+			title:"Outdoor Mode"
+		}},
+		{ SDescription:{
+	        description:"Outdoor Brightness Boost"
+		}},
+		{ SDescription:{
+			description:"Samsung's Official Solution for Brightness.  Similiar to HBM but takes light sensor into account, and acts as HBM with autobrightness."
+		}},
+		{ SDescription:{
+			description:"Default is Disabled"
+		}},
+			{ SButton:{
+				label:"Enable Outdoor Mode",
+				action:"hbm ODEN"
+			}},
+			{ SButton:{
+				label:"Disable Outdoor Mode",
+				action:"hbm ODIS"
+			}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

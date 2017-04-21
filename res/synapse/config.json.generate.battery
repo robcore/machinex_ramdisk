@@ -1,0 +1,62 @@
+cat << CTAG
+{
+    name:BATTERY,
+    elements:[
+	{ SPane:{
+		title:"Battery Info"
+	}},
+        { SLiveLabel:{
+                  action:"charge-source"
+        }},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live batttype"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battcurrav"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battcurrnow"
+	}},
+	{ SLiveLabel:{
+		refresh:9000,
+		action:"live battvoltnow"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live batttemp"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battcapa"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battstatus"
+	}},
+	{ SLiveLabel:{
+		refresh:9000,
+		action:"live batthealth"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Battery Scaling Calibration",
+		description:" If you are having incorrect battery SCALING issues, this will reset your device battery % to scale correctly to the approximate available mV. Give it a few hours after you reset the gauge. It may still show you funny values for that period, then the battery percentage should be fine after a full charge cycle. You may pull battery for at least 180 sec for possibly the same effect."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SButton:{
+		label:"Reset Fuel-Gauge Chip Now",
+		action:"fuel-gauge fuel-gauge"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

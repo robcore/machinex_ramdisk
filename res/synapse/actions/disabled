@@ -1,0 +1,18 @@
+UKM=/data/.machinex;
+BB=busybox;
+
+if [[ ! -z $2 ]]; then
+        if [ "$2" == "Disabled" ]; then
+                echo "" > $1
+        else
+                echo $2 > $1
+        fi
+fi
+
+read VAL < $1
+
+if [ -z $VAL ]; then
+        echo "Disabled"
+else
+        echo `cat $1`
+fi

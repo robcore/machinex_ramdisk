@@ -1,0 +1,14 @@
+PROF="/data/.machinex/profmin"
+f1=`cat /sys/class/power_supply/battery/charge_now`
+f2=`cat /sys/devices/system/cpu/cpu0/cpufreq/charging_min_mhz`
+if [ "$f1" -gt "0" -a $f2 -gt "1" ]; then
+                echo `cat $PROF`
+        else
+                if [ -f $1 ];then
+	if [[ ! -z $2 ]]; then
+		echo $2 > $1
+	fi
+	echo `cat $1`
+	echo `cat $1` > $PROF
+fi
+	fi

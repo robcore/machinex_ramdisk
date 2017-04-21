@@ -1,0 +1,145 @@
+cat << CTAG
+{
+  name:POWER,
+  elements:[
+	{ STitleBar:{
+		title:"Power Management",
+	}},
+	{ SLiveLabel:{
+		refresh:0,
+		action:"live powersuspend"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ STitleBar:{
+		title:"Asynchronous Power Management",
+	}},
+	{ SCheckBox:{
+		description:"Toggle Asynchronous power management. Async ON allows power states to change without confirmation, Async OFF may be slightly slower but is more stable for some drivers.",
+		label:"PM Async",
+		default:`cat /sys/power/pm_async`,
+		action:"generic /sys/power/pm_async",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ STitleBar:{
+		title:"Filesystem Sync Options",
+	}},
+	{ SDescription:{
+		description:"The two options below provide full filesystem syncs when the device is suspending.  Downside: May take longer to suspend. Upside: Less change of filesystem errors and corruption during suspend/resume routines."
+	}},
+	{ STitleBar:{
+		title:"Sync on Suspend",
+	}},
+	{ SCheckBox:{
+		description:"Toggle the option to SYNC the filesystem when AUTOSLEEP and PLATFORM suspend the system. Recommended.",
+		label:"Autosleep Sync",
+		default:`cat /sys/power/suspend_sync`,
+		action:"generic /sys/power/suspend_sync",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ STitleBar:{
+		title:"Sync on Powersuspend",
+	}},
+	{ SCheckBox:{
+		description:"Toggle the option to SYNC the filesystem when Powersuspend sets suspend.",
+		label:"Powersuspend Sync",
+		default:`cat /sys/kernel/power_suspend/power_suspend_sync`,
+		action:"generic /sys/kernel/power_suspend/power_suspend_sync",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Wakelock Control",
+	}},
+	{ SDescription:{
+		description:"This section will allow you to disable a variety of Wakelocks.  Disabling any of these will probably cause issues.  THIS CAN BREAK REGULAR FUNCTIONING! USE AT YOUR OWN RISK!"
+	}},
+	{ SCheckBox:{
+		label:"WakeBlock",
+		description:"Master Override Toggle.",
+		default:0,
+		action:"boolean /sys/module/wakeup/parameters/wakeblock",
+	}},
+	{ SCheckBox:{
+		label:"Bluetooth Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_bluesleep_ws",
+	}},
+	{ SCheckBox:{
+		label:"GPS Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_gps_ws",
+	}},
+	{ SCheckBox:{
+		label:"HSIC Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_msm_hsic_ws",
+	}},
+	{ SCheckBox:{
+		label:"WLAN RX Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_wlan_rx_wake_ws",
+	}},
+	{ SCheckBox:{
+		label:"WLAN Ctrl Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_wlan_ctrl_wake_ws",
+	}},
+	{ SCheckBox:{
+		label:"WLAN General Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_wlan_wake_ws",
+	}},
+	{ SCheckBox:{
+		label:"SSP Sensorhub Wakelock",
+		description:"Enabled by Default.",
+		default:1,
+		action:"boolean /sys/module/wakeup/parameters/enable_ssp_sensorhub_ws",
+	}},
+		{ SPane:{
+			title:"State Notifier Suspend Delay",
+		}},
+	{ SSeekBar:{
+		title:"State Notifier Delay",
+		description:"State Notifier has an option to delay its suspend function. Keep at 0 for faster suspend, or raise it if it causes issues.",
+		min:0,
+		max:10,
+		step:1,
+		unit:" s",
+		default:0,
+		action:"generic /sys/kernel/state_notifier/suspend_defer_time"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+		{ SPane:{
+			title:"State Notifier Resume Delay",
+		}},
+	{ SSeekBar:{
+		title:"State Notifier Resume Delay",
+		description:"EXPERIMENTAL. This is probably not needed, but available for tinkering.",
+		min:0,
+		max:10,
+		step:1,
+		unit:" s",
+		default:0,
+		action:"generic /sys/kernel/state_notifier/resume_defer_time"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    ]
+}
+CTAG

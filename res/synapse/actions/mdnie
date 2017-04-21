@@ -1,0 +1,96 @@
+BB=busybox;
+
+case $1 in
+scenario)
+  P=/sys/devices/virtual/mdnie/mdnie/scenario
+  if [ ! -z $2 ]; then
+  if [ $2 == UI_MODE ]; then
+    echo 0 > $P
+  elif [ $2 == VIDEO_MODE ]; then
+    echo 1 > $P
+  elif [ $2 == VIDEO_WARM_MODE ]; then
+    echo 2 > $P
+  elif [ $2 == VIDEO_COLD_MODE ]; then
+    echo 3 > $P
+  elif [ $2 == CAMERA_MODE ]; then
+    echo 4 > $P
+  elif [ $2 == NAVI ]; then
+    echo 5 > $P
+  elif [ $2 == GALLERY_MODE ]; then
+    echo 6 > $P
+  elif [ $2 == VT_MODE ]; then
+    echo 7 > $P
+  elif [ $2 == BROWSER ]; then
+    echo 8 > $P
+  elif [ $2 == eBOOK ]; then
+    echo 9 > $P
+  fi; fi
+  COPY=`cat $P`
+  if [ "$COPY" == "Current Scenario Mode : UI_MODE" ]; then
+    echo UI_MODE
+  elif [ "$COPY" == "Current Scenario Mode : VIDEO_MODE" ]; then
+    echo VIDEO_MODE
+  elif [ "$COPY" == "Current Scenario Mode : VIDEO_WARM_MODE" ]; then
+    echo VIDEO_WARM_MODE
+  elif [ "$COPY" == "Current Scenario Mode : VIDEO_COLD_MODE" ]; then
+    echo VIDEO_COLD_MODE
+  elif [ "$COPY" == "Current Scenario Mode : CAMERA_MODE" ]; then
+    echo CAMERA_MODE
+  elif [ "$COPY" == "Current Scenario Mode : NAVI" ]; then
+    echo NAVI
+  elif [ "$COPY" == "Current Scenario Mode : GALLERY_MODE" ]; then
+    echo GALLERY_MODE
+  elif [ "$COPY" == "Current Scenario Mode : VT_MODE" ]; then
+    echo VT_MODE
+  elif [ "$COPY" == "Current Scenario Mode : BROWSER" ]; then
+    echo BROWSER
+  elif [ "$COPY" == "Current Scenario Mode : eBOOK" ]; then
+    echo eBOOK
+  fi
+  ;;
+mode)
+  P=/sys/devices/virtual/mdnie/mdnie/mode
+  if [ ! -z $2 ]; then
+  if [ $2 == DYNAMIC ]; then
+    echo 0 > $P
+  elif [ $2 == STANDARD ]; then
+    echo 1 > $P
+  elif [ $2 == NATURAL ]; then
+    echo 2 > $P
+  elif [ $2 == MOVIE ]; then
+    echo 3 > $P
+  elif [ $2 == AUTO ]; then
+    echo 4 > $P
+  fi; fi
+  COPY=`cat $P`
+  if [ "$COPY" == "Current Background Mode : DYNAMIC" ]; then
+    echo DYNAMIC
+  elif [ "$COPY" == "Current Background Mode : STANDARD" ]; then
+    echo STANDARD
+  elif [ "$COPY" == "Current Background Mode : NATURAL" ]; then
+    echo NATURAL
+  elif [ "$COPY" == "Current Background Mode : MOVIE" ]; then
+    echo MOVIE
+  elif [ "$COPY" == "Current Background Mode : AUTO" ]; then
+    echo AUTO
+  fi
+  ;;
+hibri)
+  P=/sys/class/backlight/panel/auto_brightness
+  if [ ! -z $2 ]; then
+  if [ $2 -eq 0 ]; then
+    echo 0 > $P
+    echo 0 > $P
+  elif [ $2 -eq 1 ]; then
+    echo 6 > $P
+	echo 6 > $P
+  fi
+  fi
+  COPY=`cat $P`
+  if [ $COPY -eq 0 ]; then
+    echo 0
+  elif [ $COPY -eq 6 ]; then
+    echo 1
+  fi
+  ;;
+esac

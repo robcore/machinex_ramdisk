@@ -1,0 +1,47 @@
+TIMESTAMP=`date +%Y-%m-%d.%H.%M.%S`
+LOGS=/sdcard/machinex/Logs
+SQL3=sqlite3
+DISABLED_SETTINGS="'buildprop net.hostname', 'buildprop service.adb.tcp.port'";
+DISABLED_ACTIONS="AND key NOT LIKE 'restorebackup%'";
+SYNAPSE_DATA=/data/data/com.af.synapse/databases
+
+[ ! -d $LOGS ] && mkdir -p $LOGS;
+chmod 755 $LOGS
+
+case $1 in
+	logcat)
+		saved=$LOGS/logcat-$TIMESTAMP.txt
+		logcat -d > $saved;
+		cat /proc/version >> $saved;
+	;;
+
+	dmesg)
+		saved=$LOGS/dmesg-$TIMESTAMP.txt
+		dmesg > $saved;
+		cat /proc/version >> $saved;
+	;;
+
+	kmsg)
+		kmsg=/proc/last_kmsg;
+		if [ -f $kmsg ]; then
+			saved=$LOGS/last_kmsg-$TIMESTAMP.txt
+			cp -f $kmsg $saved;
+		cat /proc/version >> $saved;
+		else
+			echo "$kmsg not found"
+		fi;
+	;;
+	settings)
+		saved=$LOGS/settings-$TIMESTAMP.txt
+		cd $SYNAPSE_DATA
+		$SQL3 -separator '=' actionValueStore "SELECT key, value FROM action_value WHERE context = 'global' ORDER BY key ASC;" > $saved
+		cat /proc/version >> $saved
+		cd /
+	;;
+esac;
+
+case $1 in
+	logcat|dmesg|kmsg|settings)
+		echo "File saved to $saved"
+	;;
+esac;

@@ -1,0 +1,217 @@
+cat << CTAG
+{
+    name:IO,
+    elements:[
+	{ SPane:{
+		title:"IO",
+		description:"IO and FileSystem Tools"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SPane:{
+		title:"I/O Schedulers",
+		description:" Set the active I/O elevator algorithm. The I/O Scheduler decides how to prioritize and handle I/O requests. More info: <a href='http://timos.me/tm/wiki/ioscheduler'>HERE</a>"
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SOptionList:{
+		title:"Internal_storage scheduler",
+		default:`cat /sys/block/mmcblk0/queue/scheduler | busybox awk 'NR>1{print $1}' RS=[ FS=]`,
+		action:"scheduler /sys/block/mmcblk0/queue/scheduler",
+		values:[`while read values; do busybox printf "%s, \n" $values | busybox tr -d '[]'; done < /sys/block/mmcblk0/queue/scheduler`]
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Internal Device Storage Read-Ahead",
+		max:8192,
+		min:64,
+		unit:" KB",
+		step:64,
+		default:`cat /sys/block/mmcblk0/queue/read_ahead_kb`,
+		action:"generic /sys/block/mmcblk0/queue/read_ahead_kb"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"I/O Scheduler Tunables - Internal",
+		description:" Set the internal storage general tunables"
+	}},
+	{ STreeDescriptor:{
+		path:"/sys/block/mmcblk0/queue/iosched",
+		generic: {
+			directory: {},
+			element: {
+				SGeneric: { title:"@BASENAME" }
+			}
+		},
+		exclude: [ "weights" ]
+	}},
+	{ SCheckBox:{
+		description:" Draw entropy from spinning (rotational) storage. Default is Disabled",
+		label:"Add Random",
+		default:`cat /sys/block/mmcblk0/queue/add_random`,
+		action:"generic /sys/block/mmcblk0/queue/add_random"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SCheckBox:{
+		description:" Maintain I/O statistics for this storage device. Disabling will break I/O monitoring apps. Default is Enabled.",
+		label:"I/O Stats",
+		default:`cat /sys/block/mmcblk0/queue/iostats`,
+		action:"generic /sys/block/mmcblk0/queue/iostats"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SCheckBox:{
+		description:" Treat device as rotational storage. Default is Disabled",
+		label:"Rotational",
+		default:`cat /sys/block/mmcblk0/queue/rotational`,
+		action:"generic /sys/block/mmcblk0/queue/rotational"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SOptionList:{
+		title:" No Merges",
+		description:" Types of merges (prioritization) the scheduler queue for this storage device allows. Default is All.",
+		default:`cat /sys/block/mmcblk0/queue/nomerges`,
+		action:"generic /sys/block/mmcblk0/queue/nomerges",
+		values:{
+			`NM='0:"All", 1:"Simple Only", 2:"None",'
+			echo $NM`
+		}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"CRC",
+		description:" Disable for a 30 percent performance boost and enable to protect against data corruption"
+	}},
+	{ SCheckBox:{
+		label:"CRC Toggle",
+		description:"Disabled on this Kernel by Default.",
+		default:0,
+		action:"boolean /sys/module/mmc_core/parameters/use_spi_crc",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"MMC Clock Scaling",
+		description:"Tunables for load-based clock scaling for the mmc hardware and external SD card. The algorithm is similiar to ONDEMAND style governance"
+	}},
+	{ SCheckBox:{
+		description:"Toggle Dynamic Scaling for MMC hardware",
+		label:"MMC Scaling Toggle",
+		default:`echo $(cat /sys/class/mmc_host/mmc0/clk_scaling/enable)`,
+		action:"mmcscale internal",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"The Up/Down thresholds determine how much load is required for the mmc core to make a decision on whether it should increase/decrease the frequency."
+	}},
+	{ SSeekBar:{
+		title:"MMC Up Threshold",
+		max:100,
+		min:5,
+		unit:" %",
+		step:5,
+		default:`cat /sys/class/mmc_host/mmc0/clk_scaling/up_threshold`,
+		action:"generic /sys/class/mmc_host/mmc0/clk_scaling/up_threshold"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"MMC Down Threshold",
+		max:100,
+		min:5,
+		unit:" %",
+		step:5,
+		default:`cat /sys/class/mmc_host/mmc0/clk_scaling/down_threshold`,
+		action:"generic /sys/class/mmc_host/mmc0/clk_scaling/down_threshold"
+	}},
+	{ SDescription:{
+		description:"The Polling Interval determines how often the driver will poll for workload in order to adjust frequencies accordingly"
+	}},
+	{ SSeekBar:{
+		title:"MMC Polling Interval",
+		max:500,
+		min:10,
+		unit:" ms",
+		step:10,
+		default:`cat /sys/class/mmc_host/mmc0/clk_scaling/polling_interval`,
+		action:"generic /sys/class/mmc_host/mmc0/clk_scaling/polling_interval"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"SysFs Mount",
+		description:""
+        }},
+	{ SDescription:{
+		description:"These buttons remount the entire RootFS, be careful!"
+	}},
+	{ SButton:{
+		label:"Remount RW",
+		action:"devtools remountrw",
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"Remount RO",
+		action:"devtools remountro",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"System Mount",
+		description:""
+        }},
+	{ SDescription:{
+		description:"These buttons remount the System Partition, be careful!"
+	}},
+	{ SButton:{
+		label:"Remount System RW",
+		action:"devtools sysrw",
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"Remount System RO",
+		action:"devtools sysro",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"File System Trim",
+		description:"FSTRIM command."
+	}},
+	{ SDescription:{
+		description:"Use sparingly, Android and Linux do this somewhat automatically, though in some cases this will clean what has been missed."
+	}},
+	{ SButton:{
+		label:"fstrim",
+		action:"devtools fstrim"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

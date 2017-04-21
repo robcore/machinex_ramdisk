@@ -1,0 +1,6 @@
+UKM=/data/.machinex;
+BB=busybox
+
+VOLT=`$BB cat cat /sys/class/power_supply/battery/voltage_now 2> /dev/null`
+VOLT="$((VOLT / 1000)) mV"
+$BB echo "Voltage Now: $VOLT"

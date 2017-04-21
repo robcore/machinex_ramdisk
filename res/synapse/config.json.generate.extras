@@ -1,0 +1,118 @@
+cat << CTAG
+{
+    name:"EXTRAS",
+    elements:[
+		{ STitleBar:{
+			title:"EXTRAS"
+        }},
+		{ SDescription:{
+        	description:"This section includes miscellaneous functions that I find useful."
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ STitleBar:{
+			title:"Permissive Supolicy"
+        }},
+		{ SDescription:{
+        	description:"This will set your current SELinux policy as completely permissive. Not technically necessary, but it is always fun to trick the system into believing we are legit. Reboot to Revert."
+		}},
+		{ STitleBar:{
+			title:"Permissive Supolicy"
+		}},
+		{ SCheckBox:{
+			label:"SuPolicy",
+			description:"This will set your current SELinux policy as completely permissive. Not technically necessary, but it is always fun to trick the system into believing we are legit. This can only be disabled by unticking the checkbox and rebooting",
+			default:0,
+			action:"supol changer"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ STitleBar:{
+			title:"Google Services Wakelock Fix"
+		}},
+		{ SDescription:{
+			description:"Prevents wakelocks caused by google play services. Enabled by default. DISABLED ON MACHINEXROM due to MicroG."
+		}},
+		{ SDescription:{
+			description:"REBOOT TO APPLY."
+		}},
+			{ SButton:{
+				label:"Disable Gservices Fix",
+				action:"gserv disable"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+			{ SButton:{
+				label:"Enable Gservices Fix",
+				action:"gserv enable"
+			}},
+		{ STitleBar:{
+			title:"Fixes"
+        }},
+		{ SDescription:{
+			description:"Below you have the options to disable the Settings that conflict with Kernel Screen Control and Fast Charging.  You may also reset them to stock. REBOOT AFTER APPLYING"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+			{ SButton:{
+				label:"Screen Flicker FIX",
+				action:"sqfix flicker"
+			}},
+			{ SButton:{
+				label:"STOCK Screen Settings",
+				action:"sqfix break"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+			{ SButton:{
+				label:"Disable Adaptive Charging",
+				action:"sqfix dischg"
+			}},
+			{ SButton:{
+				label:"Enable Adaptive Charging",
+				action:"sqfix enchg"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ STitleBar:{
+			title:"Heads Up"
+        }},
+		{ SDescription:{
+			description:"Enable or Disable to taste. Reboot is Necessary."
+		}},
+			{ SButton:{
+				label:"Enable Heads Up Notifications",
+				action:"sqfix hedup"
+			}},
+			{ SButton:{
+				label:"Disable Heads Up Notifications",
+				action:"sqfix hedown"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ STitleBar:{
+			title:"YOUTUBE"
+        }},
+		{ SDescription:{
+			description:"Clearing Youtube Cache in Settings can be a pain at times, so here is a one-touch button to clear youtube cache files from your internal storage"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+			{ SButton:{
+				label:"Clear Youtube Cache",
+				action:"hbm youtube"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+    ]
+}
+CTAG

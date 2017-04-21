@@ -1,0 +1,166 @@
+cat << CTAG
+{
+    name:LED CONTROL,
+    elements:[
+	{ SPane:{
+		title:"LED Options"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Realtime LED Colour Control"
+	}},
+		{ SCheckBox:{
+			title:"LED Low Power Mode",
+			description:"This toggles the low power mode for Led lights.  It can significantly reduce power usage and save battery.",
+			label:"Low Power Mode",
+			default:1,
+			action:"generic /sys/devices/virtual/sec/led/led_lowpower",
+		}},
+		{ SSeekBar:{
+			title:"Master LED Brightness",
+			description:"Choose your LED brightness level for all three colours. Range is from 0 to 255.  Default is 255.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/sec/led/led_intensity`,
+			action:"generic /sys/class/sec/led/led_intensity"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ SSeekBar:{
+			title:"RED Max Brightness Hardlimit",
+			description:"Realtime Manipulation of RED LED brightness. Range is from 0 to 255.  Default is 40.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/leds/led_r/max_brightness`,
+			action:"generic /sys/class/leds/led_r/max_brightness"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ SSeekBar:{
+			title:"RED",
+			description:"Realtime Manipulation of RED LED brightness. Range is from 0 to 255.  Default is 40.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/leds/led_r/brightness`,
+			action:"generic /sys/class/leds/led_r/brightness"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ SSeekBar:{
+			title:"GREEN Max Brightness Hardlimit",
+			description:"Realtime Manipulation of GREEN LED brightness. Range is from 0 to 255.  Default is 40.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/leds/led_g/max_brightness`,
+			action:"generic /sys/class/leds/led_g/max_brightness"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ SSeekBar:{
+			title:"GREEN",
+			description:"Realtime Manipulation of GREEN LED brightness. Range is from 0 to 255.  Default is 40.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/leds/led_g/brightness`,
+			action:"generic /sys/class/leds/led_g/brightness"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ SSeekBar:{
+			title:"BLUE Max Brightness Hardlimit",
+			description:"Realtime Manipulation of BLUE LED brightness.Range is from 0 to 255.  Default is 40.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/leds/led_b/max_brightness`,
+			action:"generic /sys/class/leds/led_b/max_brightness"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+		{ SSeekBar:{
+			title:"BLUE",
+			description:"Realtime Manipulation of BLUE LED brightness.Range is from 0 to 255.  Default is 40.",
+			min:0,
+			max:255,
+			step:1,
+			default:`cat /sys/class/leds/led_b/brightness`,
+			action:"generic /sys/class/leds/led_b/brightness"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Boeffla LED Control Options"
+	}},
+		{ SOptionList:{
+			title:"LED Style Switch",
+			description:"Choose between blinking or fading leds.",
+			default:0,
+			action:"generic /sys/class/sec/led/led_fade",
+			values:{
+					0:"Blink", 1:"Fade"
+			}
+		}},
+		{ SCheckBox:{
+			title:"Disable Samsung Pattern",
+			description:"This switch disables Samsung Blue LED notification so LED Control Apps like lightflow do not interfere with Samsung LED.",
+			label:"Disable Blue LED",
+			default:0,
+			action:"generic /sys/devices/virtual/sec/led/disable_samsung_pattern",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SSeekBar:{
+			title:"LED Blink or Fade Speed",
+			description:"Set the speed of the blink or fade rate. 0 is continuous, 1 to 15 are increasing speed rates.",
+			min:0,
+			max:15,
+			step:1,
+			default:`cat /sys/class/sec/led/led_speed`,
+			action:"generic /sys/class/sec/led/led_speed"
+		}},
+		{ STitleBar:{
+			title:"LED Slope Control"
+		}},
+		{ SDescription:{
+			description:"Set the 4ms Delay value at each point in a fade/blink cycle."
+		}},
+		{ SDescription:{
+			description:"Range is 0-5."
+		}},
+`for LED in \`cat /sys/class/sec/led/led_slope\` ; do
+		VALUE=$(($VALUE+1))
+		echo '{ SSeekBar:{ '
+			case $VALUE in
+			1)
+				echo 'title:"Slope UP Start"' ;;
+			2)
+				echo 'title:"Slope UP Middle"' ;;
+			3)
+				echo 'title:"Slope DOWN Middle"' ;;
+			4)
+				echo 'title:"Slope DOWN End"' ;;
+			esac
+			echo ', action:"ledslope '${VALUE}'",
+			max:5, min:0 }},'
+done`
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

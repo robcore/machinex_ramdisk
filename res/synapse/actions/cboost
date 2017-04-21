@@ -1,0 +1,30 @@
+read() {
+	VALUE=0
+	for BOOST in `cat /sys/module/cpu_boost/parameters/input_boost_freq` ; do
+		VALUE=$(($VALUE+1))
+		if [ "$VALUE" == $1 ]; then
+			echo $BOOST
+			return
+		fi
+	done
+}
+
+write() {
+	COLORARR=""
+	VALUE=0
+	for BOOST in `cat /sys/module/cpu_boost/parameters/input_boost_freq`; do
+		VALUE=$(($VALUE+1))
+		if [ "$VALUE" == $1 ]; then
+			COLORARR="$COLORARR $2"
+		else
+			COLORARR="$COLORARR $BOOST"
+		fi
+	done
+	echo $COLORARR > /sys/module/cpu_boost/parameters/input_boost_freq
+}
+
+if [[ ! -z $2 ]]; then
+        write $1 $2
+fi
+
+echo $(read $1)

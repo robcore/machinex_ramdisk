@@ -1,0 +1,23 @@
+cat << CTAG
+{
+    name:POWER,
+    elements:[
+			`if [ -d "/sys/kernel/power_suspend" ]; then
+				$BB echo '{ SPane:{
+					title:"Power Suspend"
+				}},'
+				if [ -f "/sys/kernel/power_suspend/power_suspend_mode" ]; then
+				PSM=\`$BB cat /sys/kernel/power_suspend/power_suspend_mode\`
+					$BB echo '{ SOptionList:{
+						title:"Power Suspend Mode",
+						description:"LCD Hook is automatic and managed by the kernel. PLEASE ENABLE IT. USERMODE IS A DUMMY WORKAROUND.",
+						default:'$PSM',
+						action:"generic /sys/kernel/power_suspend/power_suspend_mode",
+						values:{
+							1:"User Mode", 2:"LCD Hook"
+						}
+					}},'
+				fi
+    ]
+}
+CTAG

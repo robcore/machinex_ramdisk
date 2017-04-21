@@ -1,0 +1,30 @@
+read() {
+	VALUE=0
+	for LED in `cat /sys/class/sec/led/led_slope` ; do
+		VALUE=$(($VALUE+1))
+		if [ "$VALUE" == $1 ]; then
+			echo $LED
+			return
+		fi
+	done
+}
+
+write() {
+	COLORARR=""
+	VALUE=0
+	for LED in `cat /sys/class/sec/led/led_slope`; do
+		VALUE=$(($VALUE+1))
+		if [ "$VALUE" == $1 ]; then
+			COLORARR="$COLORARR $2"
+		else
+			COLORARR="$COLORARR $LED"
+		fi
+	done
+	echo $COLORARR > /sys/class/sec/led/led_slope
+}
+
+if [[ ! -z $2 ]]; then
+        write $1 $2
+fi
+
+echo $(read $1)

@@ -1,0 +1,19 @@
+cat << CTAG
+{
+    name:Voltage,
+    elements:[
+	{ SDescription:{
+                description:"Decreasing voltage will lower power consumption of the CPU. Increasing it on overclocked frequencies improves stability. Too low voltage may cause instabilities and freezes."
+        }},
+`
+while read FREQ UVOLT; do
+        echo '{ SSeekBar:{
+	default:'$UVOLT',
+	title:"'\`expr ${FREQ//\:/} \/ 1000\`' MHz",
+	action:"cpuvolt '${FREQ}'",
+	unit:"mV", weight:0.001, min:600000, step:6250, max:1450000 }},'
+done < /sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels
+`
+    ]
+}
+CTAG

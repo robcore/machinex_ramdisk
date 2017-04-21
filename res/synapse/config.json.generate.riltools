@@ -1,0 +1,91 @@
+cat << CTAG
+{
+    name:MODEM,
+    elements:[
+	{ SPane:{
+		title:"Modem Utils",
+		description:"Utilities for radio/modem issues"
+	}},
+	{ SDescription:{
+		description:"WARNING! This section is VERY dangerous and should be avoided if you are not experiencing issues with your radio."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"STAY OUT of this section if you are not experiencing the problems described here!"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"Provided below are POTENTIAL workarounds for people experiencing modem/radio dropouts and issues."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+   	{ SPane:{
+		title:"Subsystem Restart",
+		description:"This setting determines the method used by the modem/radio/SoC to restart itself in case of errors or timeouts."
+   	}},
+	{ SDescription:{
+		description:"The options available are:"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"SoC: The whole board will reset upon modem reset."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"Coupled: Peripherals that are closely related will be reset alongside the modem."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"Independant: Peripherals, including the modem, will reset independantly of one another."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SDescription:{
+		description:"If the default is performing poorly, the device may experience better results with a different option."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SOptionList:{
+		title:"SSR",
+		default:`cat /sys/module/subsystem_restart/parameters/restart_level`,
+		action:"generic /sys/module/subsystem_restart/parameters/restart_level",
+		values:{
+			`SSR='1:"SoC", 2:"Coupled", 3:"Independant",'
+			echo $SSR`
+		}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Disable Modem Boot Timeout",
+		description:"This checkbox allows the Modem Boot Timeout to be disabled, which in turn allows the modem to be reset as many times as it needs to while the device is running"
+	}},
+	{ SDescription:{
+		description:"If you are experiencing issues where the modem is resetting itself more times than the alloted 20, then ticking this checkbox could be a POTENTIAL workaround for the issue."
+	}},
+	{ SCheckBox:{
+		label:"Disable Boot Timeout",
+		description:" ",
+		default:0,
+		action:"boolean /sys/module/mdm_common/parameters/disable_boot_timeout",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

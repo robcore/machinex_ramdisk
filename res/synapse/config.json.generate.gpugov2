@@ -1,0 +1,68 @@
+cat << CTAG
+{
+    name:GPU GOV,
+    elements:[
+	{ SPane:{
+		title:"GPU Policy Governors",
+		description:" The GPU Policy Governors determine how the GPU behaves in response to changes in workload."
+        }},
+	{ SDescription:{
+		description:""
+	}},
+        { SOptionList:{
+		title:"Current Policy Governor",
+                default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy`,
+                action:"policygov /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy",
+				values:[ trustzone, machinactive ],
+		notify:[
+			{
+				on:APPLY,
+				do:[ REFRESH, CANCEL ],
+				to:"/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config"
+			}
+			{
+				on:REFRESH,
+				do:REFRESH,
+				to:"/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config"
+			}
+			{
+				on:RESET,
+				do:REFRESH,
+				to:"/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config"
+			}
+			{
+				on:CANCEL,
+				do:REFRESH,
+				to:"/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config"
+			},
+		]
+        }},
+	{ SDescription:{
+		description:"Policy Governor Tunables"
+	}},
+	{ SPane:{
+		title:"Gpu Policy Governor Options",
+		description:"Valid State Modes for Machinactive are 0-Conservative, 1-EnergySaver and 2-Machinactive (Performance)."
+        }},
+	{ SDescription:{
+		description:"TrustZone Governors are the original stock values, ondemand and performance. They have to be manually typed in."
+	}},
+				{ STreeDescriptor:{
+					path:"/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config",
+					generic: {
+						directory: {
+							STreeDescriptor:{
+								generic: {
+									directory: {},
+									element: {
+										SGeneric: { title:"@BASENAME" }
+									}
+								},
+								exclude: [ "polling_interval", "pwrlevel_thresholds" ]
+							},
+						}
+					},
+				}},
+		]
+}
+CTAG

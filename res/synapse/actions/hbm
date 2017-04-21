@@ -1,0 +1,209 @@
+BB=busybox;
+SQL=sqlite3
+
+case $1 in
+	enable)
+		$BB echo "6" > /sys/class/backlight/panel/auto_brightness
+		$BB echo "6" > /sys/class/backlight/panel/auto_brightness
+		$BB echo "HBM High Brightness enabled"
+	;;
+	disable)
+		$BB echo "0" > /sys/class/backlight/panel/auto_brightness
+		$BB echo "HBM disabled"
+	;;
+	torchon)
+		$BB echo "15" > /sys/class/leds/torch-sec1/brightness
+		$BB echo "TORCH ON"
+	;;
+	torchoff)
+		$BB echo "0" > /sys/class/leds/torch-sec1/brightness
+		$BB echo "TORCH OFF"
+	;;
+	btnon)
+		$BB echo "255" > /sys/class/i2c-adapter/i2c-16/16-0020/leds/button-backlight/brightness
+		$BB echo "Button Backlight ON"
+	;;
+	btnoff)
+		$BB echo "0" > /sys/class/i2c-adapter/i2c-16/16-0020/leds/button-backlight/brightness
+		$BB echo "Button Backlight OFF"
+	;;
+	night)
+		$BB echo 5 > /sys/class/lcd/panel/machinex_backlight
+		$BB echo "Night Mode Enabled"
+	;;
+	day)
+		$BB echo 300 > /sys/class/lcd/panel/machinex_backlight
+		$BB echo "Normal Mode Enabled"
+	;;
+	ODEN)
+		$BB echo 2 > /sys/devices/virtual/mdnie/mdnie/outdoor
+		$BB echo 2 > /sys/devices/virtual/mdnie/mdnie/outdoor
+		$BB echo "Outdoor Mode enabled"
+	;;
+	ODIS)
+		$BB echo 0 > /sys/devices/virtual/mdnie/mdnie/outdoor
+		$BB echo "Outdoor Mode disabled"
+	;;
+	pwm)
+		$BB echo 300 > /sys/devices/virtual/timed_output/vibrator/enable
+		$BB echo "'$(cat /sys/devices/virtual/timed_output/vibrator/pwm_value)'"
+	;;
+	kapply)
+		$BB echo 1 > /sys/devices/platform/DIAG0.0/power_rail_ctrl
+		$BB echo "KCAL Applied"
+		;;
+	youtube)
+		rm -rf /storage/sdcard0/Android/data/com.google.android.youtube/cache 2> /dev/null;
+		$BB echo "YouTube Cache Cleared"
+	;;
+	maxgpubypass)
+		$BB echo 99 > /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_pwrlevel_hardlimit
+		$BB echo "MAX HardLimit Disabled"
+	;;
+	mingpubypass)
+		$BB echo 99 > /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/min_pwrlevel_hardlimit
+		$BB echo "MIN HardLimit Disabled"
+	;;
+	flickerstock)
+		if [[ ! -z $2 ]]; then
+		mount -o remount,rw -t auto /
+		mount -t rootfs -o remount,rw rootfs
+		mount -o remount,rw /system
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB cp -p /data/data/com.android.providers.settings/databases/settings.db /data/.machinex/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		cd /data/.machinex;
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'dim_screen', 1);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 1 WHERE name = 'dim_screen';";
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'intelligent_screen_mode', 1);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 1 WHERE name = 'intelligent_screen_mode';";
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB mv -f /data/.machinex/settings.db /data/data/com.android.providers.settings/databases/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		mount -o remount,ro -t auto /
+		mount -t rootfs -o remount,ro rootfs
+		mount -o remount,ro /system
+		$BB echo "Flicker is Stock - Rebooting Now";
+		sync;
+		sync;
+		reboot -p;
+		fi;
+	;;
+	flickerfix)
+		if [[ ! -z $2 ]]; then
+		mount -o remount,rw -t auto /
+		mount -t rootfs -o remount,rw rootfs
+		mount -o remount,rw /system
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB cp -p /data/data/com.android.providers.settings/databases/settings.db /data/.machinex/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		cd /data/.machinex;
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'dim_screen', 0);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 0 WHERE name = 'dim_screen';";
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'intelligent_screen_mode', 0);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 0 WHERE name = 'intelligent_screen_mode';";
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB mv -f /data/.machinex/settings.db /data/data/com.android.providers.settings/databases/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		mount -o remount,ro -t auto /
+		mount -t rootfs -o remount,ro rootfs
+		mount -o remount,ro /system
+		$BB echo "Flicker is Fixed - Rebooting Now";
+		sync;
+		sync;
+		reboot -p;
+		fi;
+	;;
+	adaptiveON)
+		if [[ ! -z $2 ]]; then
+		mount -o remount,rw -t auto /
+		mount -t rootfs -o remount,rw rootfs
+		mount -o remount,rw /system
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB cp -p /data/data/com.android.providers.settings/databases/settings.db /data/.machinex/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		cd /data/.machinex;
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'adaptive_fast_charging', 1);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 1 WHERE name = 'adaptive_fast_charging';";
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB mv -f /data/.machinex/settings.db /data/data/com.android.providers.settings/databases/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		mount -o remount,ro -t auto /
+		mount -t rootfs -o remount,ro rootfs
+		mount -o remount,ro /system
+		$BB echo "Adaptive Fast Charging Enabled - Rebooting Now";
+		sync;
+		sync;
+		reboot -p;
+		fi;
+	;;
+	adaptiveOFF)
+		if [[ ! -z $2 ]]; then
+		mount -o remount,rw -t auto /
+		mount -t rootfs -o remount,rw rootfs
+		mount -o remount,rw /system
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB cp -p /data/data/com.android.providers.settings/databases/settings.db /data/.machinex/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		cd /data/.machinex;
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'adaptive_fast_charging', 0);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 0 WHERE name = 'adaptive_fast_charging';";
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB mv -f /data/.machinex/settings.db /data/data/com.android.providers.settings/databases/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		mount -o remount,ro -t auto /
+		mount -t rootfs -o remount,ro rootfs
+		mount -o remount,ro /system
+		$BB echo "Adaptive Fast Charging Disabled - Rebooting Now";
+		sync;
+		sync;
+		reboot -p;
+		fi;
+	;;
+	hapticON)
+		if [[ ! -z $2 ]]; then
+		mount -o remount,rw -t auto /
+		mount -t rootfs -o remount,rw rootfs
+		mount -o remount,rw /system
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB cp -p /data/data/com.android.providers.settings/databases/settings.db /data/.machinex/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		cd /data/.machinex;
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'haptic_feedback_extra', 1);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 1 WHERE name = 'haptic_feedback_extra';";
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB mv -f /data/.machinex/settings.db /data/data/com.android.providers.settings/databases/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		mount -o remount,ro -t auto /
+		mount -t rootfs -o remount,ro rootfs
+		mount -o remount,ro /system
+		$BB echo "Extra Haptic Feedback Enabled - Rebooting Now";
+		sync;
+		sync;
+		reboot -p;
+		fi;
+	;;
+	hapticOFF)
+		if [[ ! -z $2 ]]; then
+		mount -o remount,rw -t auto /
+		mount -t rootfs -o remount,rw rootfs
+		mount -o remount,rw /system
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB cp -p /data/data/com.android.providers.settings/databases/settings.db /data/.machinex/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		cd /data/.machinex;
+		$SQL3 settings.db "INSERT INTO global VALUES(null, 'haptic_feedback_extra', 0);" 2> /dev/null;
+		#$SQL3 settings.db "UPDATE global/secure/system SET value = 0 WHERE name = 'haptic_feedback_extra';";
+		$BB chown 0:0 /data/data/com.android.providers.settings/databases/settings.db;
+		$BB mv -f /data/.machinex/settings.db /data/data/com.android.providers.settings/databases/settings.db;
+		$BB chown 1000:1000 /data/data/com.android.providers.settings/databases/settings.db;
+		mount -o remount,ro -t auto /
+		mount -t rootfs -o remount,ro rootfs
+		mount -o remount,ro /system
+		$BB echo "Extra Haptic Feedback Disabled - Rebooting Now";
+		sync;
+		sync;
+		reboot -p;
+		fi;
+	;;
+esac;

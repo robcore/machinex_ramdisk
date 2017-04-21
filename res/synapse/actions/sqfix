@@ -1,0 +1,33 @@
+case $1 in
+	flicker)
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE system SET value='0' WHERE name='dim_screen';";
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE system SET value='0' WHERE name='intelligent_screen_mode';";
+		$BB echo "Screen Flicker Fixed, REBOOT"
+	;;
+	break)
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE system SET value='1' WHERE name='dim_screen';";
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE system SET value='1' WHERE name='intelligent_screen_mode';";
+		$BB echo "Screen Settings Restored, REBOOT"
+	;;
+	dischg)
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE system SET value='0' WHERE name='adaptive_fast_charging';";
+		$BB echo "Adaptive Charging Disabled, REBOOT"
+	;;
+	enchg)
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE system SET value='1' WHERE name='adaptive_fast_charging';";
+		$BB echo "Adaptive Charging Enabled, REBOOT"
+	;;
+	headup)
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE global SET value='1' WHERE name='heads_up_notifications_enabled';";
+		$BB echo "Heads Up Notifications Enabled, REBOOT"
+	;;
+	hedown)
+		sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE global SET value='0' WHERE name='heads_up_notifications_enabled';";
+		$BB echo "Heads Up Notifications Disabled, REBOOT"
+	;;
+	supol)
+		supolicy --permissive * 2> /dev/null;
+		$BB echo "SuPolicy is now Permissive"
+	;;
+esac;
+

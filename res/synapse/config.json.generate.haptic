@@ -1,0 +1,89 @@
+cat << CTAG
+{
+    name:HARDWARE_FUNCTIONS,
+		elements:[
+		{ STitleBar:{
+			title:"Vibrator"
+		}},
+		{ SDescription:{
+			description:"This is the original Pulse-Width-Modulation Vibration control based on the Timed Output Vibtonz interface."
+		}},
+		{ SSeekBar:{
+			title:"Vibration Control",
+			min:0,
+			max:100,
+			step:1,
+			description:" Value in percentage from 1-100.",
+			default:50,
+			action:"generic /sys/devices/virtual/timed_output/vibrator/pwm_value"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ SButton:{
+			label:"Test vibration",
+			action:"hbm pwm"
+        }},
+		{ SDescription:{
+			description:" "
+		}},
+		{ STitleBar:{
+			title:"TORCH"
+        }},
+		{ SDescription:{
+			description:"Toggle Your Torch on and off"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+			{ SButton:{
+				label:"Torch ON",
+				action:"hbm torchon"
+			}},
+			{ SButton:{
+				label:"Torch OFF",
+				action:"hbm torchoff"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+	{ SPane:{
+		title:"Torch Fine Brightness Options"
+	}},
+		{ SDescription:{
+			description:"This is an adjustable Torch brightness control, ranging from 1-15. 0 is Off."
+		}},
+	{ SSeekBar:{
+		title:"Torch Fine Brightness",
+		max:15,
+		min:0,
+		step:1,
+		default:`cat /sys/class/leds/torch-sec1/brightness`,
+		action:"generic /sys/class/leds/torch-sec1/brightness"
+	}},
+		{ SDescription:{
+			description:" "
+		}},
+		{ STitleBar:{
+			title:"Button Backlight Control"
+        }},
+		{ SDescription:{
+			description:"Toggle your Capacitative Buttons On and Off"
+		}},
+		{ SDescription:{
+			description:" "
+		}},
+			{ SButton:{
+				label:"Button Backlight ON",
+				action:"hbm btnon"
+			}},
+			{ SButton:{
+				label:"Button Backlight OFF",
+				action:"hbm btnoff"
+			}},
+		{ SDescription:{
+			description:" "
+		}},
+    ]
+}
+CTAG

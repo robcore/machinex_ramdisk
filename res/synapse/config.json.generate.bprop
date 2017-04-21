@@ -1,0 +1,46 @@
+cat << CTAG
+{
+	name:BUILD.PROP,
+		elements:[
+			{ SPane:{
+				title:"build.prop Tweaks",
+				description:"A value of -1 on any of the following settings means that setting was not found in your build.prop file.",
+			}},
+				{ SSeekBar:{
+					title:"VM Heapsize",
+					description:"Set the maximum amount of heapsize (memory) a single instance of the Dalvik Virtual Machine (application) can obtain.",
+					unit:" MB",
+					min:-1,
+					max:1024,
+					step:1,
+					default:512,
+					action:"buildprop dalvik.vm.heapsize",
+				}},
+				{ SCheckBox:{
+					label:"Allow purging of assets",
+					description:"Purging of bitmap memory assets allows the freeing of more RAM when needed.",
+					default:1,
+					action:"buildprop persist.sys.purgeable_assets",
+				}},
+				{ SCheckBox:{
+					label:"Bluetooth aptx",
+					description:"Allows high quality bluetooth audio. Experimental and Unconfirmed.",
+					default:0,
+					action:"buildprop persist.service.btui.use_aptx",
+				}},
+			{ SPane:{
+				title:"ADB over WIFI"
+			}},
+				{ SGeneric:{
+					title:"Device HostName",
+					default:`getprop net.hostname 2> /dev/null`,
+					action:"buildprop net.hostname",
+				}},
+				{ SGeneric:{
+					title:"Wireless Port",
+					default:`getprop service.adb.tcp.port`,
+					action:"buildprop service.adb.tcp.port",
+				}},
+		]
+}
+CTAG

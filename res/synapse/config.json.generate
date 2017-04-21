@@ -1,0 +1,32 @@
+cat << CTAG
+{
+  sections:[
+    `. /res/synapse/config.json.generate.info`,
+    `. /res/synapse/config.json.generate.cpu`,
+    `. /res/synapse/config.json.generate.hardlimit`,
+    `. /res/synapse/config.json.generate.cpugov`,
+    `. /res/synapse/config.json.generate.cpuvolt`,
+    `. /res/synapse/config.json.generate.hotplug`,
+    `. /res/synapse/config.json.generate.boost`,
+    `. /res/synapse/config.json.generate.therm`,
+    `. /res/synapse/config.json.generate.gpugov`,
+    `. /res/synapse/config.json.generate.gpu`,
+    `. /res/synapse/config.json.generate.panel`,
+    `. /res/synapse/config.json.generate.screen`,
+    `. /res/synapse/config.json.generate.haptic`,
+    `. /res/synapse/config.json.generate.led`,
+    `. /res/synapse/config.json.generate.sound`,
+    `. /res/synapse/config.json.generate.memory`,
+	`. /res/synapse/config.json.generate.fsutils`,
+    `. /res/synapse/config.json.generate.fast`,
+	`. /res/synapse/config.json.generate.power`
+    `. /res/synapse/config.json.generate.net`,
+    `. /res/synapse/config.json.generate.advanced`,
+	`. /res/synapse/config.json.generate.bprop`,
+	`. /res/synapse/config.json.generate.extras`,
+    `. /res/synapse/config.json.generate.riltools`,
+    `. /res/synapse/config.json.generate.logs`,
+    `. /res/synapse/config.json.generate.reboot`
+  ]
+}
+CTAG

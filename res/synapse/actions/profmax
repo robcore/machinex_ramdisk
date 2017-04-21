@@ -1,0 +1,21 @@
+PROF="/data/.machinex/profmax"
+f1=`cat /sys/class/power_supply/battery/capacity`
+f2=`cat /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_batt_lvl`
+f3=`cat /sys/class/power_supply/battery/charge_now`
+f4=`cat /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_disable_chrg`
+f5=`cat /sys/devices/system/cpu/cpu0/cpufreq/charging_max_mhz`
+if [ "$f1" -lt "$f2" -a $(( $f3 + $f4 )) -ne "2" ]; then
+                echo `cat $PROF`
+        else
+if [ "$f3" -gt "0" -a $f5 -gt "1" ]; then
+                echo `cat $PROF`
+        else
+                if [ -f $1 ];then
+	if [[ ! -z $2 ]]; then
+		echo $2 > $1
+	fi
+	echo `cat $1`
+	echo `cat $1` > $PROF
+fi
+	fi
+fi

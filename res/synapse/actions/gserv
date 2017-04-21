@@ -1,0 +1,14 @@
+BB=busybox;
+
+case $1 in
+disable)
+  $BB touch /data/.machinex/gdisable
+  $BB chown 0:0 /data/.machinex/gdisable
+  $BB chmod 777 /data/.machinex/gdisable
+  $BB echo "Disabled! REBOOT TO APPLY"
+  ;;
+enable)
+  $BB rm -f /data/.machinex/gdisable
+  $BB echo "Enabled! REBOOT TO APPLY"
+  ;;
+esac

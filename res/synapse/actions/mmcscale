@@ -1,0 +1,36 @@
+case $1 in
+internal)
+  P=/sys/class/mmc_host/mmc0/clk_scaling/enable
+
+  if [ ! -z $2 ]; then
+	if [ $2 == 0 ]; then
+		echo 0 > $P
+	elif [ $2 == 1 ]; then
+	    echo 1 > $P
+  fi
+  fi
+  copy=`cat $P`
+  if [ $copy == 0 ]; then
+    echo 0
+  elif [ $copy == 1 ]; then
+    echo 1
+  fi
+  ;;
+external)
+  Q=/sys/class/mmc_host/mmc2/clk_scaling/enable
+
+  if [ ! -z $2 ]; then
+	if [ $2 == 0 ]; then
+		echo 0 > $Q
+	elif [ $2 == 1 ]; then
+		echo 1 > $Q
+  fi
+  fi
+  ypoc=`cat $Q`
+  if [ $ypoc == 0 ]; then
+    echo 0
+  elif [ $ypoc == 1 ]; then
+    echo 1
+  fi
+  ;;
+esac

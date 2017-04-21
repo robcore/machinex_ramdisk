@@ -1,0 +1,16 @@
+cat << CTAG
+{
+  sections:[
+    `. /res/synapse/config.json.generate.devtools`,
+    `. /res/synapse/config.json.generate.usage`,
+    `. /res/synapse/config.json.generate.meminfo`,
+    `. /res/synapse/config.json.generate.vmstats`,
+`
+if [ -d "/sys/block/zram0" ]; then
+    . /res/synapse/config.json.generate.zramstats;
+fi;
+`,
+    `. /res/synapse/config.json.generate.backup-restore`
+  ]
+}
+CTAG

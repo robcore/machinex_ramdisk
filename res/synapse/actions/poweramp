@@ -1,0 +1,12 @@
+	{ SPane:{
+		title:"Analog Gain"
+	}},
+	{ SSeekBar:{
+		title:"Set Headphone Analog Poweramp Gain",
+		description:"The driver sets this value to max by default, so this setting allows it to be lowered.  Range is from 0-12.
+		max:12,
+		min:0,
+		step:1,
+		default:`sh poweramp read`,
+		action:"poweramp write"
+	}},

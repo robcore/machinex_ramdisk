@@ -1,0 +1,4 @@
+UKM=/data/.machinex;
+BB=busybox
+
+echo Status: `cat /sys/class/power_supply/battery/status`

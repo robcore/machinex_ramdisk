@@ -1,0 +1,14 @@
+BB=busybox;
+
+case $1 in
+	reload)
+		$BB insmod /system/lib/modules/dhd.ko
+		echo "WiFi Reloaded"
+	;;
+	forceload)
+		$BB rmmod /system/lib/modules/dhd.ko
+		sleep 3
+		$BB insmod /system/lib/modules/dhd.ko
+		echo "WiFi FORCE Loaded (CAUTION)"
+	;;
+esac;

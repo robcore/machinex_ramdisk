@@ -1,0 +1,89 @@
+cat << CTAG
+{
+    name:Battery,
+    elements:[
+        { SPane:{
+		title:"Fast charge",
+        }},
+	{ SCheckBox:{
+		description:"If you enable fast charge, access to phone storage via usb it will disabled.", 
+		label:"Turn on Fast charge",
+		default:`cat /sys/kernel/fast_charge/force_fast_charge`,
+                action:"generic /sys/kernel/fast_charge/force_fast_charge"
+	}},
+        { SPane:{
+		title:"Screen on charging limit",
+        }},
+	{ SCheckBox:{
+		description:"If you enable screen on charging limit, there's a charging limit of 1200mA when the screen is on.", 
+		label:"Turn charging limit on",
+		default:`cat /sys/kernel/fast_charge/screen_on_current_limit`,
+                action:"generic /sys/kernel/fast_charge/screen_on_current_limit"
+	}},
+	{ SPane:{
+		title:{en:"CPU Settings while charging.",el:"Ρυθμίσεις CPU ώταν η συσκευή φορτίζει.",it:"Impostazioni CPU durante la carica."},
+		description:{en:"Sometimes some values may cause system instability.",el:"Κάποιες φορές, ορισμένες τιμές ενδέχεται να προκαλέσουν αστάθεια του συστήματος.",it:"Qualche volta alcuni valori possono causare instabilità nel sistema."}
+        }},
+	{ SSeekBar:{
+       		title:{en:"CPU max frequency while charging.",el:"Μέγιστη συχνότητα CPU οταν η συσκευή φορτίζει.",it:"Massima frequenza CPU durante la carica."},
+		description:{en:"Set the maximum freqency the CPU scales up to while device is charging.",el:"Μέγιστο όριο συχνότητας της CPU ώταν η συσκευή φορτίζει.",it:"Impostare la minima frequenza che la CPU può impostare mentre il dispositivo è in carica."},
+		default:0,
+		action:"cpusc /sys/devices/system/cpu/cpu0/cpufreq/charging_max_mhz",
+		values:{
+`
+			while read FREQ TIME; do
+					LABEL=$(expr $FREQ / 1000)
+				echo "$FREQ:\"${LABEL}MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+0:{ en:"Disabled", el:"Απεν/μένο", it:"Disabilitato"},
+		}
+	}},
+	{ SSeekBar:{
+       		title:{en:"CPU min frequency while charging.",el:"Ελάχιστη συχνότητα CPU οταν η συσκευή φορτίζει.",it:"Minima frequenza CPU durante la carica."},
+		description:{en:"Set the minimum freqency the CPU scales up to while device is charging.",el:"Ελάχιστο όριο συχνότητας της CPU οταν η συσκευή φορτίζει.",it:"Impostare la minima frequenza che la CPU può impostare mentre il dispositivo è in carica."},
+		default:0,
+		action:"cpusc /sys/devices/system/cpu/cpu0/cpufreq/charging_min_mhz",
+		values:{
+`
+			while read FREQ TIME; do
+					LABEL=$(expr $FREQ / 1000)
+				echo "$FREQ:\"${LABEL}MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+0:{ en:"Disabled", el:"Απεν/μένο", it:"Disabilitato"},
+		}
+	}},
+	{ SPane:{
+		title:{en:"Battery CPU freqency control",el:"Συχνότητα της CPU σε σχεση με την μπαταρία",it:"Frequenza CPU in relazione alla batteria"},
+		description:{en:"Sometimes some values may cause system instability.",el:"Κάποιες φορές, ορισμένες τιμές ενδέχεται να προκαλέσουν αστάθεια του συστήματος.",it:"Qualche volta alcuni valori possono causare instabilità nel sistema."}
+        }},
+	{ SSeekBar:{
+		title:{en:"When battery percent is below:",el:"Οταν η ένδειξη μπαταρίας είναι κάτω από:",it:"Quando la percentuale della batteria è inferiore a:"},
+		min:0, max:100, unit:"%", step:5,
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_batt_lvl`,
+                action:"generic /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_batt_lvl"
+	}},
+	{ SSeekBar:{
+       		title:{en:"CPU max frequencie will be:",el:"Η συχνότητα της CPU θα είναι:",it:"La massima frequenza CPU sarà:"},
+		default:0,
+		action:"generic /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_cpu_mhz_lvl",
+		values:{
+`
+			while read FREQ TIME; do
+					LABEL=$(expr $FREQ / 1000)
+				echo "$FREQ:\"${LABEL}MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+0:{ en:"Disabled", el:"Απεν/μένο", it:"Disabilitato"},
+		}
+	}},
+	{ SCheckBox:{
+		label:{en:"Disable CPU freqency control on charge",el:"Απενεργοποίηση συχνότητας cpu όταν η συσκευή φορτίζει",it:"Disabilitare il controllo frequenza CPU in carica"},
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_disable_chrg`,
+                action:"generic /sys/devices/system/cpu/cpu0/cpufreq/battery_ctrl_disable_chrg"
+	}},
+
+    ]
+}
+CTAG

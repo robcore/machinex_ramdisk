@@ -1,0 +1,9 @@
+if [[ ! -z $2 ]]; then
+	if [ -e /sys/kernel/alucard_hotplug/$1 ]; then
+		echo $2 > /sys/kernel/alucard_hotplug/$1 2> /dev/null
+	fi
+fi
+
+if [ -e /sys/kernel/alucard_hotplug/$1 ]; then
+	echo `cat /sys/kernel/alucard_hotplug/$1`
+fi

@@ -1,0 +1,64 @@
+cat << CTAG
+{
+    name:SOUND,
+    elements:[
+    	{ SDescription:{
+        	description:"Sound Control Engine 4.8",
+        	background:0
+        }},
+		{ SDescription:{
+			description:"An Updated FauxSound driver, providing complete control of your volume levels."
+		}},
+	{ SPane:{
+		title:"Master Switch"
+	}},
+	{ SCheckBox:{
+		label:"Sound Control Enabled",
+		description:"Toggle Sound Engine Control",
+		default:`cat /sys/kernel/sound_control_3/gpl_sound_control_enabled`,
+		action:"generic /sys/kernel/sound_control_3/gpl_sound_control_enabled"
+	}},
+	{ SPane:{
+		title:"Digital output"
+	}},
+	{ SSeekBar:{
+		title:"Headphone Gain",
+		max:30,
+		min:-30,
+		step:1,
+		default:`echo $(/res/synapse/actions/output /sys/kernel/sound_control_3/gpl_headphone_gain)`,
+		action:"output /sys/kernel/sound_control_3/gpl_headphone_gain"
+	}},
+	{ SSeekBar:{
+		title:"Speaker Gain",
+		max:30,
+		min:-30,
+		step:1,
+		default:`echo $(/res/synapse/actions/output /sys/kernel/sound_control_3/gpl_speaker_gain)`,
+		action:"output /sys/kernel/sound_control_3/gpl_speaker_gain"
+	}},
+	{ SPane:{
+		title:"Digital input"
+	}},
+	{ SSeekBar:{
+		title:"Voicecall Microphone Gain",
+		max:30,
+		min:-30,
+		step:1,
+		default:`echo $(/res/synapse/actions/input /sys/kernel/sound_control_3/gpl_mic_gain)`,
+		action:"input /sys/kernel/sound_control_3/gpl_mic_gain"
+	}},
+	{ SSeekBar:{
+		title:"Camera Microphone Gain",
+		max:30,
+		min:-30,
+		step:1,
+		default:`echo $(/res/synapse/actions/input /sys/kernel/sound_control_3/gpl_cam_mic_gain)`,
+		action:"input /sys/kernel/sound_control_3/gpl_cam_mic_gain"
+	}},
+		{ SDescription:{
+			description:" "
+		}},
+    ]
+}
+CTAG

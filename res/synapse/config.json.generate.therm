@@ -1,0 +1,135 @@
+cat << CTAG
+{
+    name:THERMAL,
+    elements:[
+	{ SPane:{
+		title:"Intelli Thermal Control",
+	}},
+	{ SDescription:{
+		description:"An in kernel replacement for Qualcomms Thermald. Developed by faux123"
+	}},
+			{ SPane:{
+				title:"CPU Temperature:"
+			}},
+				{ SDescription:{
+					description:""
+				}},
+			{ SLiveLabel:{
+				refresh:750,
+				action:"live LiveCPUTEMP"
+			}},
+	{ SSeekBar:{
+		title:"Frequency limit temperature",
+		description:" Default is 70°C.",
+		max:100,
+		min:50,
+		unit:"°C",
+		step:1,
+		default:`cat /sys/module/msm_thermal/parameters/limit_temp_degC`,
+		action:"generic /sys/module/msm_thermal/parameters/limit_temp_degC"
+	}},
+	{ SSeekBar:{
+		title:"Core limit temperature",
+		description:" Default is 80°C.",
+		max:100,
+		min:50,
+		unit:"°C",
+		step:1,
+		default:`cat /sys/module/msm_thermal/parameters/core_limit_temp_degC`,
+		action:"generic /sys/module/msm_thermal/parameters/core_limit_temp_degC",
+	}},
+	{ SSeekBar:{
+		title:"Frequency Steps",
+		description:" How many steps to lower frequency by during thermal mitigation. Higher means faster thermal limiting.",
+		max:7,
+		min:1,
+		unit:" step(s)",
+		step:1,
+		default:`cat /sys/module/msm_thermal/parameters/freq_step`,
+		action:"generic /sys/module/msm_thermal/parameters/freq_step",
+	}},
+	{ SPane:{
+		title:"Frequency Control",
+	}},
+	{ SDescription:{
+		description:"Frequency Throttling Cores:"
+		}},
+	{ SDescription:{
+		description:"Cores to throttle frequency when temperature limit is reached."
+		}}
+	{ SCheckBox:{
+		label:"Core 0",
+		action:"intellithermal freq core0"
+		}},
+	{ SCheckBox:{
+		label:"Core 1",
+		action:"intellithermal freq core1"
+		}},
+	{ SCheckBox:{
+		label:"Core 2",
+		action:"intellithermal freq core2"
+		}},
+	{ SCheckBox:{
+		label:"Core 3",
+		action:"intellithermal freq core3"
+		}},
+	{ SPane:{
+		title:"Core Control",
+	}},
+	{ SDescription:{
+		description:"Toggle Core Control. Though not recommended, this allows thermal-hotplugging to be disabled."
+	}},
+	{ SCheckBox:{
+		label:"Core Control Toggle",
+		default:1,
+		action:"generic /sys/module/msm_thermal/core_control/enabled"
+		}},
+	{ SDescription:{
+		description:"Core Throttling Cores:"
+		}},
+	{ SDescription:{
+		description:"Cores to shutdown when temperature limit is reached."
+		}}
+	{ SCheckBox:{
+		label:"Core 1",
+		action:"intellithermal core core1"
+		}},
+	{ SCheckBox:{
+		label:"Core 2",
+		action:"intellithermal core core2"
+		}},
+	{ SCheckBox:{
+		label:"Core 3",
+		action:"intellithermal core core3"
+		}},
+	{ SSeekBar:{
+		title:"Poll",
+		unit:" ms",
+		step:10,
+		min:0,
+		max:3000,
+		default:`cat /sys/module/msm_thermal/parameters/poll_ms`,
+		action:"generic /sys/module/msm_thermal/parameters/poll_ms"
+		}},
+	{ SSeekBar:{
+		title:"Thermal Limit Low",
+		step:1,
+		min:0,
+		max:30,
+		default:`cat /sys/module/msm_thermal/parameters/thermal_limit_low`,
+		action:"generic /sys/module/msm_thermal/parameters/thermal_limit_low"
+		}},
+	{ SSeekBar:{
+		title:"Thermal Limit High",
+		step:1,
+		min:1,
+		max:30,
+		default:`cat /sys/module/msm_thermal/parameters/thermal_limit_high`,
+		action:"generic /sys/module/msm_thermal/parameters/thermal_limit_high"
+		}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

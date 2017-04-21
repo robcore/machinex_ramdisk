@@ -1,0 +1,116 @@
+UKM=/data/.machinex;
+BB=busybox;
+
+case $1 in
+gamma)
+  P=/sys/class/mdnie/mdnie/gamma_curve
+  if [ ! -z $2 ]
+  then
+  if [ $2 == Movie ]
+  then
+  echo 0 > $P
+  elif [ $2 == Dynamic ]
+  then
+  echo 1 > $P
+  fi
+  fi
+  curve=`cat $P`
+  if [ $curve == 0 ]
+  then
+  echo Movie
+  elif [ $curve == 1 ]
+  then
+  echo Dynamic
+  fi
+  ;;
+mode)
+  P=/sys/class/mdnie/mdnie/copy_mode
+  if [ ! -z $2 ]
+  then
+  if [ $2 == Standard ]
+  then
+  echo 0 > $P
+  elif [ $2 == Natural ]
+  then
+  echo 1 > $P
+  elif [ $2 == Movie ]
+  then
+  echo 2 > $P
+  fi
+  fi
+  copy=`cat $P`
+  if [ $copy == 0 ]
+  then
+  echo Standard
+  elif [ $copy == 1 ]
+  then
+  echo Natural
+  elif [ $copy == 2 ]
+  then
+  echo Movie
+  fi
+  ;;
+screendata)
+  P=/sys/class/mdnie/mdnie
+  echo "#!/system/bin/sh\necho 1 > $P/override\necho $(cat $P/copy_mode) > $P/copy_mode\necho $(cat $P/black) > $P/black\necho $(cat $P/white) > $P/white\necho $(cat $P/red) > $P/red\necho $(cat $P/green) > $P/green\necho $(cat $P/blue) > $P/blue\necho $(cat $P/cyan) > $P/cyan\necho $(cat $P/magenta) > $P/magenta\necho $(cat $P/yellow) > $P/yellow\necho $(cat $P/gamma_curve) > $P/gamma_curve\necho $(cat $P/sharpen) > $P/sharpen\n" > /sdcard/screen
+  echo File saved at /sdcard/screen
+  ;;
+version)
+  $BB echo "$(uname -r)"
+  ;;
+build)
+  $BB echo "$(getprop ro.build.PDA)"
+  ;;
+baseband)
+  $BB echo "$(getprop gsm.version.baseband)"
+  ;;
+bootloader)
+  $BB echo "$(getprop ro.bootloader)"
+  ;;
+date)
+  $BB echo "$(getprop ro.build.date)"
+  ;;
+android_version)
+  $BB echo "$(getprop ro.build.version.release)"
+  ;;
+serial)
+  P=/efs/FactoryApp/serial_no
+  if [ -f $P ]; then
+  $BB echo "$(cat $P)"
+  else
+  $BB echo "$(getprop ro.boot.serialno)"
+  fi
+  ;;
+hotplug)
+  P=/sys/kernel/intelli_plug/intelli_plug_active
+  Z=/sys/kernel/zen_decision/enabled
+  if [ ! -z $2 ]
+  then
+  if [ $2 == 1 ]
+  then
+  stop mpdecision
+  echo 0 > $Z
+  else
+  stop mpdecision
+  fi
+  echo $2 > $P
+  fi
+  echo `cat $P`
+  ;;
+zen)
+  Z=/sys/kernel/intelli_plug/intelli_plug_active
+  P=/sys/kernel/zen_decision/enabled
+  if [ ! -z $2 ]
+  then
+  if [ $2 == 1 ]
+  then
+  stop mpdecision
+  echo 0 > $Z
+  else
+  stop mpdecision
+  fi
+  echo $2 > $P
+  fi
+  echo `cat $P`
+  ;;
+esac

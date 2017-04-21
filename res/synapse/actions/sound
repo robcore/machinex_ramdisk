@@ -1,0 +1,12 @@
+read LEFT RIGHT < /sys/kernel/sound_control/gpl_headphone_gain  
+if [[ $1 == "left" ]]; then
+if [[ ! -z $2 ]]; then
+echo $2 $RIGHT > /sys/kernel/sound_control/gpl_headphone_gain
+fi
+else
+if [[ ! -z $2 ]]; then
+echo $LEFT $2 > /sys/kernel/sound_control/gpl_headphone_gain
+fi
+fi
+read LEFT RIGHT < /sys/kernel/sound_control/gpl_headphone_gain
+[[ $1 == "left" ]] && echo $LEFT || echo $RIGHT

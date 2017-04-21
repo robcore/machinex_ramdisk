@@ -1,0 +1,88 @@
+cat << CTAG
+{
+  name:ADVANCED,
+  elements:[
+    { STitleBar:{
+        title:"Kernel Entropy"
+    }},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live Entropy"
+	}},
+    { SSeekBar:{
+        title:"Read Wakeup Threshold",
+        min:64,
+		max:2048,
+		step:64,
+        default:256,
+        action:"generic /proc/sys/kernel/random/read_wakeup_threshold"
+    }},
+    { SSeekBar:{
+        title:"Write Wakeup Threshold",
+        min:64, max:2048, step:64,
+        default:320,
+        action:"generic /proc/sys/kernel/random/write_wakeup_threshold"
+    }},
+    { STitleBar:{
+        title:"Scheduling and Timing"
+    }},
+	{ SSeekBar:{
+		title:"RT Period",
+		min:10000,
+		max:2000000,
+		step:10000,
+		unit:"us",
+		default:1000000,
+		action:"generic /proc/sys/kernel/sched_rt_period_us"
+	}},
+	{ SSeekBar:{
+		title:"RT Runtime",
+		min:10000,
+		max:2000000,
+		step:2500,
+		unit:"us",
+		default:1,
+		action:"generic /proc/sys/kernel/sched_rt_runtime_us"
+	}},
+	{ SCheckBox:{
+		label:"Autogroup",
+		default:1,
+		action:"generic /proc/sys/kernel/sched_autogroup_enabled"
+	}},
+	{ SCheckBox:{
+		label:"Gentle Fair Sleepers",
+		default:1,
+		action:"generic /sys/kernel/sched/gentle_fair_sleepers"
+	}},
+	{ SCheckBox:{
+		description:" Enable or Disable realtime runtime sharing of resources.",
+		label:"RT Runtime Sharing",
+		default:1,
+		action:"generic /sys/kernel/sched/rt_runtime_sharing"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ STitleBar:{
+		title:"BAM DMUX Adaptive Timer",
+	}},
+	{ SCheckBox:{
+		description:"BAM DMUX has an alternative to its fixed timer, adaptive.  If this is turned on, the driver measures the load used its clients and adjust the timer accordingly.",
+		label:"BAM Adaptive Timer",
+		default:`cat /sys/module/bam_dmux/parameters/adaptive_timer_enabled`,
+		action:"generic /sys/module/bam_dmux/parameters/adaptive_timer_enabled",
+	}},
+    { STitleBar:{
+        title:"Other"
+    }},
+	{ SSeekBar:{
+		title:"Randomize VA Space", max:2,
+		default:2,
+		action:"generic /proc/sys/kernel/randomize_va_space"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+  ]
+}
+CTAG

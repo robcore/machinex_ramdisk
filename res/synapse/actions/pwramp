@@ -1,0 +1,66 @@
+BB=busybox;
+
+case $1 in
+HPH)
+  read VOL
+  if [ $VOL == 0 ]; then
+    tinymix 50 0 && tinymix 51 0;
+  elif [ $VOL == 1 ]; then
+    tinymix 50 1 &&	tinymix 51 1;
+  elif [ $VOL == 2 ]; then
+    tinymix 50 2 &&	tinymix 51 2;
+  elif [ $VOL == 3 ]; then
+    tinymix 50 3 &&	tinymix 51 3;
+  elif [ $VOL == 4 ]; then
+    tinymix 50 4 &&	tinymix 51 4;
+  elif [ $VOL == 5 ]; then
+    tinymix 50 5 &&	tinymix 51 5;
+  elif [ $VOL == 6 ]; then
+    tinymix 50 6 &&	tinymix 51 6;
+  elif [ $VOL == 7 ]; then
+    tinymix 50 7 &&	tinymix 51 7;
+  elif [ $VOL == 8 ]; then
+    tinymix 50 8 &&	tinymix 51 8;
+  elif [ $VOL == 9 ]; then
+    tinymix 50 9 &&	tinymix 51 9;
+  elif [ $VOL == 10 ]; then
+    tinymix 50 10 && tinymix 51 10;
+  elif [ $VOL == 11 ]; then
+    tinymix 50 11 && tinymix 51 11;
+  elif [ $VOL == 12 ]; then
+    tinymix 50 12 && tinymix 51 12;
+  else
+    tinymix 50 12 && tinymix 51 12;
+  fi; fi
+  COPY=`tinymix 50`
+  if [ "$COPY" == "HPHL Volume: 0 (range 0->12)" ]; then
+    echo 0
+  elif [ "$COPY" == "HPHL Volume: 1 (range 0->12)" ]; then
+    echo 1
+  elif [ "$COPY" == "HPHL Volume: 2 (range 0->12)" ]; then
+    echo 2
+  elif [ "$COPY" == "HPHL Volume: 3 (range 0->12)" ]; then
+    echo 3
+  elif [ "$COPY" == "HPHL Volume: 4 (range 0->12)" ]; then
+    echo 4
+  elif [ "$COPY" == "HPHL Volume: 5 (range 0->12)" ]; then
+    echo 5
+  elif [ "$COPY" == "HPHL Volume: 6 (range 0->12)" ]; then
+    echo 6
+  elif [ "$COPY" == "HPHL Volume: 7 (range 0->12)" ]; then
+    echo 7
+  elif [ "$COPY" == "HPHL Volume: 8 (range 0->12)" ]; then
+    echo 8
+  elif [ "$COPY" == "HPHL Volume: 9 (range 0->12)" ]; then
+    echo 9
+  elif [ "$COPY" == "HPHL Volume: 10 (range 0->12)" ]; then
+    echo 10
+  elif [ "$COPY" == "HPHL Volume: 11 (range 0->12)" ]; then
+    echo 11
+  elif [ "$COPY" == "HPHL Volume: 12 (range 0->12)" ]; then
+    echo 12
+  else
+	echo 12
+  fi
+  ;;
+esac

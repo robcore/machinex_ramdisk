@@ -1,0 +1,118 @@
+cat << CTAG
+{
+    name:"BATTERY",
+    elements:[
+        { SPane:{
+		title:"Live Statistics",
+        }},
+		{ SLiveLabel:{
+			title:"Present Status Charging/Discharging",
+			refresh:3000,
+			action:"charge-status"
+		}},
+		{ SLiveLabel:{
+			title:"Present Charge Source / Type",
+			refresh:3000,
+			action:"charge-source"
+		}},
+		{ SLiveLabel:{
+			title:"Battery Input Current",
+			description:"How much current the battery is actually receiving, and recent average.",
+			refresh:1500,
+			action:"echo \$(cat /sys/class/power_supply/battery/current_now) \\\(\$(cat /sys/class/power_supply/battery/current_avg)\\\) mA"
+		}},
+		{ SLiveLabel:{
+			title:"Battery Voltage",
+			refresh:3000,
+			action:"charge-volt"
+		}},
+		{ SLiveLabel:{
+			title:"Battery Health",
+			refresh:3000,
+			action:"charge-health"
+		}},
+    	{ SPane:{
+		title:"Fast Charge",
+        }},
+    	{ SDescription:{
+        	description:"\n\tFast Charge has 3 modes.\n\n\tDisabled, Enabled, and Enabled with custom levels.\n\n",
+        	background:0
+        }},
+    	{ SPane:{
+		title:"Charging Currents",
+        }},
+	{ SOptionList:{
+		default:`echo $(/res/synapse/actions/fast fastcharge)`,
+		action:"fast fastcharge",
+		values:[Disabled, Enabled, Enabled_with_Custom_Levels,]
+	}},
+		{ SCheckBox:{
+			description:"Use MTP during fast charge. Default is Enabled.",
+			label:"Use MTP",
+			default:`cat /sys/kernel/fast_charge/use_mtp_during_fast_charge`,
+			action:"generic /sys/kernel/fast_charge/use_mtp_during_fast_charge",
+		}},
+		{ SCheckBox:{
+			description:"Use Samsung screen ON charging limit whilst charging. Default is Enabled.",
+			label:"Screen ON current limit",
+			default:`cat /sys/kernel/fast_charge/screen_on_current_limit`,
+			action:"generic /sys/kernel/fast_charge/screen_on_current_limit",
+		}},
+	{ SPane:{
+		title:"Custom_Levels settings",
+		description:" Only possible when FastCharge Custom_Levels is selected"
+	}},
+	{ SOptionList:{
+		title:"Set AC Custom Charge Level - default is 1000",
+		default:`cat /sys/kernel/fast_charge/ac_charge_level`,
+		action:"generic /sys/kernel/fast_charge/ac_charge_level",
+		values:[2100, 2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1200, 1100, 1000,]
+	}},
+	{ SOptionList:{
+		title:"Set USB Custom Charge Level - default is 460",
+		default:`cat /sys/kernel/fast_charge/usb_charge_level`,
+		action:"generic /sys/kernel/fast_charge/usb_charge_level",
+		values:[1000, 900, 800, 700, 600, 500, 460,]
+	}},
+	{ SOptionList:{
+		title:"Set Wireless Custom Charge Level - default is 650",
+		default:`cat /sys/kernel/fast_charge/wireless_charge_level`,
+		action:"generic /sys/kernel/fast_charge/wireless_charge_level",
+		values:[1200, 1100, 1000, 900, 800, 650,]
+	}},
+	{ SPane:{
+		title:"FAILSAFE - DISABLE AT OWN RISK",
+		description:" If disabled you allow anything up to 2.1A/h to be used as AC / USB custom current"
+	}},
+	{ SCheckBox:{
+		label:"Un-check to disable - ON YOUR OWN RISK",
+		default:`cat /sys/kernel/fast_charge/failsafe`,
+		action:"generic /sys/kernel/fast_charge/failsafe"
+	}},
+	{ SPane:{
+		title:"Unstable Charger Power Detection - DISABLE AT OWN RISK",
+		description:" If disabled you risk damaging your phone, battery, charger, cable, wall socket and even starting a fire and/or explosion, but you can extract full charge current even if your connection is faulty."
+	}},
+	{ SCheckBox:{
+		label:"Un-check to disable - ON YOUR OWN RISK",
+		default:`cat /sys/kernel/fast_charge/unstable_power_detection`,
+		action:"generic /sys/kernel/fast_charge/unstable_power_detection"
+	}},
+	{ SPane:{
+		title:"Battery Scaling Calibration",
+		description:" If you are having incorrect battery SCALING issues, this will reset your device battery % to scale correctly to the approximate available mV. Give it a few hours after you reset the gauge. It may still show you funny values for that period, then the battery percentage should be fine after a full charge cycle. You may pull battery for at least 180 sec for possibly the same effect."
+	}},
+	{ SButton:{
+		label:"Reset Fuel-Gauge Chip Now",
+		action:"fuel-gauge fuel-gauge",
+	}},
+	{ SButton:{
+		label:"Fast Charge Info",
+		action:"show fast"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

@@ -1,0 +1,18 @@
+case $1 in
+core)
+  P=/sys/module/workqueue/parameters/power_efficient
+  if [ ! -z $2 ]; then
+  if [ $2 == normal ]; then
+    echo N > $P
+  elif [ $2 == power_efficient ]; then
+    echo Y > $P
+  fi;
+fi;
+  copy=`cat $P`
+  if [ $copy == N ]; then
+    echo normal
+  elif [ $copy == Y ]; then
+    echo power_efficient
+  fi
+  ;;
+esac

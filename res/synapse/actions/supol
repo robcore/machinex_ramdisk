@@ -1,0 +1,21 @@
+BB=busybox;
+
+case $1 in
+changer)
+  P=/data/.machinex/supolicy_prof
+  if [ ! -z $2 ]; then
+  if [ $2 -eq 0 ]; then
+    echo 0 > $P
+  elif [ $2 -eq 1 ]; then
+    echo 1 > $P
+	supolicy --permissive * 2> /dev/null;
+  fi
+  fi
+  COPY=`cat $P`
+  if [ $COPY -eq 0 ]; then
+    echo 0
+  elif [ $COPY -eq 1 ]; then
+    echo 1
+  fi
+  ;;
+esac

@@ -1,0 +1,14 @@
+BB=busybox;
+
+if [ "$1" == "/sys/kernel/sound_control_3/gpl_headphone_gain" ]
+	if [ "$2" -lt 0 ]; then
+		V=$2;
+		H=$((255 - V - V));
+		V=$((256 + V));
+		$BB echo "$V $V $H" > $1;
+	else
+		V=$2;
+		H=$((255 - V - V));
+		$BB echo "$V $V $H" > $1;
+	fi;
+fi

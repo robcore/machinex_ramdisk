@@ -1,0 +1,112 @@
+BB=busybox;
+sQ=sqlite3;
+
+TIMESTAMP=`date +%Y-%m-%d.%H.%M.%S`;
+LOGS=/sdcard/machinex/Logs;
+
+case $1 in
+	optimizedb)
+		for i in `$BB find /data -iname "*.db"`; do
+			$sQ $i 'VACUUM;' 2> /dev/null;
+			$sQ $i 'REINDEX;' 2> /dev/null;
+		done;
+
+		for i in `$BB find /sdcard -iname "*.db"`; do
+			$sQ $i 'VACUUM;' 2> /dev/null;
+			$sQ $i 'REINDEX;' 2> /dev/null;
+		done;
+
+		$BB echo "Databases have been optimized.";
+	;;
+	logcat)
+		saved="$LOGS/logcat-$TIMESTAMP.txt";
+		[ ! -d "$LOGS" ] && $BB mkdir -p "$LOGS";
+		$BB chmod 755 $LOGS;
+
+		logcat -d > $saved;
+	;;
+	dmesg)
+		saved="$LOGS/dmesg-$TIMESTAMP.txt";
+		[ ! -d "$LOGS" ] && $BB mkdir -p "$LOGS";
+		$BB chmod 755 $LOGS;
+
+		$BB dmesg > $saved;
+	;;
+	kmsg)
+		kmsg=/proc/last_kmsg;
+		if [ -f $kmsg ]; then
+			saved="$LOGS/last_kmsg-$TIMESTAMP.txt";
+			[ ! -d "$LOGS" ] && $BB mkdir -p "$LOGS";
+			$BB chmod 755 $LOGS;
+
+			$BB cp -f $kmsg $saved;
+		else
+			$BB echo "$kmsg not found.";
+		fi;
+	;;
+	reboot)
+		sync;
+		sync;
+		$BB sleep 1;
+		reboot $2;
+	;;
+	cleardata)
+		$BB rm -R /data/data/com.af.synapse/databases;
+		am force-stop com.af.synapse 2> /dev/null;
+	;;
+	spcm_service)
+	  P=/data/.machinex/spcm_prof
+	  if [ ! -z "$2" ]; then
+	  if [ "$2" == Enabled ]; then
+	    echo Enabled > $P
+		setprop sys.config.samp_spcm_enable true
+	  elif [ "$2" == Disabled ]; then
+	    echo Disabled > $P
+		setprop sys.config.samp_spcm_enable false
+	  fi; fi
+	  copy=$(cat $P)
+	  if [ "$copy" == Enabled ]; then
+	    echo Enabled
+	  elif [ "$copy" == Disabled ]; then
+	    echo Disabled
+	  fi
+	;;
+	fstrim)
+		$BB mount -o remount,rw -t auto /
+		$BB mount -t rootfs -o remount,rw rootfs
+		$BB mount -o rw,remount /system
+		fstrim -v /system
+		fstrim -v /data
+		fstrim -v /cache
+		$BB mount -o remount,ro -t auto /
+		$BB mount -t rootfs -o remount,ro rootfs
+		$BB mount -o remount,ro /system
+		echo "/fstrim complete"
+	;;
+	remountro)
+		$BB mount -o remount,ro -t auto /
+		$BB mount -t rootfs -o remount,ro rootfs
+		$BB mount -o remount,ro /system
+		echo "Mounted Read Only"
+	;;
+	remountrw)
+		$BB mount -o remount,rw -t auto /
+		$BB mount -t rootfs -o remount,rw rootfs
+		$BB mount -o rw,remount /system
+		echo "Mounted Read Write"
+	;;
+	sysrw)
+		$BB mount -o remount,rw /system
+		echo "System Mounted Read-Write"
+	;;
+	sysro)
+		$BB mount -o remount,ro /system
+		echo "System Mounted Read-Only"
+	;;
+esac;
+
+case $1 in
+	logcat|dmesg|kmsg)
+		$BB echo "Logfile saved to $saved";
+	;;
+esac;

@@ -1,0 +1,65 @@
+cat << CTAG
+{
+    name:"GOV",
+    elements:[
+	{ SPane:{
+		title:"CPU Governor",
+		description:" The CPU governor determines how the CPU behaves in response to changes in workload."
+        }},
+	{ SDescription:{
+		description:""
+	}},
+        { SOptionList:{
+		title:"Current governor",
+                default:`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`,
+                action:"governor /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+                values:[
+`
+                        for GOVERNOR in \`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors\` ; do
+                                echo "\"$GOVERNOR\","
+                        done
+`
+                ],
+		notify:[
+			{
+				on:APPLY,
+				do:[ REFRESH, CANCEL ],
+				to:"/sys/devices/system/cpu/cpufreq/$(`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`)/*"
+			},
+			{
+				on:REFRESH,
+				do:REFRESH,
+				to:"/sys/devices/system/cpu/cpufreq/$(`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`)/*"
+			}
+		]
+        }},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Governor tunables",
+		description:"The various configuration items which are governor-dependent."
+        }},
+	{ SDescription:{
+		description:""
+	}},
+				{ STreeDescriptor:{
+					path:"/sys/devices/system/cpu/cpufreq",
+					generic: {
+						directory: {
+							STreeDescriptor:{
+								generic: {
+									directory: {},
+									element: {
+										SGeneric: { title:"@BASENAME" }
+									}
+								},
+								exclude: [ "boostpulse", "sampling_rate_min", "cpufreq_limit_requests", "target_loads", "timer_rate", "above_hispeed_delay", "go_hispeed_load" ]
+							},
+						}
+					},
+					exclude: [ "overall_stats", "vdd_table" ]
+				}},
+    ]
+}
+CTAG

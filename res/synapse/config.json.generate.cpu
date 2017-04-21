@@ -1,0 +1,78 @@
+cat << CTAG
+{
+	name:CPU_STATS,
+		elements:[
+	{ SPane:{
+		title:"Live Frequencies:"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SLiveLabel:{
+		refresh:375,
+		action:"live LiveCPUFrequency"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+			`[ -d "/sys/module/pm_8x60" ] && PM=/sys/module/pm_8x60;
+
+			if [ -d "$PM/modes/cpu0" ]; then
+				$BB echo '{ SPane:{
+					title:"Krait Per-CPU Idle Stats"
+				}},'
+				$BB echo '{ SPane:{
+					title:"CPU-0"
+				}},'
+				if [ -f "$PM/modes/cpu0/wfi/idle_enabled" ]; then
+					$BB echo '{ SDescription:{
+						description:"CPU-0 Time in Idle.",
+					}},'
+				fi
+				$BB echo '{ SLiveLabel:{
+				refresh:3000,
+				action:"live LiveC0"
+					}},'
+				$BB echo '{ SPane:{
+					title:"CPU-1"
+				}},'
+				if [ -f "$PM/modes/cpu0/retention/idle_enabled" ]; then
+					$BB echo '{ SDescription:{
+						description:"CPU-1 Time in Idle",
+					}},'
+				fi
+				$BB echo '{ SLiveLabel:{
+				refresh:3000,
+				action:"live LiveC1"
+					}},'
+				$BB echo '{ SPane:{
+					title:"CPU-2"
+				}},'
+				if [ -f "$PM/modes/cpu0/standalone_power_collapse/idle_enabled" ]; then
+					$BB echo '{ SDescription:{
+						description:"CPU-2 Time in Idle",
+					}},'
+				fi
+				$BB echo '{ SLiveLabel:{
+				refresh:3000,
+				action:"live LiveC2"
+					}},'
+				$BB echo '{ SPane:{
+					title:"CPU-3"
+				}},'
+				if [ -f "$PM/modes/cpu0/power_collapse/idle_enabled" ]; then
+					$BB echo '{ SDescription:{
+						description:"CPU-3 Time in Idle.",
+					}},'
+				fi
+				$BB echo '{ SLiveLabel:{
+				refresh:3000,
+				action:"live LiveC3"
+					}},'
+			fi`
+	{ SDescription:{
+		description:""
+	}},
+	]
+}
+CTAG

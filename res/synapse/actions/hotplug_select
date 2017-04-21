@@ -1,0 +1,162 @@
+BB=busybox;
+
+if [[ ! -z $2 ]]; then
+	$BB echo $2 > $1;
+	if [  $2 == "Lazyplug" ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			if [ -e /sys/kernel/intelli_plug/intelli_plug_active ]; then
+				echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+			fi
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+
+			echo "1" > /sys/module/lazyplug/parameters/lazyplug_active;
+	elif [  $2 == "MSM_Hotplug" ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			if [ -e /sys/kernel/intelli_plug/intelli_plug_active ]; then
+				echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+			fi
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+
+			echo "1" > /sys/module/msm_hotplug/msm_enabled;
+	elif [  $2 == "Intelli_Hotplug" ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+
+			echo "1" > /sys/kernel/intelli_plug/intelli_plug_active;
+	elif [  $2 == "Bricked_Hotplug" ] && [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			if [ -e /sys/kernel/intelli_plug/intelli_plug_active ]; then
+				echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+
+			echo "1" > /sys/kernel/msm_mpdecision/conf/enabled;
+	elif [  $2 == "MSM_Sleeper" ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			if [ -e /sys/kernel/intelli_plug/intelli_plug_active ]; then
+				echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+			fi
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+
+			echo "1" > /sys/devices/platform/msm_sleeper/enabled;
+	elif [  $2 == "Alucard_Hotplug" ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			if [ -e /sys/kernel/intelli_plug/intelli_plug_active ]; then
+				echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+			fi
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+
+			echo "1" > /sys/kernel/alucard_hotplug/hotplug_enable;
+	elif [  $2 == "Blu_Plug" ]; then
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			if [ -e /sys/kernel/intelli_plug/intelli_plug_active ]; then
+				echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+			fi
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+
+			echo "1" > /sys/module/blu_plug/parameters/enabled;
+	elif [  $2 == "Mako_Hotplug" ]; then
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+			echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+
+			echo "1" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+	else
+			echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+			echo "0" > /sys/module/msm_hotplug/msm_enabled;
+			echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+			echo "0" > /sys/module/blu_plug/parameters/enabled;
+			if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+				echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+			fi
+			echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+
+			echo "1" > /sys/kernel/intelli_plug/intelli_plug_active;
+	fi
+fi
+
+if [ $(expr `cat /sys/module/lazyplug/parameters/lazyplug_active`) -eq "1" ]; then
+	echo "Lazyplug"
+elif [ -e /sys/kernel/intelli_plug/intelli_plug_active ] && [ $(expr `cat /sys/kernel/intelli_plug/intelli_plug_active`) -eq "1" ]; then
+	echo "Intelli_Hotplug"
+elif [ -e /sys/kernel/msm_mpdecision/conf/enabled ] && [ $(expr `cat /sys/kernel/msm_mpdecision/conf/enabled`) -eq "1" ]; then
+	echo "Bricked_Hotplug"
+elif [ $(expr `cat /sys/module/msm_hotplug/msm_enabled`) -eq "1" ]; then
+	echo "MSM_Hotplug"
+elif [ $(expr `cat /sys/devices/platform/msm_sleeper/enabled`) -eq "1" ]; then
+	echo "MSM_Sleeper"
+elif [ $(expr `cat /sys/module/blu_plug/parameters/enabled`) -eq "1" ]; then
+	echo "Blu_Plug"
+elif [ $(expr `cat /sys/kernel/alucard_hotplug/hotplug_enable`) -eq "1" ]; then
+	echo "Alucard_Hotplug"
+elif [ $(expr `cat /sys/devices/virtual/misc/mako_hotplug_control/enabled`) -eq "1" ]; then
+	echo "Mako_Hotplug"
+else
+	if [ -e /sys/kernel/msm_mpdecision/conf/enabled ]; then
+		echo "0" > /sys/kernel/msm_mpdecision/conf/enabled;
+	fi
+	echo "0" > /sys/devices/virtual/misc/mako_hotplug_control/enabled;
+	echo "0" > /sys/module/lazyplug/parameters/lazyplug_active;
+	echo "0" > /sys/module/blu_plug/parameters/enabled;
+	echo "0" > /sys/module/msm_hotplug/msm_enabled;
+	echo "0" > /sys/devices/platform/msm_sleeper/enabled;
+	echo "0" > /sys/devices/system/cpu/cpu0/rq-stats/hotplug_enable;
+	echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+	echo "1" > /sys/kernel/intelli_plug/intelli_plug_active;
+	echo "Intelli_Hotplug"
+fi

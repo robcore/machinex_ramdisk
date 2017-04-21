@@ -1,0 +1,36 @@
+#!/system/bin/sh
+
+config=/res/synapse/config.json
+action=/res/synapse/actions
+
+mount -t rootfs -o rw,remount rootfs;
+
+chmod -R 755 /res/synapse
+chmod 755 /sbin/uci
+
+if [ -d /sys/block/mmcblk1 ]; then
+	if [ ! -e $config ]; then
+	    source /res/synapse/config.json.generate > $config
+	fi
+else
+	if [ ! -e $config ]; then
+	    source /res/synapse/config.json.xenerate > $config
+	fi
+fi
+
+case $1 in
+config)
+  cat $config
+  ;;
+configpath)
+  echo $config
+  ;;
+actionpath)
+  echo $action
+  ;;
+reset)
+  rm -f $config
+  ;;
+esac
+
+mount -t rootfs -o ro,remount rootfs

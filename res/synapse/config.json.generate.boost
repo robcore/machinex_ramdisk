@@ -1,0 +1,77 @@
+cat << CTAG
+{
+    name:"CPUBOOST",
+    elements:[
+	{ SPane:{
+		title:"CPU Boost Options",
+		description:" These are the various parameters for boosting frequencies according to different events including touch, wakeup, hotplug, etc."
+        }},
+				`if [ -d "/sys/module/cpu_boost/parameters" ]; then
+					$BB echo '{ SPane:{
+							title:"CPU Boost Driver"
+						}},'
+					if [ -f "/sys/module/cpu_boost/parameters/input_boost_ms" ]; then
+						$BB echo '{ SSeekBar:{
+								title:"Input Boost",
+								description:"Minimum interval a CPU is boosted when input is detected.",
+								unit:" ms",
+								min:0,
+								max:5000,
+								step:10,
+								default:50,
+								action:"generic /sys/module/cpu_boost/parameters/input_boost_ms"
+						}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/min_input_interval" ]; then
+						$BB echo '{ SSeekBar:{
+								title:"Min Input Interval",
+								description:"Minimum Input Interval between touches.",
+								unit:" ms",
+								min:10,
+								max:1500,
+								step:10,
+								default:150,
+								action:"generic /sys/module/cpu_boost/parameters/min_input_interval"
+						}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/input_boost_freq" ]; then
+							$BB echo '{ SSeekBar:{
+								title:"Boost Frequency",
+								description:"This is the boost frequency for for the Input, Hotplug, and Wakeup if they are enabled.",
+								default:1350000,
+								unit:" Mhz",
+								action:"generic /sys/module/cpu_boost/parameters/input_boost_freq",
+								values:{ 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
+							}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/input_boost_enabled" ]; then
+						$BB echo '{ SCheckBox:{
+							label:"Input Boost",
+							description:"This will boost your minimum CPU speed to the selected frequency when you touch the screen or press a button.",
+							default:1,
+							action:"boolean /sys/module/cpu_boost/parameters/input_boost_enabled",
+						}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/hotplug_boost" ]; then
+						$BB echo '{ SCheckBox:{
+							label:"Hotplug Boost",
+							description:"Hotplug Boost is similar to input boost but it occurs when CPUs go online.",
+							default:0,
+							action:"boolean /sys/module/cpu_boost/parameters/hotplug_boost",
+						}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/wakeup_boost" ]; then
+						$BB echo '{ SCheckBox:{
+							label:"Wakeup Boost",
+							description:"Wakeup Boost is similar to input boost but it occurs when screen is turned on.",
+							default:1,
+							action:"boolean /sys/module/cpu_boost/parameters/wakeup_boost",
+						}},'
+					fi
+				fi`
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

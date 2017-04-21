@@ -1,0 +1,83 @@
+cat << CTAG
+{
+    name:GPU,
+    elements:[
+	{ SPane:{
+		title:"Live Frequency"
+	}},
+	{ SLiveLabel:{
+		refresh:500,
+		action:"live LiveGPUFrequency"
+	}},
+	{ SPane:{
+		title:"GPU Frequency"
+	}},
+	{ SSeekBar:{
+		title:"Max Frequency",
+		description:" Set the maximum frequency the GPU scales up to.",
+		unit:"MHz",
+		weight:0.000001,
+		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk`,
+		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk",
+		values:[450000000, 320000000, 200000000, 128000000,]
+	}},
+	{ SPane:{
+		title:"GPU PowerNap"
+	}},
+		{ SCheckBox:{
+			description:"Powernap allows the gpu to rest between frames. Disabling it may improve graphics at the cost of stability and battery life.",
+			label:"pwrnap",
+			default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrnap`,
+			action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrnap",
+		}},
+	{ SPane:{
+		title:"GPU MAX FPS"
+	}},
+	{ SSeekBar:{
+		title:"Set Max FPS",
+		description:" Set the maximum FPS cap allowable. Default is 60. This acts as a hardlimit.",
+		unit:"fps",
+		min:1,
+		max:120,
+		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_fps`,
+		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_fps",
+	}},
+	{ SPane:{
+		title:"GPU FPS"
+	}},
+	{ SSeekBar:{
+		title:"Set FPS",
+		description:" Set the current FPS value. Default is 60.",
+		unit:"fps",
+		min:1,
+		max:120,
+		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/fps`,
+		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/fps",
+	}},
+			`if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/GPU_mV_table" ]; then
+				$BB echo '{ SPane:{
+					title:"GPU Voltages"
+				}},'
+				$BB echo '{ SDescription:{
+					description:"Voltage changes come with SIGNIFICANT RISK"
+				}},'
+					while read UVOLT UNIT; do
+					VOLTAGE=$(($VOLTAGE+1));
+						$BB echo '{ SSeekBar:{
+							default:'$UVOLT',
+							title:"Voltage '${VOLTAGE}'",
+							action:"voltage gpuvolt '${VOLTAGE}'",
+							unit:"' ${UNIT}'",'
+							if [ "$UVOLT" -ge "900000" ]; then
+								$BB echo 'min:900000, max:1200000, step:5000 }},'
+							else
+								$BB echo 'min:900, max:1200, step:5 }},'
+							fi;
+					done < /sys/devices/system/cpu/cpu0/cpufreq/GPU_mV_table
+			fi`
+	{ SDescription:{
+		description:" "
+	}},
+		]
+}
+CTAG

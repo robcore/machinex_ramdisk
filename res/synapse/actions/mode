@@ -1,0 +1,72 @@
+BB=busybox
+
+case $1 in
+	dynamic)
+		$BB echo 0 > /sys/class/mdnie/mdnie/mode
+		$BB echo "DYNAMIC"
+	;;
+	standard)
+		$BB echo 1 > /sys/class/mdnie/mdnie/mode
+		$BB echo "STANDARD"
+	;;
+	movie)
+		$BB echo 2 > /sys/class/mdnie/mdnie/mode
+		$BB echo "MOVIE"
+	;;
+	natural)
+		$BB echo 3 > /sys/class/mdnie/mdnie/mode
+		$BB echo "NATURAL"
+	;;
+	auto)
+		$BB echo 4 > /sys/class/mdnie/mdnie/mode
+		$BB echo "AUTO"
+	;;
+	ui_mode)
+		$BB echo 0 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "UI_MODE"
+	;;
+	video_mode)
+		$BB echo 1 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "VIDEO_MODE"
+	;;
+	video_warm_mode)
+		$BB echo 2 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "VIDEO_WARM_MODE"
+	;;
+	video_cold_mode)
+		$BB echo 3 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "VIDEO_COLD_MODE"
+	;;
+	camera_mode)
+		$BB echo 4 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "CAMERA_MODE"
+	;;
+	navi)
+		$BB echo 5 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "NAVI"
+	;;
+	gallery_mode)
+		$BB echo 6 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "GALLERY_MODE"
+	;;
+	vt_mode)
+		$BB echo 7 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "VT_MODE"
+	;;
+	browser)
+		$BB echo 8 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "BROWSER"
+	;;
+	ebook)
+		$BB echo 9 > /sys/class/mdnie/mdnie/scenario
+		$BB echo "eBOOK"
+	;;
+	enabled)
+		$BB echo 1 > /sys/class/mdnie/mdnie/outdoor
+		$BB echo "Outdoor mode Enabled"
+	;;
+	disabled)
+		$BB echo 0 > /sys/class/mdnie/mdnie/outdoor
+		$BB echo "Outdoor mode Disabled"
+	;;
+esac;

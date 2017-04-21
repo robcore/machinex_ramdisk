@@ -1,0 +1,105 @@
+cat << CTAG
+{
+    name:BACKUP RESTORE,
+    elements:[
+	{ STitleBar:{
+		title:"Kernel Image"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SOptionList:{
+		title:"Selected Image",
+        description:" Choose the image you want. APPLY & REBOOT.",
+		action:"restorebackup pickboot",
+        default:"None",
+		values:[ "None",
+`
+			for IMG in \`/res/synapse/actions/restorebackup listboot\`; do
+			  echo "\"$IMG\","
+			done
+`
+		]
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    { STitleBar:{
+		title:"Kernel Actions",
+    }},
+	{ SDescription:{
+		description:""
+	}},
+    { SButton:{
+		label:"Restore Selected Kernel",
+		action:"restorebackup flashboot /dev/block/platform/15540000.dwmmc0/by-name/BOOT"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    { SButton:{
+		label:"Delete Selected Kernel",
+		action:"restorebackup delboot"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SButton:{
+		label:"Backup Current Kernel",
+		action:"restorebackup keepboot /dev/block/platform/15540000.dwmmc0/by-name/BOOT"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ STitleBar:{
+		title:"Configuration Profiles"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SOptionList:{
+		title:"Selected Profile",
+        description:" Choose the settings backup you want. APPLY & REBOOT.",
+		action:"restorebackup pickconfig",
+        default:"None",
+		values:[ "None",
+`
+			for BAK in \`/res/synapse/actions/restorebackup listconfig\`; do
+			  echo "\"$BAK\","
+			done
+`
+		]
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ STitleBar:{
+		title:"Settings Actions",
+   	}},
+	{ SDescription:{
+		description:""
+	}},
+    	{ SButton:{
+		label:"Restore Selected Profile",
+		action:"restorebackup applyconfig"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    	{ SButton:{
+		label:"Delete Selected Profile",
+		action:"restorebackup delconfig"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SButton:{
+		label:"Backup Current Profile",
+		action:"restorebackup keepconfig"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

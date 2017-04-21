@@ -1,0 +1,313 @@
+cat << CTAG
+{
+    name:MEMORY,
+    elements:[
+	{ SPane:{
+		title:"Memory:"
+	}},
+	{ SLiveLabel:{
+		refresh:1500,
+		action:"live LiveMemory"
+	}},
+	{ SOptionList:{
+		title:"LMK Profile",
+		description:"This option will auto-tune LMK minfree values as per selected profile.",
+		default:Custom,
+		action:"lmk profile",
+		values:[ Custom, Low, Medium, Default, Aggressive, Exterminate, ],
+		notify:[
+				{
+					on:APPLY,
+					do:[ REFRESH, APPLY ],
+					to:[
+							"minfree 1",
+							"minfree 2",
+							"minfree 3",
+							"minfree 4",
+							"minfree 5",
+							"minfree 6"
+					],
+				}
+		]
+	}},
+`
+if [ -f "/sys/module/lowmemorykiller/parameters/minfree" ]; then
+    echo '{ SPane:{
+              title:"Low Memory Killer",
+              description:"LMK Minfree controls how much memory each app type can hold, and is responsible for memory management in multitasking; all values are multiplied by 256 pages."
+          }},
+    ';
+    for LMK in 1 2 3 4 5 6; do
+        echo '{ SSeekBar:{ ';
+        case $LMK in
+            1) echo 'title:"Foreground App"' ;;
+            2) echo 'title:"Visible App"' ;;
+            3) echo 'title:"Secondary Server"' ;;
+            4) echo 'title:"Hidden App"' ;;
+            5) echo 'title:"Content Provider"' ;;
+            6) echo 'title:"Empty App"' ;;
+        esac;
+        echo ', min:2, max:320,
+                action:"minfree '${LMK}'" }},
+        ';
+    done;
+fi;
+`
+`
+if [ -f "/sys/module/lowmemorykiller/parameters/lmk_fast_run" ]; then
+    echo '{ SCheckBox:{
+              label:"LMK Fast Run",
+              default:'$(cat /sys/module/lowmemorykiller/parameters/lmk_fast_run)',
+              action:"generiq /sys/module/lowmemorykiller/parameters/lmk_fast_run"
+          }},
+    ';
+fi;
+`
+`
+if [ -f "/sys/module/lowmemorykiller/parameters/donotkill_proc" ]; then
+    echo '{ SPane:{
+              title:"LMK Whitelist",
+              description:"Allows certain apps to be exempt from being killed until absolutely necessary to avoid out-of-memory (OOM)."
+          }},
+          { SCheckBox:{
+              label:"Do-Not-Kill System Processes List",
+              default:'$(cat /sys/module/lowmemorykiller/parameters/donotkill_sysproc)',
+              action:"generiq /sys/module/lowmemorykiller/parameters/donotkill_sysproc"
+          }},
+          { SGeneric:{ title:"Exempt System Processes",
+              default:'$(cat /sys/module/lowmemorykiller/parameters/donotkill_sysproc_names)',
+              action:"generiq /sys/module/lowmemorykiller/parameters/donotkill_sysproc_names"
+          }},
+          { SCheckBox:{
+              label:"Do-Not-Kill User Processes List",
+              default:'$(cat /sys/module/lowmemorykiller/parameters/donotkill_proc)',
+              action:"generiq /sys/module/lowmemorykiller/parameters/donotkill_proc"
+          }},
+          { SGeneric:{ title:"Exempt User Processes",
+              default:'$(cat /sys/module/lowmemorykiller/parameters/donotkill_proc_names)',
+              action:"generiq /sys/module/lowmemorykiller/parameters/donotkill_proc_names"
+          }},
+          { SDescription:{
+              description:"To add processes to the lists, enter process or package names separated by a comma."
+          }},
+    ';
+fi;
+`
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+		title:"RQ Affinity",
+		description:" Try to have scheduler requests complete on the CPU core they were made from. Higher is more aggressive. Some kernels only support 0-1. Default is 1.",
+		default:`cat /sys/block/mmcblk0/queue/rq_affinity`,
+		action:"generic /sys/block/mmcblk0/queue/rq_affinity",
+		values:{
+			`RQA='0:"0: Disabled", 1:"1", 2:"2"'
+			echo $RQA`
+		}
+	}},
+  	{ SDescription:{
+		description:" "
+	}},
+	{ SOptionList:{
+		title:"Drop Caches (Clear VFS Cache After Boot)",
+		description:"This option will force rebuild of file system cache based on actual app usage rather than boot/startup processes. NOTE: This process can take from 1-2 minutes (Enable for better file system read/write performance).",
+		default:0,
+		action:"dropcaches /data/.machinex/dropcaches_prof",
+		values:{ 0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SButton:{
+		label:"Quick Cache Dropper",
+		action:"drop cache"
+	}},
+	{ SDescription:{
+		description:"Quickly drop pagecache, dentries and inodes."
+	}},
+	{ SButton:{
+		label:"Full Cache Dropper",
+		action:"drop full"
+	}},
+	{ SDescription:{
+		description:"Drop pagecache, dentries, inodes, and all application caches."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ STitleBar:{
+		title:"ZSWAP",
+		description:" Tune the ."
+	}},
+	{ SCheckBox:{
+		label:"Enable Zswap",
+		default:1,
+		action:"boolean /sys/module/zswap/parameters/enabled"
+	}},
+	{ SSeekBar:{
+		title:"ZSwap memory pool",
+		description:" ZSwap memory pool percentage of main memory that may be used as compressed page cache. Default is 20.",
+		min:0, max:50, unit:" %", step:1,
+		default:`cat /sys/module/zswap/parameters/max_pool_percent`,
+		action:"generic /sys/module/zswap/parameters/max_pool_percent"
+	}},
+	{ SSeekBar:{
+		title:"ZSwap Compression Ratio",
+		description:" ZSwap memory compression percentage.Default is 80.",
+		min:0, max:100, unit:" %", step:1,
+		default:`cat /sys/module/zswap/parameters/max_compression_ratio`,
+		action:"generic /sys/module/zswap/parameters/max_compression_ratio"
+	}},
+	{ STitleBar:{
+		title:"Virtual Memory",
+		description:" Tune the operation of the VM subsystem of the Linux kernel and the writeout of dirty data to disk."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SSeekBar:{
+        	title:"dirty_background_ratio",
+        	description:" Dirty background memory buffer, more you set, more memory will be used for write buffer for background operations, buffer is released on need to free RAM. The set value is a percentage of total system memory, the number of pages at which the pdflush background writeback daemon will start writing out dirty data. Default is 5.",
+        	min:0,
+		max:100,
+		unit:" %",
+		step:5,
+        	default:`cat /proc/sys/vm/dirty_background_ratio`,
+       		action:"generic /proc/sys/vm/dirty_background_ratio",
+    }},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"dirty_ratio",
+		description:" Dirty real time memory buffer, more you set, more memory will be used for write buffer for real time operations, buffer is released on need to free RAM. The set value is a percentage of total system memory, the number of pages at which a process which is generating disk writes will itself start writing out dirty data. Default is 20.",
+		min:0,
+		max:100,
+		unit:" %",
+		step:5,
+		default:`cat /proc/sys/vm/dirty_ratio`,
+		action:"generic /proc/sys/vm/dirty_ratio",
+    }},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SOptionList:{
+		title:"Laptop Mode (Auto FS Writeback Delay Mode)",
+		description:" This option will delay the writebacks of file system bits cached in RAM while screen is ON (Enable for better performance @ slight risk of possible data loss if crashed or sudden loss of power).",
+		default:`$BB cat /proc/sys/vm/laptop_mode`,
+		action:"generic /proc/sys/vm/laptop_mode",
+		values:{ 0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"swappiness",
+		description:" A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. Default is 130.",
+		max:200,
+		min:0,
+		step:10,
+		default:`cat /proc/sys/vm/swappiness`,
+		action:"generic /proc/sys/vm/swappiness",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SSeekBar:{
+		title:"Adaptive VFS Cache Pressure",
+		description:" This controls the calculation of vmpressure, taking only the ratio of reclaimed to scanned pages into account.",
+		unit:" %",
+		step:1,
+		min:0,
+		max:200,
+		default:`cat /proc/sys/vm/vfs_cache_pressure`,
+		action:"generic /proc/sys/vm/vfs_cache_pressure"
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SSeekBar:{
+		title:"VM Pressure Scale Max",
+		description:" This tunable monitors the number of pages scanned in the direct reclaim path and scales the vmpressure level according to that.",
+		unit:" %",
+		step:1,
+		min:0,
+		max:200,
+		default:`cat /sys/module/vmpressure/parameters/vmpressure_scale_max`,
+		action:"generic /sys/module/vmpressure/parameters/vmpressure_scale_max"
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+    	{ SSeekBar:{
+		title:"VM Pressure Allocation Stall Threshold",
+		description:" This is a minimum percentage of vmpressure that determines when accounting of allocation stalls begins. Keeping it lower than 100 prevents false memory accounting and helps to prevent unnecessary LMK kills. Default is 70.",
+		unit:" %",
+		step:1,
+		min:0,
+		max:100,
+		default:`cat /sys/module/vmpressure/parameters/allocstall_threshold`,
+		action:"generic /sys/module/vmpressure/parameters/allocstall_threshold"
+    	}},
+	{ SDescription:{
+		description:" "
+	}},
+    { STitleBar:{
+        title:"Kernel Samepage Merging"
+    }},
+	{ SDescription:{
+		description:"KSM combines duplicate memory pages of different processes to possibly improve usage/performance of system memory."
+	}},
+	{ SOptionList:{
+		label:"Kernel Samepage Merging",
+		description:"Usage: KSM_RUN_STOP stops KSM but keep the merged pages, KSM_RUN_MERGE enables KSM, and KSM_RUN_UNMERGE stops KSM and releases all of the merged pages.",
+		default:`$BB cat /sys/kernel/mm/ksm/run`,
+		action:"generic /sys/kernel/mm/ksm/run",
+		values:{ 0:"KSM_RUN_STOP", 1:"KSM_RUN_MERGE", 2:"KSM_RUN_UNMERGE"
+		}
+	}},
+	{ SOptionList:{
+		title:"Laptop Mode (Auto FS Writeback Delay Mode)",
+		description:" This option will delay the writebacks of file system bits cached in RAM while screen is ON (Enable for better performance @ slight risk of possible data loss if crashed or sudden loss of power).",
+		default:`$BB cat /proc/sys/vm/laptop_mode`,
+		action:"generic /proc/sys/vm/laptop_mode",
+		values:{ 0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSeekBar:{
+		title:"Pages To Scan",
+		min:4, max:1024, step:4,
+		default:256,
+		action:"generic /sys/kernel/mm/ksm/pages_to_scan"
+	}},
+	{ SSeekBar:{
+		title:"Sleep",
+		min:20, max:3000, step:10, unit:" ms",
+		default:1500,
+		action:"generic /sys/kernel/mm/ksm/sleep_millisecs"
+	}},
+	{ SCheckBox:{
+		label:"Deferred Timer",
+		default:0,
+		action:"generic /sys/kernel/mm/ksm/deferred_timer"
+	}},
+	{ SPane:{
+		title:"Samsung SAMP_SPCM",
+		description:"This is a Samsung-specific background appkiller. Though in most cases it is useful, you may want to disable it if having issues with certain apps.  Disabling this will allow use of default android kernel low memory killer"
+	}},
+	{ SOptionList:{
+		title:"Toggle SAMP_SPCM",
+		description:" ",
+		default:$(echo "$(/res/synapse/actions/devtools spcm_service)"),
+		action:"devtools spcm_service",
+		values:[Enabled, Disabled,]
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG
