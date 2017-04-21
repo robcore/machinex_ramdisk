@@ -1,6 +1,6 @@
 cat << CTAG
 {
-    name:HARDWARE_FUNCTIONS,
+    name:HARDWARE FUNCTIONS,
 		elements:[
 		{ STitleBar:{
 			title:"Vibrator"
