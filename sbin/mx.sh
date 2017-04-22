@@ -636,7 +636,7 @@ setprop debug.enable.wl_log 1
 #echo 2 > /sys/kernel/intelli_plug/min_cpus_online
 #echo Y > /sys/module/msm_thermal/parameters/enabled;
 #echo 70 > /sys/module/msm_thermal/parameters/limit_temp_degC
-#echo 1 > /sys/module/msm_thermal/core_control/enabled;
+echo 0 > /sys/module/msm_thermal/core_control/enabled;
 #echo 80 > /sys/module/msm_thermal/parameters/core_limit_temp_degC
 #if [ -e /system/robcore ]; then
 #	echo machinactive > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2> /dev/null;

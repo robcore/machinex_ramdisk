@@ -123,4 +123,6 @@ echo 1 > /sys/module/rpm_resources/enable_low_power/pxo 2> /dev/null;
 echo 1 > /sys/module/rpm_resources/enable_low_power/vdd_dig 2> /dev/null;
 echo 1 > /sys/module/rpm_resources/enable_low_power/vdd_mem 2> /dev/null;
 
+echo 1 > /sys/module/msm_thermal/core_control/enabled;
+
 echo "[machinex] Post-Init COMPLETE" | tee /dev/kmsg
