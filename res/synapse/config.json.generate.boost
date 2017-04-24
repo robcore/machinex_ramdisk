@@ -49,7 +49,7 @@ cat << CTAG
 								default:1350000,
 								unit:" Mhz",
 								action:"generic /sys/module/cpu_boost/parameters/input_boost_freq",
-								values:{ 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
+								values:{ 0:"0", 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
 							}},'
 					fi
 					if [ -f "/sys/module/cpu_boost/parameters/hotplug_boost_enabled" ]; then
@@ -91,7 +91,7 @@ cat << CTAG
 								default:0,
 								unit:" Mhz",
 								action:"generic /sys/module/cpu_boost/parameters/hotplug_boost_freq",
-								values:{ 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
+								values:{ 0:"0", 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
 							}},'
 					fi
 					if [ -f "/sys/module/cpu_boost/parameters/wakeup_boost_enabled" ]; then
@@ -133,7 +133,7 @@ cat << CTAG
 								default:1350000,
 								unit:" Mhz",
 								action:"generic /sys/module/cpu_boost/parameters/wakeup_boost_freq",
-								values:{ 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
+								values:{ 0:"0", 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
 							}},'
 					fi
 				fi`
