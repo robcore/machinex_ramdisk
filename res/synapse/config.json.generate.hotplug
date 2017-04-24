@@ -62,7 +62,7 @@ cat << CTAG
 		default:`cat /sys/kernel/intelli_plug/full_mode_profile`,
 		action:"generic /sys/kernel/intelli_plug/full_mode_profile",
 		values:{
-			0:"Balanced", 1:"Performance", 2:"Conservative", 3:"Disabled", 4:"Tri", 5:"Eco", 6:"Strict"
+			0:"Balanced", 1:"Machinex", 2:"Performance", 3:"Conservative", 4:"Disabled", 5:"Tri", 6:"Eco", 7:"Strict"
 		}
 	}},
 	{ SSeekBar:{
