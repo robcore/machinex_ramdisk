@@ -107,11 +107,6 @@ else
 	echo "[MACHINEX] Google Services Fix APPLIED" | tee /dev/kmsg
 fi
 
-echo 1350000 > /sys/module/cpu_boost/parameters/input_boost_freq 2> /dev/null;
-echo Y > /sys/module/cpu_boost/parameters/input_boost_enabled 2> /dev/null;
-
-echo 1 > /sys/kernel/intelli_plug/intelli_plug_active 2> /dev/null;
-
 #fastrpc permission setting
 #insmod /system/lib/modules/adsprpc.ko
 chown -h system.system /dev/adsprpc-smd
@@ -123,6 +118,11 @@ echo 1 > /sys/module/rpm_resources/enable_low_power/pxo 2> /dev/null;
 echo 1 > /sys/module/rpm_resources/enable_low_power/vdd_dig 2> /dev/null;
 echo 1 > /sys/module/rpm_resources/enable_low_power/vdd_mem 2> /dev/null;
 
-echo 1 > /sys/module/msm_thermal/core_control/enabled;
+echo 1890000 > /sys/module/cpu_boost/parameters/wakeup_boost_freq 2> /dev/null;
+echo Y > /sys/module/cpu_boost/parameters/wakeup_boost_enabled 2> /dev/null;
 
+echo 1350000 > /sys/module/cpu_boost/parameters/input_boost_freq 2> /dev/null;
+echo Y > /sys/module/cpu_boost/parameters/input_boost_enabled 2> /dev/null;
+
+echo 1 > /sys/kernel/intelli_plug/intelli_plug_active 2> /dev/null;
 echo "[machinex] Post-Init COMPLETE" | tee /dev/kmsg

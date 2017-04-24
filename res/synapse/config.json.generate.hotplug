@@ -65,6 +65,13 @@ cat << CTAG
 			0:"Balanced", 1:"Performance", 2:"Conservative", 3:"Disabled", 4:"Tri", 5:"Eco", 6:"Strict"
 		}
 	}},
+	{ SSeekBar:{
+		title:"Intelliplug Sampling Rate",
+		description:"This determines how often the driver queries the various criteria used for hotplugging work.",
+		min:5, max:1000, unit:" ms", step:5,
+		default:`cat /sys/kernel/intelli_plug/def_sampling_ms`,
+        action:"generic /sys/kernel/intelli_plug/def_sampling_ms"
+	}},
 	{ SPane:{
 		title:"Lazyplug Specific Options",
 		description:"OPTIONS",
