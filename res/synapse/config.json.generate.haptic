@@ -84,6 +84,16 @@ cat << CTAG
 		{ SDescription:{
 			description:" "
 		}},
+		{ SCheckBox:{
+			title:"Flip Cover Bypass",
+			description:"Override the Hall Sensor/Flip Cover wakeup interrupt.",
+			label:"Bypass",
+			default:0,
+			action:"generic /sys/module/gpio_keys/parameters/flip_cover_bypass",
+		}},
+		{ SDescription:{
+			description:" "
+		}},
     ]
 }
 CTAG

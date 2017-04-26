@@ -58,6 +58,12 @@ cat << CTAG
 			default:`cat /sys/kernel/fast_charge/screen_on_current_limit`,
 			action:"generic /sys/kernel/fast_charge/screen_on_current_limit",
 		}},
+		{ SCheckBox:{
+			description:"Bypass the Samsung slow-charge indicator and default to fast charge. Be careful! Potentially dangerous when charge is full!",
+			label:"Bypass Aicl",
+			default:`cat /sys/module/max77693_charger/parameters/aicl_bypass`,
+			action:"generic /sys/module/max77693_charger/parameters/aicl_bypass",
+		}},
 	{ SPane:{
 		title:"Custom_Levels settings",
 		description:" Only possible when FastCharge Custom_Levels is selected"

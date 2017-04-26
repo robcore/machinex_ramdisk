@@ -1,6 +1,6 @@
 cat << CTAG
 {
-    name:"mDNIe",
+    name:"mDNIe Hijack",
     elements:[
     	{ SDescription:{
         	description:"Settings related to Samsung's mobile Digital Natural Image engine.@n",

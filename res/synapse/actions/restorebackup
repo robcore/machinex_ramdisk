@@ -18,8 +18,8 @@ if [ -d /data/data/com.af.synapse ]; then
 fi;
 
 reset_uci() {
-  /sbin/uci reset;
-  /sbin/uci;
+  /sbin/uci reset 2> /dev/null
+  /sbin/uci 2> /dev/null
 }
 
 case "$1" in
@@ -92,8 +92,8 @@ case "$1" in
   keepconfig)
     timestamp=`date +%Y-%m-%d.%H.%M.%S`;
     cd $SYNAPSE_DATA
-    tar -cz -f "$SYNAPSE_CONFIG_DIR/config-$timestamp.tgz" *;
-    echo "config-$timestamp.tgz created. Restart Phone to see updated list.";
+    tar -cz -f "$SYNAPSE_CONFIG_DIR/config-$timestamp.tgz" * &> /dev/null
+    echo "config-$timestamp.tgz created. Restart Phone to see updated list."
     reset_uci;
   ;;
 
