@@ -39,6 +39,9 @@ cat << CTAG
 				AUTO,
 				   ]
         }},
+	{ SDescription:{
+		description:" "
+	}},
 	{ SPane:{
 	title:"Mdnie Mode Hijack",
 	description:"MDNIE Lite Control by Yank555.lu"

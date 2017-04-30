@@ -84,8 +84,11 @@ cat << CTAG
 		{ SDescription:{
 			description:" "
 		}},
+	{ SPane:{
+		title:"Flip Cover Bypass"
+	}},
 		{ SCheckBox:{
-			title:"Flip Cover Bypass",
+			title:"",
 			description:"Override the Hall Sensor/Flip Cover wakeup interrupt.",
 			label:"Bypass",
 			default:0,

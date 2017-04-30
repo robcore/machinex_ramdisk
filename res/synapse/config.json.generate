@@ -20,7 +20,6 @@ cat << CTAG
 	`. /res/synapse/config.json.generate.fsutils`,
     `. /res/synapse/config.json.generate.fast`,
 	`. /res/synapse/config.json.generate.power`
-    `. /res/synapse/config.json.generate.net`,
     `. /res/synapse/config.json.generate.advanced`,
 	`. /res/synapse/config.json.generate.bprop`,
 	`. /res/synapse/config.json.generate.extras`,

@@ -4,7 +4,7 @@ cat << CTAG
     elements:[
 	{ SPane:{
 		title:"CPU Boost Options",
-		description:" These are the various parameters for boosting frequencies according to different events including touch, wakeup, hotplug, etc."
+		description:" These are the parameters for boosting frequencies according to touch events."
         }},
 				`if [ -d "/sys/module/cpu_boost/parameters" ]; then
 					$BB echo '{ SPane:{
@@ -49,90 +49,6 @@ cat << CTAG
 								default:1350000,
 								unit:" Mhz",
 								action:"generic /sys/module/cpu_boost/parameters/input_boost_freq",
-								values:{ 0:"0", 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
-							}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/hotplug_boost_enabled" ]; then
-						$BB echo '{ SCheckBox:{
-							label:"Hotplug Boost",
-							description:"This will boost minimum CPU speed to the selected frequency when a hotplugged core comes back online.",
-							default:1,
-							action:"boolean /sys/module/cpu_boost/parameters/hotplug_boost_enabled",
-						}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/hotplug_boost_ms" ]; then
-						$BB echo '{ SSeekBar:{
-								title:"Hotplug Boost Interval",
-								description:"Amount of time a CPU is boosted when core online is detected.",
-								unit:" ms",
-								min:0,
-								max:5000,
-								step:10,
-								default:50,
-								action:"generic /sys/module/cpu_boost/parameters/hotplug_boost_ms"
-						}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/min_hotplug_interval" ]; then
-						$BB echo '{ SSeekBar:{
-								title:"Min Hotplug Interval",
-								description:"Minimum Interval between boosts.",
-								unit:" ms",
-								min:10,
-								max:1500,
-								step:10,
-								default:150,
-								action:"generic /sys/module/cpu_boost/parameters/min_hotplug_interval"
-						}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/hotplug_boost_freq" ]; then
-							$BB echo '{ SSeekBar:{
-								title:"Hotplug Boost Frequency",
-								description:"This is the boost frequency for Hotplug.",
-								default:0,
-								unit:" Mhz",
-								action:"generic /sys/module/cpu_boost/parameters/hotplug_boost_freq",
-								values:{ 0:"0", 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
-							}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/wakeup_boost_enabled" ]; then
-						$BB echo '{ SCheckBox:{
-							label:"Wakeup Boost",
-							description:"This will boost the minimum CPU speed to the selected frequency when waking from suspend.",
-							default:1,
-							action:"boolean /sys/module/cpu_boost/parameters/wakeup_boost_enabled",
-						}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/wakeup_boost_ms" ]; then
-						$BB echo '{ SSeekBar:{
-								title:"Wakeup Boost Interval",
-								description:"Minimum interval a CPU is boosted when wakeup is detected.",
-								unit:" ms",
-								min:0,
-								max:5000,
-								step:10,
-								default:50,
-								action:"generic /sys/module/cpu_boost/parameters/wakeup_boost_ms"
-						}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/min_wakeup_interval" ]; then
-						$BB echo '{ SSeekBar:{
-								title:"Min Wakeup Interval",
-								description:"Minimum Wakeup Interval between boosts.",
-								unit:" ms",
-								min:10,
-								max:1500,
-								step:10,
-								default:150,
-								action:"generic /sys/module/cpu_boost/parameters/min_wakeup_interval"
-						}},'
-					fi
-					if [ -f "/sys/module/cpu_boost/parameters/wakeup_boost_freq" ]; then
-							$BB echo '{ SSeekBar:{
-								title:"Wakeup Boost Frequency",
-								description:"This is the boost frequency for Wakeup.",
-								default:1350000,
-								unit:" Mhz",
-								action:"generic /sys/module/cpu_boost/parameters/wakeup_boost_freq",
 								values:{ 0:"0", 384000:"384 Mhz", 486000:"486 Mhz", 594000:"594 Mhz", 702000:"702 Mhz", 810000:"810 Mhz", 918000:"918 Mhz", 1026000:"1026 Mhz", 1134000:"1134 Mhz", 1242000:"1242 Mhz", 1350000:"1350 Mhz", 1458000:"1458 Mhz", 1566000:"1566 Mhz", 1674000:"1674 Mhz", 1782000:"1782 Mhz", 1890000:"1890 Mhz", }
 							}},'
 					fi

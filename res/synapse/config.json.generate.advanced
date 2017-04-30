@@ -23,6 +23,27 @@ cat << CTAG
         default:320,
         action:"generic /proc/sys/kernel/random/write_wakeup_threshold"
     }},
+	{ SDescription:{
+		description:" "
+	}},
+    { STitleBar:{
+        title:"TCP Congestion"
+    }},
+    { SOptionList:{
+        title:"TCP Congestion Control Algorithm",
+        description:"Set the algorithm of internet congestion avoidance, to possibly improve speeds and load times.",
+        action:"generic /proc/sys/net/ipv4/tcp_congestion_control",
+        values:[
+`
+            for TCP in $(cat /proc/sys/net/ipv4/tcp_available_congestion_control); do
+                echo "\"$TCP\",";
+            done;
+`
+        ]
+    }},
+	{ SDescription:{
+		description:" "
+	}},
     { STitleBar:{
         title:"Scheduling and Timing"
     }},
@@ -55,10 +76,14 @@ cat << CTAG
 		action:"generic /sys/kernel/sched/gentle_fair_sleepers"
 	}},
 	{ SCheckBox:{
-		description:" Enable or Disable realtime runtime sharing of resources.",
 		label:"RT Runtime Sharing",
 		default:1,
 		action:"generic /sys/kernel/sched/rt_runtime_sharing"
+	}},
+	{ SCheckBox:{
+		label:"Conservative Runqueue Stats",
+		default:0,
+		action:"generic /sys/devices/system/cpu/cpu0/rq-stats/conservative_rq"
 	}},
 	{ SDescription:{
 		description:" "
