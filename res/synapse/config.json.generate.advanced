@@ -80,11 +80,6 @@ cat << CTAG
 		default:1,
 		action:"generic /sys/kernel/sched/rt_runtime_sharing"
 	}},
-	{ SCheckBox:{
-		label:"Conservative Runqueue Stats",
-		default:0,
-		action:"generic /sys/devices/system/cpu/cpu0/rq-stats/conservative_rq"
-	}},
 	{ SDescription:{
 		description:" "
 	}},
