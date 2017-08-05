@@ -104,8 +104,7 @@ sip                                       u:object_r:radio_service:s0
 statusbar                                 u:object_r:system_server_service:s0
 SurfaceFlinger                            u:object_r:surfaceflinger_service:s0
 task                                      u:object_r:system_server_service:s0
-#telecom                                   u:object_r:radio_service:s0
-##PK2 SEC_SEforAndroid : compatibility for 5.0 OS
+## SEC_SEforAndroid : compatibility for 5.0 OS
 telecom                                   u:object_r:telecom_service:s0
 telephony.registry                        u:object_r:system_server_service:s0
 textservices                              u:object_r:system_server_service:s0
@@ -326,7 +325,6 @@ bluetooth_secure_mode_policy                u:object_r:system_server_service:s0
 browser_policy                              u:object_r:system_server_service:s0
 calling_policy                              u:object_r:system_server_service:s0
 certificate_policy                          u:object_r:system_server_service:s0
-com.samsung.ucs.ucsservice                  u:object_r:system_server_service:s0
 com.sec.action.CALL_STATE_CHANGED           u:object_r:system_server_service:s0
 com.sec.action.NO_USER_ACTIVITY             u:object_r:system_server_service:s0
 com.sec.action.USER_ACTIVITY                u:object_r:system_server_service:s0
@@ -353,7 +351,6 @@ enterprise_shared_device_policy             u:object_r:system_server_service:s0
 enterprise_sso_policy                       u:object_r:system_server_service:s0
 enterprise_user_space_sso_policy            u:object_r:system_server_service:s0
 enterprise_vpn_policy                       u:object_r:system_server_service:s0
-ESEMDMService                             u:object_r:ese_service:s0
 firewall_policy                             u:object_r:system_server_service:s0
 genericssoservice                           u:object_r:system_server_service:s0
 generic_vpn_policy                          u:object_r:system_server_service:s0
@@ -362,7 +359,6 @@ irm_service                                 u:object_r:system_server_service:s0
 kioskmode                                   u:object_r:system_server_service:s0
 knoxcustom                                  u:object_r:system_server_service:s0
 knox_ccm_policy                             u:object_r:system_server_service:s0
-knox_ucsm_policy                             u:object_r:system_server_service:s0
 knox_pinpad_service                         u:object_r:system_server_service:s0
 knox_scep_policy                            u:object_r:system_server_service:s0
 knox_timakeystore_policy                    u:object_r:system_server_service:s0
