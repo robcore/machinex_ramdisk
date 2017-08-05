@@ -15,8 +15,8 @@ cat << CTAG
 		label:"All Logs",
 		action:"allzip zl"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 	title:"Individual Logs"
@@ -28,22 +28,22 @@ cat << CTAG
 		label:"Save logcat",
 		action:"log logcat"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Save dmesg",
 		action:"log dmesg"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Save last_kmsg",
 		action:"log kmsg"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Save Settings",
@@ -52,8 +52,8 @@ cat << CTAG
 	{ SDescription:{
 		description:"The button above exports Your Synapse Settings to raw text."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"Advanced Tools"
@@ -65,14 +65,14 @@ cat << CTAG
 		label:"Optimize Databases",
 		action:"devtools optimizedb"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ STitleBar:{
 		title:"Kernel Image"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Selected Image",
@@ -87,28 +87,28 @@ cat << CTAG
 `
 		]
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ STitleBar:{
 		title:"Kernel Actions",
     	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SButton:{
 		label:"Restore Selected Kernel",
 		action:"restorebackup flashboot /dev/block/platform/msm_sdcc.1/by-name/boot"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SButton:{
 		label:"Delete Selected Kernel",
 		action:"restorebackup delboot"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Backup Current Kernel",
@@ -117,8 +117,8 @@ cat << CTAG
 	{ STitleBar:{
 		title:"Configuration Profiles"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Selected Profile",
@@ -133,35 +133,35 @@ cat << CTAG
 `
 		]
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ STitleBar:{
 		title:"Settings Actions",
    	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SButton:{
 		label:"Restore Selected Profile",
 		action:"restorebackup applyconfig"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SButton:{
 		label:"Delete Selected Profile",
 		action:"restorebackup delconfig"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Backup Current Profile",
 		action:"restorebackup keepconfig"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

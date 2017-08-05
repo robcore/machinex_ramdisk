@@ -1,0 +1,27 @@
+BB=busybox;
+
+case $1 in
+sleep)
+  P=/sys/sweep2sleep/sweep2sleep
+  if [ ! -z $2 ]; then
+  if [ $2 == Disabled ]; then
+    echo 0 > $P
+  elif [ $2 == Left2Right ]; then
+    echo 1 > $P
+  elif [ $2 == Right2Left ]; then
+    echo 2 > $P
+  elif [ $2 == BiDirection ]; then
+    echo 3 > $P
+  fi; fi
+  copy=`cat $P`
+  if [ $copy == 0 ]; then
+    echo Disabled
+  elif [ $copy == 1 ]; then
+    echo Left2Right
+  elif [ $copy == 2 ]; then
+    echo Right2Left
+  elif [ $copy == 3 ]; then
+    echo BiDirection
+  fi
+  ;;
+esac

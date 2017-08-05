@@ -1,6 +1,6 @@
 UKM=/data/.machinex;
 BB=busybox;
-DEVICE=`sh /res/synapse/files/gs4.sh`;
+DEVICE=`sh /data/.machinex/gs4.sh`;
 
 if [ -f $1 ]; then
 	PERM=`$BB stat -c %a $1`;

@@ -6,15 +6,15 @@ cat << CTAG
 		title:"IO",
 		description:"IO and FileSystem Tools"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SPane:{
 		title:"I/O Schedulers",
 		description:" Set the active I/O elevator algorithm. The I/O Scheduler decides how to prioritize and handle I/O requests. More info: <a href='http://timos.me/tm/wiki/ioscheduler'>HERE</a>"
     	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Internal_storage scheduler",
@@ -22,15 +22,15 @@ cat << CTAG
 		action:"scheduler /sys/block/mmcblk0/queue/scheduler",
 		values:[`while read values; do busybox printf "%s, \n" $values | busybox tr -d '[]'; done < /sys/block/mmcblk0/queue/scheduler`]
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SSeekBar:{
 		title:"Internal Device Storage Read-Ahead",
-		max:8192,
-		min:64,
+		max:128,
+		min:32,
 		unit:" KB",
-		step:64,
+		step:32,
 		default:`cat /sys/block/mmcblk0/queue/read_ahead_kb`,
 		action:"generic /sys/block/mmcblk0/queue/read_ahead_kb"
 	}},
@@ -42,15 +42,15 @@ cat << CTAG
 	}},
 	{ SSeekBar:{
 		title:"ExternalSD  read-ahead",
-		max:8192,
-		min:64,
+		max:128,
+		min:32,
 		unit:" kB",
-		step:64,
+		step:32,
 		default:`cat /sys/block/mmcblk1/queue/read_ahead_kb`,
 		action:"generic /sys/block/mmcblk1/queue/read_ahead_kb"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"I/O Scheduler Tunables - Internal",
@@ -85,8 +85,8 @@ cat << CTAG
 		default:`cat /sys/block/mmcblk0/queue/add_random`,
 		action:"generic /sys/block/mmcblk0/queue/add_random"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SCheckBox:{
 		description:" Maintain I/O statistics for this storage device. Disabling will break I/O monitoring apps. Default is Enabled.",
@@ -94,8 +94,8 @@ cat << CTAG
 		default:`cat /sys/block/mmcblk0/queue/iostats`,
 		action:"generic /sys/block/mmcblk0/queue/iostats"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SCheckBox:{
 		description:" Treat device as rotational storage. Default is Disabled",
@@ -103,8 +103,8 @@ cat << CTAG
 		default:`cat /sys/block/mmcblk0/queue/rotational`,
 		action:"generic /sys/block/mmcblk0/queue/rotational"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:" No Merges",
@@ -116,8 +116,8 @@ cat << CTAG
 			echo $NM`
 		}
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"CRC",
@@ -129,8 +129,8 @@ cat << CTAG
 		default:0,
 		action:"boolean /sys/module/mmc_core/parameters/use_spi_crc",
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"MMC Clock Scaling",
@@ -142,8 +142,8 @@ cat << CTAG
 		default:`echo $(cat /sys/class/mmc_host/mmc0/clk_scaling/enable)`,
 		action:"mmcscale internal",
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"The Up/Down thresholds determine how much load is required for the mmc core to make a decision on whether it should increase/decrease the frequency."
@@ -157,8 +157,8 @@ cat << CTAG
 		default:`cat /sys/class/mmc_host/mmc0/clk_scaling/up_threshold`,
 		action:"generic /sys/class/mmc_host/mmc0/clk_scaling/up_threshold"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SSeekBar:{
 		title:"MMC Down Threshold",
@@ -181,8 +181,8 @@ cat << CTAG
 		default:`cat /sys/class/mmc_host/mmc0/clk_scaling/polling_interval`,
 		action:"generic /sys/class/mmc_host/mmc0/clk_scaling/polling_interval"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"SD Card Clock Scaling",
@@ -203,8 +203,8 @@ cat << CTAG
 		default:`cat /sys/class/mmc_host/mmc2/clk_scaling/up_threshold`,
 		action:"generic /sys/class/mmc_host/mmc2/clk_scaling/up_threshold"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SSeekBar:{
 		title:"SD Card Down Threshold",
@@ -227,8 +227,8 @@ cat << CTAG
 		default:`cat /sys/class/mmc_host/mmc2/clk_scaling/polling_interval`,
 		action:"generic /sys/class/mmc_host/mmc2/clk_scaling/polling_interval"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"SysFs Mount",
@@ -248,8 +248,8 @@ cat << CTAG
 		label:"Remount RO",
 		action:"devtools remountro",
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"System Mount",
@@ -269,8 +269,8 @@ cat << CTAG
 		label:"Remount System RO",
 		action:"devtools sysro",
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"File System Trim",
@@ -283,8 +283,8 @@ cat << CTAG
 		label:"fstrim",
 		action:"devtools fstrim"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

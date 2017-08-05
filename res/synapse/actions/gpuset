@@ -1,6 +1,6 @@
 UKM=/data/.machinex;
 BB=busybox;
-DEVICE=`sh /res/synapse/files/gs4.sh`;
+DEVICE=`sh /data/.machinex/gs4.sh`;
 
 case $1 in
 	`sh $DEVICE DirGPUMinPwrLevel`)

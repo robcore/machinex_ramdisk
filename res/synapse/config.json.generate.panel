@@ -13,8 +13,8 @@ cat << CTAG
 		default:0,
 		action:"mdnie hibri"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ STitleBar:{
 			title:"MSM Kcal"
@@ -93,8 +93,8 @@ done`
 		default:`cat /sys/devices/virtual/input/input8/enabled`,
 		action:"generic /sys/devices/virtual/input/input8/enabled"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     { STitleBar:{
         title:"HDMI HDCP"
@@ -125,8 +125,8 @@ done`
 				label:"Disable Outdoor Mode",
 				action:"hbm ODIS"
 			}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

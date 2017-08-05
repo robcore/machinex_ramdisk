@@ -17,7 +17,7 @@ dyna)
   echo `cat /sys/kernel/dyn_fsync/Dyn_fsync_version`
   ;;
 susp)
-  echo `cat /sys/kernel/power_suspend/power_suspend_version`
+  echo `cat /sys/kernel/prometheus/prometheus_version`
   ;;
 sound)
   echo "Sound Engine Version: 4.8"

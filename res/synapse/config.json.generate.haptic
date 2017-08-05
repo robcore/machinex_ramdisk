@@ -11,31 +11,66 @@ cat << CTAG
 		{ SSeekBar:{
 			title:"Vibration Control",
 			min:0,
-			max:100,
-			step:1,
-			description:" Value in percentage from 1-100.",
-			default:50,
+			max:10000,
+			step:10,
+			description:" Value in pwm strength from 1-10000.",
+			default:`cat /sys/devices/virtual/timed_output/vibrator/pwm_value`,
 			action:"generic /sys/devices/virtual/timed_output/vibrator/pwm_value"
 		}},
-		{ SDescription:{
-			description:" "
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SSeekBar:{
+		title:"Max Timeout",
+		description:"Max Timeout for the vibrator. Set to 60000ms (1 min) by default.",
+		default:`cat /sys/module/vibrator/parameters/max_timeout`,
+		max:60000,
+		min:0,
+		step:1000,
+		unit:" ms",
+		action:"generic /sys/module/vibrator/parameters/max_timeout",
 		}},
+	{ SSpacer:{
+		height: 1
+	}},
+    { STitleBar:{
+        title:"Vibrate On Wake"
+    }},
+	{ SCheckBox:{
+		label:"VoW",
+		description:"Vibrate when the screen wakes up.",
+		default:0,
+		action:"boolean /sys/module/vibrator/parameters/vibrate_on_wake"
+	}},
+	{ SSeekBar:{
+		title:"VoW Timeout",
+		description:"How long VoW vibrates for in ms",
+		default:`cat /sys/module/vibrator/parameters/wake_vibrate_timeout`,
+		max:60000,
+		min:0,
+		step:25,
+		unit:" ms",
+		action:"generic /sys/module/vibrator/parameters/wake_vibrate_timeout",
+		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ SButton:{
 			label:"Test vibration",
 			action:"hbm pwm"
         }},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ STitleBar:{
 			title:"TORCH"
         }},
 		{ SDescription:{
 			description:"Toggle Your Torch on and off"
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 			{ SButton:{
 				label:"Torch ON",
 				action:"hbm torchon"
@@ -44,9 +79,9 @@ cat << CTAG
 				label:"Torch OFF",
 				action:"hbm torchoff"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 	{ SPane:{
 		title:"Torch Fine Brightness Options"
 	}},
@@ -61,18 +96,18 @@ cat << CTAG
 		default:`cat /sys/class/leds/torch-sec1/brightness`,
 		action:"generic /sys/class/leds/torch-sec1/brightness"
 	}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ STitleBar:{
 			title:"Button Backlight Control"
         }},
 		{ SDescription:{
 			description:"Toggle your Capacitative Buttons On and Off"
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 			{ SButton:{
 				label:"Button Backlight ON",
 				action:"hbm btnon"
@@ -81,22 +116,9 @@ cat << CTAG
 				label:"Button Backlight OFF",
 				action:"hbm btnoff"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
-	{ SPane:{
-		title:"Flip Cover Bypass"
+	{ SSpacer:{
+		height: 1
 	}},
-		{ SCheckBox:{
-			title:"",
-			description:"Override the Hall Sensor/Flip Cover wakeup interrupt.",
-			label:"Bypass",
-			default:0,
-			action:"generic /sys/module/gpio_keys/parameters/flip_cover_bypass",
-		}},
-		{ SDescription:{
-			description:" "
-		}},
     ]
 }
 CTAG

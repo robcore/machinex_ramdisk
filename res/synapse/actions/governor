@@ -1,21 +1,58 @@
 UKM=/data/.machinex;
 BB=busybox;
 
-refresh () {
-	 su -c "am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpu0/cpufreq/"}}' &> /dev/null;"
+refreshzero () {
+	 su -c "am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpufreq/policy0"}}' &> /dev/null"
+}
+refreshone () {
+	 su -c "am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpufreq/policy1"}}' &> /dev/null"
+}
+refreshtwo () {
+	 su -c "am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpufreq/policy2"}}' &> /dev/null"
+}
+refreshthree () {
+	 su -c "am startservice -n com.af.synapse/.lib.ActionService -e json '{ SDirectoryParser: { id:"/sys/devices/system/cpu/cpufreq/policy3"}}' &> /dev/null"
 }
 
-if [ -f $1 ]; then
-	OLD=`cat $1`
-	if [[ ! -z $2 ]]; then
-		$BB echo $2 > $1
-	fi
+case "$1" in
+	SetCPUGovernorzero)
+		OLD=`$BB cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor`
+		$BB echo $2 > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor 2> /dev/null
+		NEW=`$BB cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor`
+		$BB echo $NEW
+		refreshzero &
+	;;
+esac;
 
-	NEW=`$BB cat $1`
+case "$1" in
+	SetCPUGovernorone)
+		OLD=`$BB cat /sys/devices/system/cpu/cpufreq/policy1/scaling_governor`
+		$BB echo 1 > /sys/devices/system/cpu/cpu1/online 2> /dev/null
+		$BB echo $2 > /sys/devices/system/cpu/cpufreq/policy1/scaling_governor 2> /dev/null
+		NEW=`$BB cat /sys/devices/system/cpu/cpufreq/policy1/scaling_governor`
+		$BB echo $NEW
+		refreshone &
+	;;
+esac;
 
-	if [ $OLD != $NEW ]; then
-		refresh &
-	fi
+case "$1" in
+	SetCPUGovernortwo)
+		OLD=`$BB cat /sys/devices/system/cpu/cpufreq/policy2/scaling_governor`
+		$BB echo 1 > /sys/devices/system/cpu/cpu2/online 2> /dev/null
+		$BB echo $2 > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor 2> /dev/null
+		NEW=`$BB cat /sys/devices/system/cpu/cpufreq/policy2/scaling_governor`
+		$BB echo $NEW
+		refreshtwo &
+	;;
+esac;
 
-	$BB echo $NEW
-fi
+case "$1" in
+	SetCPUGovernorthree)
+		OLD=`$BB cat /sys/devices/system/cpu/cpufreq/policy3/scaling_governor`
+		$BB echo 1 > /sys/devices/system/cpu/cpu3/online 2> /dev/null
+		$BB echo $2 > /sys/devices/system/cpu/cpufreq/policy3/scaling_governor 2> /dev/null
+		NEW=`$BB cat /sys/devices/system/cpu/cpufreq/policy3/scaling_governor`
+		$BB echo $NEW
+		refreshthree &
+	;;
+esac;

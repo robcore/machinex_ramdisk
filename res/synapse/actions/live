@@ -1,29 +1,41 @@
 UKM=/data/.machinex;
 BB=busybox;
-DEVICE=/res/synapse/files/gs4.sh;
+DEVICE=/data/.machinex/gs4.sh;
 
 case $1 in
   machinex)
 	$BB echo "Machinex"
   ;;
   mark)
-	$BB echo "Mark93"
+	$BB echo "Mark97"
   ;;
   quote)
 	if [ -e /system/mi_nr ]; then
 		$BB echo "She is gold and nothing less. She makes me fearless <3"
 	else
-		$BB echo "Failing the Rorschach Test."
+		$BB echo "The wheels keep turning."
 	fi
   ;;
-  powersuspend)
-	$BB echo "`cat /sys/kernel/power_suspend/power_suspend_version`"
+  soundcontrol)
+	$BB echo "`cat /sys/kernel/sound_control_3/gpl_sound_control_version`"
+  ;;
+  prometheus)
+	$BB echo "`cat /sys/kernel/prometheus/prometheus_version`"
+  ;;
+  hardplug)
+	$BB echo "`cat /sys/kernel/cpu_hardplug/cpu_hardplug_version`"
   ;;
   quote2)
 	echo " "
   ;;
   quote3)
 	echo " "
+  ;;
+  stock_scenario)
+	$BB echo `cat /sys/devices/virtual/mdnie/mdnie/scenario`
+  ;;
+  stock_mode)
+	$BB echo `cat /sys/devices/virtual/mdnie/mdnie/mode`
   ;;
   entropy)
     $BB echo "`cat /proc/sys/kernel/random/entropy_avail`"
@@ -60,13 +72,19 @@ LiveSPEED)
 	fi;
   ;;
 LiveCPUTEMP)
-	TEMP=/sys/class/thermal/thermal_zone0/temp;
-	if [ -f "$TEMP" ]; then
-		HEAT="$((`$BB cat $TEMP`)) °C";
-		$BB echo "$HEAT";
-	else
-		$BB echo "-";
-	fi;
+	TEMP0=/sys/class/thermal/thermal_zone0/temp;
+	TEMP1=/sys/class/thermal/thermal_zone7/temp;
+	TEMP2=/sys/class/thermal/thermal_zone8/temp;
+	TEMP3=/sys/class/thermal/thermal_zone9/temp;
+	TEMP4=/sys/class/thermal/thermal_zone10/temp;
+
+	if [ -f "$TEMP0" ]; then HEAT0="$((`$BB cat $TEMP0`)) °C"; else	HEAT0="unsupported"; fi;
+	if [ -f "$TEMP1" ]; then HEAT1="$((`$BB cat $TEMP1`)) °C"; else	HEAT1="unsupported"; fi;
+	if [ -f "$TEMP2" ]; then HEAT2="$((`$BB cat $TEMP2`)) °C"; else	HEAT2="unsupported"; fi;
+	if [ -f "$TEMP3" ]; then HEAT3="$((`$BB cat $TEMP3`)) °C"; else	HEAT3="unsupported"; fi;
+	if [ -f "$TEMP4" ]; then HEAT4="$((`$BB cat $TEMP4`)) °C"; else	HEAT4="unsupported"; fi;
+
+	$BB echo "Board: "$HEAT0"@nCore 0: "$HEAT1"@nCore 1: $HEAT2@nCore 2: $HEAT3@nCore 3: $HEAT4";
   ;;
 batttemp)
   $BB echo Battery: $(($(cat /sys/devices/platform/sec-battery/power_supply/battery/temp) / 10))°C
@@ -81,17 +99,53 @@ battstatus)
   $BB echo Status: `cat /sys/devices/platform/sec-battery/power_supply/battery/status`
   ;;
 LiveCPUFrequency)
-  CPU0=`$BB cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq 2> /dev/null`;
-  CPU1=`$BB cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq 2> /dev/null`;
-  CPU2=`$BB cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq 2> /dev/null`;
-  CPU3=`$BB cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq 2> /dev/null`;
+  CPU0=`$BB cat /sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq 2> /dev/null`;
+  CPU1=`$BB cat /sys/devices/system/cpu/cpufreq/policy1/scaling_cur_freq 2> /dev/null`;
+  CPU2=`$BB cat /sys/devices/system/cpu/cpufreq/policy2/scaling_cur_freq 2> /dev/null`;
+  CPU3=`$BB cat /sys/devices/system/cpu/cpufreq/policy3/scaling_cur_freq 2> /dev/null`;
 
-  if [ -z "$CPU0" ]; then CPU0="Offline"; else CPU0="$((CPU0 / 1000)) MHz"; fi;
-  if [ -z "$CPU1" ]; then CPU1="Offline"; else CPU1="$((CPU1 / 1000)) MHz"; fi;
-  if [ -z "$CPU2" ]; then CPU2="Offline"; else CPU2="$((CPU2 / 1000)) MHz"; fi;
-  if [ -z "$CPU3" ]; then CPU3="Offline"; else CPU3="$((CPU3 / 1000)) MHz"; fi;
+  if [ "$CPU0" -gt 0 ]; then CPU0="$((CPU0 / 1000)) MHz"; else CPU0="Offline"; fi;
+  if [ "$CPU1" -gt 0 ]; then CPU1="$((CPU1 / 1000)) MHz"; else CPU1="Offline"; fi;
+  if [ "$CPU2" -gt 0 ]; then CPU2="$((CPU2 / 1000)) MHz"; else CPU2="Offline"; fi;
+  if [ "$CPU3" -gt 0 ]; then CPU3="$((CPU3 / 1000)) MHz"; else CPU3="Offline"; fi;
 
 $BB echo "Core 0: $CPU0@nCore 1: $CPU1@nCore 2: $CPU2@nCore 3: $CPU3";
+;;
+LiveCPU0Hardlimit)
+  MAX=`$BB cat /sys/devices/system/cpu/cpufreq/policy0/current_limit_max 2> /dev/null`;
+  MIN=`$BB cat /sys/devices/system/cpu/cpufreq/policy0/current_limit_min 2> /dev/null`;
+
+  MAX="$((MAX / 1000)) MHz";
+  MIN="$((MIN / 1000)) MHz";
+
+$BB echo "Current Max: $MAX@nCurrent Min: $MIN";
+;;
+LiveCPU1Hardlimit)
+  MAX=`$BB cat /sys/devices/system/cpu/cpufreq/policy1/current_limit_max 2> /dev/null`;
+  MIN=`$BB cat /sys/devices/system/cpu/cpufreq/policy1/current_limit_min 2> /dev/null`;
+
+  MAX="$((MAX / 1000)) MHz";
+  MIN="$((MIN / 1000)) MHz";
+
+$BB echo "Current Max: $MAX@nCurrent Min: $MIN";
+;;
+
+LiveCPU2Hardlimit)
+  MAX=`$BB cat /sys/devices/system/cpu/cpufreq/policy2/current_limit_max 2> /dev/null`;
+  MIN=`$BB cat /sys/devices/system/cpu/cpufreq/policy2/current_limit_min 2> /dev/null`;
+
+  MAX="$((MAX / 1000)) MHz";
+  MIN="$((MIN / 1000)) MHz";
+
+$BB echo "Current Max: $MAX@nCurrent Min: $MIN";
+;;
+LiveCPU3Hardlimit)
+  MAX=`$BB cat /sys/devices/system/cpu/cpufreq/policy3/current_limit_max 2> /dev/null`;
+  MIN=`$BB cat /sys/devices/system/cpu/cpufreq/policy3/current_limit_min 2> /dev/null`;
+
+  MAX="$((MAX / 1000)) MHz";
+  MIN="$((MIN / 1000)) MHz";
+$BB echo "Current Max: $MAX@nCurrent Min: $MIN";
 ;;
 LiveMemory)
   while read TYPE MEM KB; do
@@ -109,7 +163,7 @@ LiveMemory)
 ;;
 LiveUpTime)
   TOTAL=`$BB awk '{ print $1 }' /proc/uptime`;
-  AWAKE=$((`$BB awk '{s+=$2} END {print s}' /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state` / 100));
+  AWAKE=$((`$BB awk '{s+=$2} END {print s}' /sys/devices/system/cpu/cpufreq/policy0/stats/time_in_state` / 100));
   SLEEP=`$BB awk "BEGIN { print ($TOTAL - $AWAKE) }"`;
 
   PERC_A=`$BB awk "BEGIN { print ( ($AWAKE / $TOTAL) * 100) }"`;

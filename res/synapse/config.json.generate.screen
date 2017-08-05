@@ -1,16 +1,29 @@
 cat << CTAG
 {
-    name:"mDNIe Hijack",
+    name:"MDNIE HIJACK",
     elements:[
     	{ SDescription:{
         	description:"Settings related to Samsung's mobile Digital Natural Image engine.@n",
         	background:0
-	}},
+		}},
+		{ SLiveLabel:{
+			refresh:1000,
+			action:"live stock_scenario"
+		}},
+		{ SLiveLabel:{
+			refresh:1000,
+			action:"live stock_mode"
+		}},
 		{ STitleBar:{
-			title:"Stock mDNIe Controls"
+			title:"Locked mDNIe Controls"
+		}},
+        { SCheckBox:{
+       		label:"Lock",
+			default:`cat /sys/class/mdnie/mdnie/locked`,
+			action:"generic /sys/class/mdnie/mdnie/locked",
 		}},
 		{ SDescription:{
-			description:"mobile Digital Natural Image engine control by Samsung"
+			description:"mobile Digital Natural Image engine control by Samsung. When locked, the value here overrides whatever the system tries to set. Hijack will override this setting."
 		}},
 		{ SOptionList:{
 			title:"Scenario",
@@ -39,12 +52,12 @@ cat << CTAG
 				AUTO,
 				   ]
         }},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
-	title:"Mdnie Mode Hijack",
-	description:"MDNIE Lite Control by Yank555.lu"
+	title:"mDNIe Hijack",
+	description:"MDNIE Lite Control by Yank555.lu. Fine tune the builtin Samsung Post-Processing Colour Interface"
         }},
         { SCheckBox:{
        		label:"Enable or disable Hijack. (Default: Off)",
@@ -314,6 +327,9 @@ cat << CTAG
 			unit:"",
 			action:"generic /sys/class/mdnie/mdnie/yellow_red",
 		}},
+	{ SSpacer:{
+		height: 1
+	}},
     ]
 }
 CTAG

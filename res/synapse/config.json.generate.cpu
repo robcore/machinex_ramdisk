@@ -5,15 +5,15 @@ cat << CTAG
 	{ SPane:{
 		title:"Live Frequencies:"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SLiveLabel:{
-		refresh:375,
+		refresh:380,
 		action:"live LiveCPUFrequency"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 			`[ -d "/sys/module/pm_8x60" ] && PM=/sys/module/pm_8x60;
 

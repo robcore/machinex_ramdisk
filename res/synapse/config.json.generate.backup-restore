@@ -5,8 +5,8 @@ cat << CTAG
 	{ STitleBar:{
 		title:"Kernel Image"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Selected Image",
@@ -21,41 +21,41 @@ cat << CTAG
 `
 		]
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     { STitleBar:{
 		title:"Kernel Actions",
     }},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     { SButton:{
 		label:"Restore Selected Kernel",
 		action:"restorebackup flashboot /dev/block/platform/15540000.dwmmc0/by-name/BOOT"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     { SButton:{
 		label:"Delete Selected Kernel",
 		action:"restorebackup delboot"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Backup Current Kernel",
 		action:"restorebackup keepboot /dev/block/platform/15540000.dwmmc0/by-name/BOOT"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ STitleBar:{
 		title:"Configuration Profiles"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Selected Profile",
@@ -70,35 +70,35 @@ cat << CTAG
 `
 		]
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ STitleBar:{
 		title:"Settings Actions",
    	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SButton:{
 		label:"Restore Selected Profile",
 		action:"restorebackup applyconfig"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SButton:{
 		label:"Delete Selected Profile",
 		action:"restorebackup delconfig"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Backup Current Profile",
 		action:"restorebackup keepconfig"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

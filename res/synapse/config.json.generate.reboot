@@ -5,43 +5,43 @@ cat << CTAG
 	{ STitleBar:{
 		title:"Reboot Options"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Reboot Device",
 		action:"devtools reboot"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Recovery Mode",
 		action:"devtools reboot recovery"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Download Mode",
 		action:"devtools reboot download"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Power Off",
 		action:"devtools reboot -p"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"General Actions",
 		description:" To clear data, select Clear Synapse Data (fixes most common issues)."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Clear Synapse Data",

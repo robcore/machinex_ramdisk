@@ -48,19 +48,6 @@ cat << CTAG
 				refresh:1000,
 				action:"live LiveUpTime"
 			}},
-	{ SOptionList:{
-		title:"PRESETS",
-		description:"These are very basic preset profiles. SYNAPSE WILL FORCE CLOSE upon applying. Start app again to see your changes. The values changed by these presets can be restored to their defaults by pressing the RESTORE DEFAULTS button below.",
-		default:0,
-		action:"presetter rolloyoujerk",
-		values:{
-			0:"None", 1:"PERFORMANCE", 2:"BALANCED-OD", 3:"BALANCED-INT", 4:"BATTERY-SAVER", 5:"ROLLOS-BATTERY-SAVER"
-		}
-	}},
-			{ SButton:{
-				label:"RESTORE DEFAULTS",
-				action:"presetter defaults"
-			}},
 		]
 }
 CTAG

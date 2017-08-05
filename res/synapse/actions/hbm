@@ -45,7 +45,8 @@ case $1 in
 		$BB echo "Outdoor Mode disabled"
 	;;
 	pwm)
-		$BB echo 300 > /sys/devices/virtual/timed_output/vibrator/enable
+		VIBTO=`cat /sys/module/vibrator/parameters/wake_vibrate_timeout`
+		$BB echo $VIBTO > /sys/devices/virtual/timed_output/vibrator/enable
 		$BB echo "'$(cat /sys/devices/virtual/timed_output/vibrator/pwm_value)'"
 	;;
 	kapply)

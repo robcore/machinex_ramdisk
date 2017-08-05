@@ -3,19 +3,15 @@ if [ -d /data/data/com.af.synapse ]; then
   SYNAPSE_SD_DIR=/sdcard/machinex/Synapse;
   SYNAPSE_BOOT_DIR=$SYNAPSE_SD_DIR/kernel_backups;
   SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/saved_profiles;
-  SYNAPSE_PRESET_DIR=/data/.machinex/saved_presets;
   SYNAPSE_DATA=/data/data/com.af.synapse/databases;
 
   [ ! -d "$SYNAPSE_BOOT_DIR" ] && mkdir -p "$SYNAPSE_BOOT_DIR";
   [ ! -f "$SYNAPSE_BOOT_DIR/.selected_boot_img" -o -z `cat "$SYNAPSE_BOOT_DIR/.selected_boot_img"` ] && echo "None" > "$SYNAPSE_BOOT_DIR/.selected_boot_img";
   [ ! -d "$SYNAPSE_CONFIG_DIR" ] && mkdir -p "$SYNAPSE_CONFIG_DIR";
   [ ! -f "$SYNAPSE_CONFIG_DIR/.selected_config_profile" -o -z `cat "$SYNAPSE_CONFIG_DIR/.selected_config_profile"` ] && echo "None" > "$SYNAPSE_CONFIG_DIR/.selected_config_profile";
-  [ ! -d "$SYNAPSE_PRESET_DIR" ] && mkdir -p "$SYNAPSE_PRESET_DIR";
-  [ ! -f "$SYNAPSE_PRESET_DIR/.selected_preset_profile" -o -z `cat "$SYNAPSE_PRESET_DIR/.selected_preset_profile"` ] && echo "None" > "$SYNAPSE_PRESET_DIR/.selected_preset_profile";
 
   SYNAPSE_BOOT_IMG=`cat "$SYNAPSE_BOOT_DIR/.selected_boot_img"`;
   SYNAPSE_CONFIG_PROFILE=`cat "$SYNAPSE_CONFIG_DIR/.selected_config_profile"`;
-  SYNAPSE_PRESET_PROFILE=`cat "$SYNAPSE_PRESET_DIR/.selected_preset_profile"`;
 fi;
 
 reset_uci() {
@@ -116,31 +112,6 @@ case "$1" in
     am force-stop com.af.synapse 2> /dev/null;
     sleep 1;
     am start -a android.intent.action.MAIN -n com.af.synapse/.MainActivity 2> /dev/null;
-  ;;
-
-  listpreset)
-    echo `ls "$SYNAPSE_PRESET_DIR"`
-  ;;
-
-  pickpreset)
-    if [ -f "$SYNAPSE_PRESET_DIR/$2" -o "$2" == "None" ]; then
-      echo "$2" > "$SYNAPSE_PRESET_DIR/.selected_preset_profile";
-    fi;
-    echo `cat "$SYNAPSE_PRESET_DIR/.selected_preset_profile"`;
-  ;;
-
-  applypreset)
-    if [ -f "$SYNAPSE_PRESET_DIR/$SYNAPSE_PRESET_PROFILE" ]; then
-      rm -f $SYNAPSE_DATA/*
-      cd $SYNAPSE_DATA
-      tar -xz -f "$SYNAPSE_PRESET_DIR/$SYNAPSE_PRESET_PROFILE";
-      echo "$SYNAPSE_PRESET_PROFILE restored. Restart Synapse to refresh.";
-      reset_uci;
-    elif [ "$SYNAPSE_PRESET_PROFILE" == "None" ]; then
-      echo "None selected.";
-    else
-      echo "File not found.";
-    fi;
   ;;
 
   reboot)

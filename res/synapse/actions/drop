@@ -3,15 +3,23 @@ BB=busybox
 case $1 in
 	cache)
 		sync
+		$BB echo 1 > /proc/sys/vm/drop_caches
+		$BB echo 2 > /proc/sys/vm/drop_caches
 		$BB echo 3 > /proc/sys/vm/drop_caches
-		chmod 666 /sys/devices/virtual/sec/sec_misc/drop_caches
-		$BB echo 3 > /sys/devices/virtual/sec/sec_misc/drop_caches
+		chmod 666 /sys/devices/virtual/sec/sec_misc/mx_drop_caches
+		$BB echo 1 > /sys/devices/virtual/sec/sec_misc/mx_drop_caches
+		$BB echo 2 > /sys/devices/virtual/sec/sec_misc/mx_drop_caches
+		$BB echo 3 > /sys/devices/virtual/sec/sec_misc/mx_drop_caches
 		$BB echo "Quick Cache Drop Complete"
 	;;
 	full)
 		sync
+		$BB echo 1 > /proc/sys/vm/drop_caches
+		$BB echo 2 > /proc/sys/vm/drop_caches
 		$BB echo 3 > /proc/sys/vm/drop_caches
 		chmod 666 /sys/devices/virtual/sec/sec_misc/mx_drop_caches
+		$BB echo 1 > /sys/devices/virtual/sec/sec_misc/mx_drop_caches
+		$BB echo 2 > /sys/devices/virtual/sec/sec_misc/mx_drop_caches
 		$BB echo 3 > /sys/devices/virtual/sec/sec_misc/mx_drop_caches
 		CACHE_JUNK=$(ls -d /data/data/*/cache)
 		for i in $CACHE_JUNK; do

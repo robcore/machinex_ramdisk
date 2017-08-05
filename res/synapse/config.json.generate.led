@@ -5,8 +5,8 @@ cat << CTAG
 	{ SPane:{
 		title:"LED Options"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"Realtime LED Colour Control"
@@ -27,8 +27,8 @@ cat << CTAG
 			default:`cat /sys/class/sec/led/led_intensity`,
 			action:"generic /sys/class/sec/led/led_intensity"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ SSeekBar:{
 			title:"RED Max Brightness Hardlimit",
@@ -39,8 +39,8 @@ cat << CTAG
 			default:`cat /sys/class/leds/led_r/max_brightness`,
 			action:"generic /sys/class/leds/led_r/max_brightness"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ SSeekBar:{
 			title:"RED",
@@ -51,8 +51,8 @@ cat << CTAG
 			default:`cat /sys/class/leds/led_r/brightness`,
 			action:"generic /sys/class/leds/led_r/brightness"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ SSeekBar:{
 			title:"GREEN Max Brightness Hardlimit",
@@ -63,8 +63,8 @@ cat << CTAG
 			default:`cat /sys/class/leds/led_g/max_brightness`,
 			action:"generic /sys/class/leds/led_g/max_brightness"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ SSeekBar:{
 			title:"GREEN",
@@ -75,8 +75,8 @@ cat << CTAG
 			default:`cat /sys/class/leds/led_g/brightness`,
 			action:"generic /sys/class/leds/led_g/brightness"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ SSeekBar:{
 			title:"BLUE Max Brightness Hardlimit",
@@ -87,8 +87,8 @@ cat << CTAG
 			default:`cat /sys/class/leds/led_b/max_brightness`,
 			action:"generic /sys/class/leds/led_b/max_brightness"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		{ SSeekBar:{
 			title:"BLUE",
@@ -99,8 +99,8 @@ cat << CTAG
 			default:`cat /sys/class/leds/led_b/brightness`,
 			action:"generic /sys/class/leds/led_b/brightness"
 		}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"Boeffla LED Control Options"
@@ -121,9 +121,9 @@ cat << CTAG
 			default:0,
 			action:"generic /sys/devices/virtual/sec/led/disable_samsung_pattern",
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ SSeekBar:{
 			title:"LED Blink or Fade Speed",
 			description:"Set the speed of the blink or fade rate. 0 is continuous, 1 to 15 are increasing speed rates.",
@@ -158,8 +158,8 @@ cat << CTAG
 			echo ', action:"ledslope '${VALUE}'",
 			max:5, min:0 }},'
 done`
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

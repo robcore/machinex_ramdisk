@@ -6,6 +6,11 @@ cat << CTAG
 		title:"Live Statistics",
         }},
 		{ SLiveLabel:{
+			title:"Charger Cable State",
+			refresh:3000,
+			action:"charge-cbl"
+		}},
+		{ SLiveLabel:{
 			title:"Present Status Charging/Discharging",
 			refresh:3000,
 			action:"charge-status"
@@ -116,8 +121,8 @@ cat << CTAG
 		label:"Fast Charge Info",
 		action:"show fast"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

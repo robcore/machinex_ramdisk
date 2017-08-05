@@ -1,19 +1,19 @@
 cat << CTAG
 {
-    name:"CPU2 GOV",
+    name:"CPU3 GOV",
     elements:[
 	{ SPane:{
-		title:"CPU2 Governor",
+		title:"CPU3 Governor",
 		description:" "
         }},
         { SOptionList:{
-		title:"CPU2 Governor",
-                default:`$BB cat /sys/devices/system/cpu/cpufreq/policy2/scaling_governor`,
-                action:"governor SetCPUGovernortwo",
+		title:"CPU3 Governor",
+                default:`$BB cat /sys/devices/system/cpu/cpufreq/policy3/scaling_governor`,
+                action:"governor SetCPUGovernorthree",
                 values:[
 `
-                        for GOVERNORT in \`$BB cat /sys/devices/system/cpu/cpufreq/policy2/scaling_available_governors\` ; do
-                                $BB echo "\"$GOVERNORT\","
+                        for GOVERNORH in \`$BB cat /sys/devices/system/cpu/cpufreq/policy3/scaling_available_governors\` ; do
+                                $BB echo "\"$GOVERNORH\","
                         done
 `
                 ],
@@ -21,12 +21,12 @@ cat << CTAG
 			{
 				on:APPLY,
 				do:[ REFRESH, CANCEL, REBUILD ],
-				to:"/sys/devices/system/cpu/cpufreq/policy2"
+				to:"/sys/devices/system/cpu/cpufreq/policy3"
 			},
 			{
 				on:REFRESH,
 				do:REFRESH,
-				to:"/sys/devices/system/cpu/cpufreq/policy2"
+				to:"/sys/devices/system/cpu/cpufreq/policy3"
 			}
 		]
         }},
@@ -34,21 +34,21 @@ cat << CTAG
 		height: 1
 	}},
 	{ SPane:{
-		title:"CPU2 Governor tunables",
+		title:"CPU3 Governor tunables",
 		description:" "
         }},
 				{ SSpacer:{
 						height: 1
 				}},
 				{ STreeDescriptor:{
-					path:"/sys/devices/system/cpu/cpufreq/policy2",
+					path:"/sys/devices/system/cpu/cpufreq/policy3",
 					generic: {
 						directory: {
 							STreeDescriptor:{
 								path:
 `
-                        for MYGOVT in \`$BB cat /sys/devices/system/cpu/cpufreq/policy2/scaling_governor\` ; do
-                                $BB echo "\"$MYGOVT\","
+                        for MYGOVH in \`$BB cat /sys/devices/system/cpu/cpufreq/policy3/scaling_governor\` ; do
+                                $BB echo "\"$MYGOVH\","
                         done
 `
 								generic: {

@@ -8,9 +8,9 @@ cat << CTAG
 		{ SDescription:{
         	description:"This section includes miscellaneous functions that I find useful."
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ STitleBar:{
 			title:"Permissive Supolicy"
         }},
@@ -26,14 +26,14 @@ cat << CTAG
 			default:0,
 			action:"supol changer"
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ STitleBar:{
 			title:"Google Services Wakelock Fix"
 		}},
 		{ SDescription:{
-			description:"Prevents wakelocks caused by google play services. Enabled by default. DISABLED ON MACHINEXROM due to MicroG."
+			description:"Prevents wakelocks caused by google play services. DISABLED by default."
 		}},
 		{ SDescription:{
 			description:"REBOOT TO APPLY."
@@ -42,9 +42,9 @@ cat << CTAG
 				label:"Disable Gservices Fix",
 				action:"gserv disable"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 			{ SButton:{
 				label:"Enable Gservices Fix",
 				action:"gserv enable"
@@ -55,9 +55,9 @@ cat << CTAG
 		{ SDescription:{
 			description:"Below you have the options to disable the Settings that conflict with Kernel Screen Control and Fast Charging.  You may also reset them to stock. REBOOT AFTER APPLYING"
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 			{ SButton:{
 				label:"Screen Flicker FIX",
 				action:"sqfix flicker"
@@ -66,9 +66,9 @@ cat << CTAG
 				label:"STOCK Screen Settings",
 				action:"sqfix break"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 			{ SButton:{
 				label:"Disable Adaptive Charging",
 				action:"sqfix dischg"
@@ -77,9 +77,9 @@ cat << CTAG
 				label:"Enable Adaptive Charging",
 				action:"sqfix enchg"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ STitleBar:{
 			title:"Heads Up"
         }},
@@ -94,25 +94,25 @@ cat << CTAG
 				label:"Disable Heads Up Notifications",
 				action:"sqfix hedown"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 		{ STitleBar:{
 			title:"YOUTUBE"
         }},
 		{ SDescription:{
 			description:"Clearing Youtube Cache in Settings can be a pain at times, so here is a one-touch button to clear youtube cache files from your internal storage"
 		}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
 			{ SButton:{
 				label:"Clear Youtube Cache",
 				action:"hbm youtube"
 			}},
-		{ SDescription:{
-			description:" "
-		}},
+	{ SSpacer:{
+		height: 1
+	}},
     ]
 }
 CTAG

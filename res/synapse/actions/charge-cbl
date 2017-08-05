@@ -1,0 +1,12 @@
+UKM=/data/.machinex;
+BB=busybox
+
+VALUE=`$BB cat /sys/module/sec_switch/parameters/chrgr_cbl_attached`
+
+if [ $VALUE = "Y" ]; then
+	$BB echo "Charging Cable Attached"
+elif [ $VALUE = "N" ]; then
+	$BB echo "Charging Cable Detached"
+else
+	$BB echo "Cable Status Unknown"
+fi

@@ -86,7 +86,7 @@ case $1 in
 		fi;
 	;;
 	gpuvolt)
-		P=/sys/devices/system/cpu/cpu0/cpufreq/GPU_mV_table;
+		P=/sys/devices/system/cpu/cpufreq/vdd_table/GPU_mV_table;
 
 		if [ -f $P ]; then
 			if [[ ! -z $3 ]]; then

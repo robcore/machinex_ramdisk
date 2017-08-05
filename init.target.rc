@@ -253,6 +253,7 @@ service TvoutService_C /system/bin/bintvoutservice
      class main
      user system
      group graphics
+
 on property:ro.SecEDS.enable=false
     stop TvoutService_C
 

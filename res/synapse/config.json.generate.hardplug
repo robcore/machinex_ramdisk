@@ -1,0 +1,95 @@
+cat << CTAG
+{
+  name:HARDPLUG,
+  elements:[
+	{ STitleBar:{
+		title:"CPU Hardplug",
+	}},
+	{ SLiveLabel:{
+		refresh:0,
+		action:"live hardplug"
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SDescription:{
+		description:"CPU Hardplug is a driver developed by robcore. It hooks into the kernel cpu api in order to provide control over which cores are allowed to run"
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"This allows CPU Hardplug to set the number of CPUs available while the screen is on. Disabled by default.",
+		label:"Limit Screen On CPUs",
+		default:`cat /sys/kernel/cpu_hardplug/limit_screen_on_cpus`,
+		action:"generic /sys/kernel/cpu_hardplug/limit_screen_on_cpus",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"Enable CPU1 when screen is on.",
+		label:"CPU1",
+		default:`cat /sys/kernel/cpu_hardplug/cpu1_allowed`,
+		action:"generic /sys/kernel/cpu_hardplug/cpu1_allowed",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"Enable CPU2 when screen is on.",
+		label:"CPU2",
+		default:`cat /sys/kernel/cpu_hardplug/cpu2_allowed`,
+		action:"generic /sys/kernel/cpu_hardplug/cpu2_allowed",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"Enable CPU3 when screen is on.",
+		label:"CPU3",
+		default:`cat /sys/kernel/cpu_hardplug/cpu3_allowed`,
+		action:"generic /sys/kernel/cpu_hardplug/cpu3_allowed",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"This allows CPU Hardplug to set the number of CPUs available while the screen is off. Disabled by default.",
+		label:"Limit Screen Off CPUs",
+		default:`cat /sys/kernel/cpu_hardplug/limit_screen_off_cpus`,
+		action:"generic /sys/kernel/cpu_hardplug/limit_screen_off_cpus",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"Enable CPU1 when screen is off and system is not in deep sleep.",
+		label:"CPU1",
+		default:`cat /sys/kernel/cpu_hardplug/cpu1_allowed_susp`,
+		action:"generic /sys/kernel/cpu_hardplug/cpu1_allowed_susp",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"Enable CPU2 when screen is off and system is not in deep sleep.",
+		label:"CPU2",
+		default:`cat /sys/kernel/cpu_hardplug/cpu2_allowed_susp`,
+		action:"generic /sys/kernel/cpu_hardplug/cpu2_allowed_susp",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SCheckBox:{
+		description:"Enable CPU3 when screen is off and system is not in deep sleep.",
+		label:"CPU3",
+		default:`cat /sys/kernel/cpu_hardplug/cpu3_allowed_susp`,
+		action:"generic /sys/kernel/cpu_hardplug/cpu3_allowed_susp",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+    ]
+}
+CTAG

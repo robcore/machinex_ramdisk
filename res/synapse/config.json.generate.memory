@@ -93,8 +93,8 @@ if [ -f "/sys/module/lowmemorykiller/parameters/donotkill_proc" ]; then
     ';
 fi;
 `
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SSeekBar:{
 		title:"RQ Affinity",
@@ -106,8 +106,8 @@ fi;
 			echo $RQA`
 		}
 	}},
-  	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Drop Caches (Clear VFS Cache After Boot)",
@@ -117,8 +117,8 @@ fi;
 		values:{ 0:"Disabled", 1:"Enabled"
 		}
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SButton:{
 		label:"Quick Cache Dropper",
@@ -134,8 +134,8 @@ fi;
 	{ SDescription:{
 		description:"Drop pagecache, dentries, inodes, and all application caches."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ STitleBar:{
 		title:"ZSWAP",
@@ -144,7 +144,7 @@ fi;
 	{ SCheckBox:{
 		label:"Enable Zswap",
 		default:1,
-		action:"boolean /sys/module/zswap/parameters/enabled"
+		action:"generic /sys/module/zswap/parameters/enabled"
 	}},
 	{ SSeekBar:{
 		title:"ZSwap memory pool",
@@ -164,8 +164,8 @@ fi;
 		title:"Virtual Memory",
 		description:" Tune the operation of the VM subsystem of the Linux kernel and the writeout of dirty data to disk."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SSeekBar:{
         	title:"dirty_background_ratio",
@@ -177,8 +177,8 @@ fi;
         	default:`cat /proc/sys/vm/dirty_background_ratio`,
        		action:"generic /proc/sys/vm/dirty_background_ratio",
     }},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SSeekBar:{
 		title:"dirty_ratio",
@@ -190,8 +190,8 @@ fi;
 		default:`cat /proc/sys/vm/dirty_ratio`,
 		action:"generic /proc/sys/vm/dirty_ratio",
     }},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"Laptop Mode (Auto FS Writeback Delay Mode)",
@@ -201,11 +201,23 @@ fi;
 		values:{ 0:"Disabled", 1:"Enabled"
 		}
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SSeekBar:{
-		title:"swappiness",
+		title:"Memory Swappiness",
+		description:" A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. Default is 100, on this kernel 130.",
+		max:200,
+		min:0,
+		step:10,
+		default:$(cat /sys/fs/cgroup/memory/sw/memory.swappiness),
+		action:"generiq /sys/fs/cgroup/memory/sw/memory.swappiness",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SSeekBar:{
+		title:"VM Swappiness",
 		description:" A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. Default is 130.",
 		max:200,
 		min:0,
@@ -213,8 +225,8 @@ fi;
 		default:`cat /proc/sys/vm/swappiness`,
 		action:"generic /proc/sys/vm/swappiness",
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SSeekBar:{
 		title:"Adaptive VFS Cache Pressure",
@@ -226,8 +238,8 @@ fi;
 		default:`cat /proc/sys/vm/vfs_cache_pressure`,
 		action:"generic /proc/sys/vm/vfs_cache_pressure"
     	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SSeekBar:{
 		title:"VM Pressure Scale Max",
@@ -239,8 +251,8 @@ fi;
 		default:`cat /sys/module/vmpressure/parameters/vmpressure_scale_max`,
 		action:"generic /sys/module/vmpressure/parameters/vmpressure_scale_max"
     	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     	{ SSeekBar:{
 		title:"VM Pressure Allocation Stall Threshold",
@@ -252,8 +264,8 @@ fi;
 		default:`cat /sys/module/vmpressure/parameters/allocstall_threshold`,
 		action:"generic /sys/module/vmpressure/parameters/allocstall_threshold"
     	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     { STitleBar:{
         title:"Kernel Samepage Merging"
@@ -305,8 +317,8 @@ fi;
 		action:"devtools spcm_service",
 		values:[Enabled, Disabled,]
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

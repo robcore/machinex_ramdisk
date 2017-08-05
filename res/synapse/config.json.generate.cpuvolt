@@ -69,8 +69,8 @@ cat << CTAG
 							}},'
 						done < /sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels
 			fi`
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		]
 }

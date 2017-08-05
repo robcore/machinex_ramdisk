@@ -2,13 +2,17 @@ BB=busybox;
 
 case $1 in
 disable)
-  $BB touch /data/.machinex/gdisable
-  $BB chown 0:0 /data/.machinex/gdisable
-  $BB chmod 777 /data/.machinex/gdisable
+  mount -o remount,rw /system
+  $BB rm -f /system/etc/init.d/100gserv
+  mount -o remount,ro /system
   $BB echo "Disabled! REBOOT TO APPLY"
   ;;
 enable)
-  $BB rm -f /data/.machinex/gdisable
+  mount -o remount,rw /system
+  cp -p /data/.machinex/100gserv /system/etc/init.d/100gserv
+  $BB chown 0:0 /system/etc/init.d/100gserv
+  $BB chmod 777 /system/etc/init.d/100gserv
+  mount -o remount,ro /system
   $BB echo "Enabled! REBOOT TO APPLY"
   ;;
 esac

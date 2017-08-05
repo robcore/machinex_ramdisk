@@ -6,8 +6,8 @@ cat << CTAG
 		title:"GPU Policy Governors",
 		description:" The GPU Policy Governors determine how the GPU behaves in response to changes in workload."
         }},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
         { SOptionList:{
 		title:"Current Policy Governor",
@@ -42,10 +42,12 @@ cat << CTAG
 	}},
 	{ SPane:{
 		title:"Gpu Policy Governor Options",
-		description:"Machinactive options are 1:Conservative, 2:EnergySaver and 3:Machinactive for performance."
         }},
 	{ SDescription:{
-		description:"TrustZone Governors are the originals and must typed in as: ondemand or performance."
+		description:"TrustZone Governors must be typed in as: interactive, ondemand or performance."
+	}},
+	{ SDescription:{
+		description:"Machinactive options are 0:Conservative, 1:EnergySaver and 2:Machinactive for performance."
 	}},
 				{ STreeDescriptor:{
 					path:"/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config",

@@ -1,1 +1,13 @@
-modules
+if [[ ! -z $1 ]]; then
+if [ "$1" == "1" ]; then
+insmod /system/lib/modules/$(basename $0).ko
+else
+rmmod /system/lib/modules/$(basename $0).ko
+fi
+fi;
+     
+M=$(lsmod | grep $(basename $0)); if [[ -z $M ]]; 
+then echo 0; 
+else 
+[[ ! -z $M ]] && echo 1; 
+fi;

@@ -24,7 +24,7 @@ cat << CTAG
 								description:"Minimum interval a CPU is boosted when input is detected.",
 								unit:" ms",
 								min:0,
-								max:5000,
+								max:2000,
 								step:10,
 								default:50,
 								action:"generic /sys/module/cpu_boost/parameters/input_boost_ms"
@@ -35,9 +35,9 @@ cat << CTAG
 								title:"Min Input Interval",
 								description:"Minimum Input Interval between touches.",
 								unit:" ms",
-								min:10,
-								max:1500,
-								step:10,
+								min:0,
+								max:2000,
+								step:50,
 								default:150,
 								action:"generic /sys/module/cpu_boost/parameters/min_input_interval"
 						}},'
@@ -53,8 +53,8 @@ cat << CTAG
 							}},'
 					fi
 				fi`
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

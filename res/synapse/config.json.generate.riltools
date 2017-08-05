@@ -9,20 +9,20 @@ cat << CTAG
 	{ SDescription:{
 		description:"WARNING! This section is VERY dangerous and should be avoided if you are not experiencing issues with your radio."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"STAY OUT of this section if you are not experiencing the problems described here!"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"Provided below are POTENTIAL workarounds for people experiencing modem/radio dropouts and issues."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
    	{ SPane:{
 		title:"Subsystem Restart",
@@ -31,32 +31,32 @@ cat << CTAG
 	{ SDescription:{
 		description:"The options available are:"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"SoC: The whole board will reset upon modem reset."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"Coupled: Peripherals that are closely related will be reset alongside the modem."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"Independant: Peripherals, including the modem, will reset independantly of one another."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SDescription:{
 		description:"If the default is performing poorly, the device may experience better results with a different option."
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SOptionList:{
 		title:"SSR",
@@ -67,8 +67,8 @@ cat << CTAG
 			echo $SSR`
 		}
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
 		title:"Disable Modem Boot Timeout",
@@ -83,8 +83,8 @@ cat << CTAG
 		default:0,
 		action:"boolean /sys/module/mdm_common/parameters/disable_boot_timeout",
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     ]
 }

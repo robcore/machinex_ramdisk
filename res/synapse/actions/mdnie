@@ -2,7 +2,7 @@ BB=busybox;
 
 case $1 in
 scenario)
-  P=/sys/devices/virtual/mdnie/mdnie/scenario
+  P=/sys/devices/virtual/mdnie/mdnie/real_scenario
   if [ ! -z $2 ]; then
   if [ $2 == UI_MODE ]; then
     echo 0 > $P
@@ -49,7 +49,7 @@ scenario)
   fi
   ;;
 mode)
-  P=/sys/devices/virtual/mdnie/mdnie/mode
+  P=/sys/devices/virtual/mdnie/mdnie/real_mode
   if [ ! -z $2 ]; then
   if [ $2 == DYNAMIC ]; then
     echo 0 > $P
@@ -76,20 +76,20 @@ mode)
   fi
   ;;
 hibri)
-  P=/sys/class/backlight/panel/auto_brightness
+  P=/sys/class/backlight/panel/hbm_mode
   if [ ! -z $2 ]; then
   if [ $2 -eq 0 ]; then
     echo 0 > $P
     echo 0 > $P
   elif [ $2 -eq 1 ]; then
-    echo 6 > $P
-	echo 6 > $P
+    echo 1 > $P
+	echo 1 > $P
   fi
   fi
   COPY=`cat $P`
   if [ $COPY -eq 0 ]; then
     echo 0
-  elif [ $COPY -eq 6 ]; then
+  elif [ $COPY -eq 1 ]; then
     echo 1
   fi
   ;;

@@ -1,68 +1,80 @@
 cat << CTAG
 {
-    name:"CPU GOV",
+    name:"CPU0 GOV",
     elements:[
 	{ SPane:{
-		title:"CPU Governor",
-		description:" The CPU governor determines how the CPU behaves in response to changes in workload."
+		title:"CPU Governors",
+		description:" The CPU governor determines how the CPU behaves in response to changes in workload. Each core can be managed independantly."
         }},
 	{ SDescription:{
 		description:""
 	}},
+	{ SPane:{
+		title:"CPU0 Governor",
+		description:" "
+        }},
         { SOptionList:{
-		title:"Current governor",
-                default:`$BB cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`,
-                action:"governor /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+		title:"CPU0 Governor",
+                default:`$BB cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor`,
+                action:"governor SetCPUGovernorzero",
                 values:[
 `
-                        for GOVERNOR in \`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors\` ; do
-                                $BB echo "\"$GOVERNOR\","
+                        for GOVERNORZ in \`$BB cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors\` ; do
+                                $BB echo "\"$GOVERNORZ\","
                         done
 `
                 ],
 		notify:[
 			{
 				on:APPLY,
-				do:[ REFRESH, CANCEL ],
-				to:"/sys/devices/system/cpu/cpufreq/"
-			}
+				do:[ REFRESH, CANCEL, REBUILD ],
+				to:"/sys/devices/system/cpu/cpufreq/policy0"
+			},
 			{
-				on:CANCEL,
+				on:REFRESH,
 				do:REFRESH,
-				to:"/sys/devices/system/cpu/cpufreq/"
+				to:"/sys/devices/system/cpu/cpufreq/policy0"
 			}
 		]
         }},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height: 1
 	}},
 	{ SPane:{
-		title:"Governor tunables",
-		description:"The various configuration items which are governor-dependent."
+		title:"CPU0 Governor tunables",
+		description:" "
         }},
-	{ SDescription:{
-		description:""
-	}},
+				{ SSpacer:{
+						height: 1
+				}},
 				{ STreeDescriptor:{
-					path:"/sys/devices/system/cpu/cpufreq/",
+					path:"/sys/devices/system/cpu/cpufreq/policy0",
 					generic: {
 						directory: {
 							STreeDescriptor:{
+								path:
+`
+                        for MYGOVZ in \`$BB cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor\` ; do
+                                $BB echo "\"$MYGOVZ\","
+                        done
+`
 								generic: {
 									directory: {},
 									element: {
 										SGeneric: { title:"@BASENAME" }
 									}
 								},
-								exclude: [ "boostpulse", "io_is_busy", "sampling_rate_min", "cpufreq_limit_requests", "target_loads", "timer_rate", "above_hispeed_delay", "freq_calc_thresh", "go_hispeed_load" ]
+								exclude: [ "boostpulse", "io_is_busy", "min_sampling_rate", "hispeed_freq", "cpufreq_limit_requests", "target_loads", "timer_rate", "cpu_util", "above_hispeed_delay", "freq_calc_thresh" ]
 							},
 						}
 					},
-					exclude: [ "overall_stats", "all_time_in_state", "vdd_table" ]
+					exclude: [ "GPU_mV_table", "affected_cpus", "cpu_utilization", "cpuinfo_cur_freq", "cpuinfo_max_freq", "cpuinfo_min_freq",
+							   "cpuinfo_transition_latency", "related_cpus", "scaling_available_frequencies", "machinex_available_frequencies", "scaling_available_governors",
+							   "scaling_cur_freq", "scaling_driver", "scaling_governor", "scaling_max_freq", "scaling_min_freq", "scaling_setspeed", "stats", "util_threshold", ]
 				}},
-	{ SDescription:{
-		description:" "
-	}},
+				{ SSpacer:{
+						height: 1
+				}},
     ]
 }
 CTAG

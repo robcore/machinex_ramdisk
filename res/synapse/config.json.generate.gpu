@@ -6,7 +6,7 @@ cat << CTAG
 		title:"Live Frequency"
 	}},
 	{ SLiveLabel:{
-		refresh:500,
+		refresh:300,
 		action:"live LiveGPUFrequency"
 	}},
 	{ SPane:{
@@ -14,13 +14,102 @@ cat << CTAG
 	}},
 	{ SSeekBar:{
 		title:"Max Frequency",
-		description:" Set the maximum frequency the GPU scales up to.",
+		description:" Maximum GPU Scaling Frequency.",
 		unit:"MHz",
 		weight:0.000001,
 		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk`,
 		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk",
 		values:[450000000, 320000000, 200000000, 128000000,]
 	}},
+	{ SSeekBar:{
+		title:"Min Frequency",
+		description:" Minimum GPU Scaling Frequency.",
+		unit:"MHz",
+		weight:0.000001,
+		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/min_gpuclk`,
+		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/min_gpuclk",
+		values:[450000000, 320000000, 200000000, 128000000,]
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SPane:{
+		title:"GPU Governor"
+	}},
+	{ SOptionList:{
+		title:"Set Governor",
+		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config/trustzone/governor`,
+		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/policy_config/trustzone/governor",
+		values:[interactive, performance, powersave, ondemand,]
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SPane:{
+		title:"Governor Tunables"
+	}},
+	{ SDescription:{
+		description:"Tunables for Ondemand and Interactive Governors."
+	}},
+	{ SSeekBar:{
+		title:"Ceiling",
+		description:"If processing time is greater than the ceiling,frequency is increased. Otherwise, the normal algorithm continues as usual. This value applies to interactive and ondemand.",
+		unit:"ms",
+		min:1000,
+		max:100000,
+		step:500,
+		default:`cat /sys/module/msm_kgsl_core/parameters/ceiling`,
+		action:"generic /sys/module/msm_kgsl_core/parameters/ceiling",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SSeekBar:{
+		title:"Floor",
+		description:"If processing time is less than the floor, the driver skips frequency calculation. This value applies to interactive and ondemand.",
+		unit:"ms",
+		min:1000,
+		max:100000,
+		step:500,
+		default:`cat /sys/module/msm_kgsl_core/parameters/floor`,
+		action:"generic /sys/module/msm_kgsl_core/parameters/floor",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SSeekBar:{
+		title:"Up Threshold",
+		description:"If the stats threshold is higher than this value, frequency ramps up.",
+		min:5,
+		max:95,
+		step:5,
+		default:`cat /sys/module/msm_kgsl_core/parameters/up_threshold`,
+		action:"generic /sys/module/msm_kgsl_core/parameters/up_threshold",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SSeekBar:{
+		title:"Down Threshold",
+		description:"If the stats threshold is lower than this value, frequency ramps down.",
+		min:5,
+		max:95,
+		step:5,
+		default:`cat /sys/module/msm_kgsl_core/parameters/up_threshold`,
+		action:"generic /sys/module/msm_kgsl_core/parameters/up_threshold",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SPane:{
+		title:"Adreno Touchboost"
+	}},
+		{ SCheckBox:{
+			description:"Enable or disable Gpu touchboost according to taste.",
+			label:"adreno_tb",
+			default:`cat /sys/module/msm_adreno/parameters/adreno_touchboost`,
+			action:"generic /sys/module/msm_adreno/parameters/adreno_touchboost",
+		}},
 	{ SPane:{
 		title:"GPU PowerNap"
 	}},
@@ -54,7 +143,7 @@ cat << CTAG
 		default:`cat /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/fps`,
 		action:"generic /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/fps",
 	}},
-			`if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/GPU_mV_table" ]; then
+			`if [ -f "/sys/devices/system/cpu/cpufreq/vdd_table/GPU_mV_table" ]; then
 				$BB echo '{ SPane:{
 					title:"GPU Voltages"
 				}},'
@@ -73,10 +162,10 @@ cat << CTAG
 							else
 								$BB echo 'min:900, max:1200, step:5 }},'
 							fi;
-					done < /sys/devices/system/cpu/cpu0/cpufreq/GPU_mV_table
+					done < /sys/devices/system/cpu/cpufreq/vdd_table/GPU_mV_table
 			fi`
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
 		]
 }

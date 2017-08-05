@@ -1,0 +1,42 @@
+cat << CTAG
+{
+    name:"S2S",
+    elements:[
+    	{ SPane:{
+		title:"Sweep2Sleep",
+        }},
+    	{ SDescription:{
+        	description:"Sweep2Sleep Functions",
+        	background:0
+		}},
+		{ SDescription:{
+			description:"Driver responds to a sweep gesture at the very bottom of the screen."
+		}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SOptionList:{
+		default:`echo $(/res/synapse/actions/sweep sleep)`,
+		action:"sweep sleep",
+		values:[Disabled, Left2Right, Right2Left, BiDirection,]
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+	{ SPane:{
+		title:"Vibration Feedback"
+	}},
+	{ SSeekBar:{
+		title:"Feedback Timeout",
+		max:10000,
+		min:0,
+		step:125,
+		default:`cat /sys/sweep2sleep/vibration_timeout`,
+		action:"generic /sys/sweep2sleep/vibration_timeout"
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+    ]
+}
+CTAG

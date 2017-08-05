@@ -23,8 +23,8 @@ cat << CTAG
         default:320,
         action:"generic /proc/sys/kernel/random/write_wakeup_threshold"
     }},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     { STitleBar:{
         title:"TCP Congestion"
@@ -41,8 +41,8 @@ cat << CTAG
 `
         ]
     }},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
     { STitleBar:{
         title:"Scheduling and Timing"
@@ -80,17 +80,47 @@ cat << CTAG
 		default:1,
 		action:"generic /sys/kernel/sched/rt_runtime_sharing"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
+	}},
+	{ STitleBar:{
+		title:"Power Efficient Workqueues",
+	}},
+	{ SCheckBox:{
+		description:"Yup they are back.",
+		label:"PEWQ",
+		default:0,
+		action:"boolean /sys/module/workqueue/parameters/power_efficient",
+	}},
+	{ SSpacer:{
+		height: 1
 	}},
 	{ STitleBar:{
 		title:"BAM DMUX Adaptive Timer",
 	}},
 	{ SCheckBox:{
-		description:"BAM DMUX has an alternative to its fixed timer, adaptive.  If this is turned on, the driver measures the load used its clients and adjust the timer accordingly.",
+		description:"BAM DMUX has an adaptive alternative to its fixed timer.  If this is turned on, the driver measures the load used by its clients and adjust the timer accordingly.",
 		label:"BAM Adaptive Timer",
 		default:`cat /sys/module/bam_dmux/parameters/adaptive_timer_enabled`,
 		action:"generic /sys/module/bam_dmux/parameters/adaptive_timer_enabled",
+	}},
+	{ SSpacer:{
+		height: 1
+	}},
+    { STitleBar:{
+        title:"BAM DMUX Fast Dormancy Timeout"
+    }},
+	{ SSeekBar:{
+		title:"FastDormancyTimeout",
+		min:100,
+		max:2000,
+		step:100,
+		unit:"ms",
+		default:`cat /sys/module/bam_dmux/parameters/real_wakelock_timeout`,
+		action:"generic /sys/module/bam_dmux/parameters/real_wakelock_timeout"
+	}},
+	{ SSpacer:{
+		height: 1
 	}},
     { STitleBar:{
         title:"Other"
@@ -100,8 +130,8 @@ cat << CTAG
 		default:2,
 		action:"generic /proc/sys/kernel/randomize_va_space"
 	}},
-	{ SDescription:{
-		description:" "
+	{ SSpacer:{
+		height: 1
 	}},
   ]
 }

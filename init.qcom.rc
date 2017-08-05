@@ -668,9 +668,8 @@ service qcom-sh /system/bin/sh /init.qcom.sh
     user root
     oneshot
 
-# Call Mid-init script
+# Call Post-init script
 service mxinit /system/bin/sh /sbin/mx.sh
-    class late_start
 	user root
     group root
 	seclabel u:r:init:s0
@@ -679,23 +678,17 @@ service mxinit /system/bin/sh /sbin/mx.sh
 
 #Make UCI a service - osm0sis you bloody genius
 service uci /system/bin/sh /sbin/uci
-	class late_start
 	user root
 	group root
-	disabled
-	seclabel u:r:init:s0
-	oneshot
-
-service mx-post-boot /system/bin/sh /sbin/init.qcom.mx_boot.sh
-    class late_start
-	user root
-    group root
 	seclabel u:r:init:s0
 	disabled
 	oneshot
 
 on property:init.svc.mxinit=stopped
-    start mx-post-boot
+	#reload with our changes
+	load_all_props
+	load_persist_props
+    start uci
 
 service wifi-sdio-on /system/bin/sh /system/etc/init.qcom.sdio.sh
     class late_start

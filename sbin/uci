@@ -3,19 +3,18 @@
 config=/res/synapse/config.json
 action=/res/synapse/actions
 
-mount -t rootfs -o rw,remount rootfs;
-
-chmod -R 755 /res/synapse
-chmod 755 /sbin/uci
-
-if [ -d /sys/block/mmcblk1 ]; then
-	if [ ! -e $config ]; then
-	    source /res/synapse/config.json.generate > $config
+if [ ! -e $config ]; then
+	if [ -d /sys/block/mmcblk1 ]; then
+		mount -t rootfs -o rw,remount rootfs
+	    source /res/synapse/config.json.generate > /$config
+		mount -t rootfs -o ro,remount rootfs
+	else
+		mount -t rootfs -o rw,remount rootfs
+	    source /res/synapse/config.json.xenerate > /$config
+		mount -t rootfs -o ro,remount rootfs
 	fi
-else
-	if [ ! -e $config ]; then
-	    source /res/synapse/config.json.xenerate > $config
-	fi
+	chmod -R 775 /res/synapse
+	chmod 775 /sbin/uci
 fi
 
 case $1 in
@@ -32,5 +31,3 @@ reset)
   rm -f $config
   ;;
 esac
-
-mount -t rootfs -o ro,remount rootfs
